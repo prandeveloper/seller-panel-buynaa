@@ -15,8 +15,8 @@ import axiosConfig from "../../../axiosConfig";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import {
-   Edit,
-   Trash2,
+  Edit,
+  Trash2,
   // Clipboard,
   // Printer,
   // Download,
@@ -44,27 +44,13 @@ class AllOrder extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 150,
+        width: 100,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-      {
-        headerName: "Order Type",
-        field: "order_type",
-        filter: true,
-        width: 250,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              {/* <span>{params.data?.user?.order_type}</span> */}
-              <span>{params.data.order_type}</span>
 
-            </div>
-          );
-        },
-      },
       {
         headerName: "Order ID",
         field: "orderId",
@@ -79,104 +65,90 @@ class AllOrder extends React.Component {
         },
       },
       {
-        headerName: "Customer Name",
-        field: "customer_name",
+        headerName: "Order Type",
+        field: "order_type",
         filter: true,
-        width: 250,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {/* <span>{params.data?.user?.customer_name}</span> */}
-              <span>{params.data.customer_name}</span>
+              {/* <span>{params.data?.user?.order_type}</span> */}
+              <span>{params.data.order_type}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Customer Name",
+        field: "customer_name",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>
+                {params.data.customer?.first_name}{" "}
+                {params.data.customer?.last_name}
+              </span>
             </div>
           );
         },
       },
 
-      // {
-      //   headerName: "Product Ordered",
-      //   field: "product.item_name",
-      //   filter: true,
-      //   width: 220,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data?.product?.item_name}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        headerName: "Product Name",
+        field: "product.product_name",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data?.product?.product_name}</span>
+            </div>
+          );
+        },
+      },
       {
         headerName: "Total Qty ",
         field: "qty",
         filter: true,
-        width: 220,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {/* <span>{params.data?.product?.qty}</span> */}
               <span>{params.data.qty}</span>
-
             </div>
           );
         },
       },
 
-     
       {
-        headerName: " Total Amount", 
+        headerName: "Amount",
         field: "purchaseprice",
         filter: true,
-        width: 220,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {/* <span>{params.data?.product?.purchaseprice}</span> */}
               <span>{params.data.purchaseprice}</span>
-
             </div>
           );
         },
       },
-      // {
-      //   headerName: "Purchased Price",
-      //   field: "purchaseprice",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.purchaseprice}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-      // {
-      //   headerName: "Reached Location",
-      //   field: "reachedlocation",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.reachedlocation}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-      // {
-      //   headerName: "Shipping Date",
-      //   field: "shippingdate",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.shippingdate}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        headerName: "Address",
+        field: "delivery_address",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.delivery_address}</span>
+            </div>
+          );
+        },
+      },
+
       {
         headerName: "Order Date",
         field: "order_date",
@@ -190,56 +162,60 @@ class AllOrder extends React.Component {
           );
         },
       },
-      // {
-      //   headerName: "Status",
-      //   field: "status",
-      //   filter: true,
-      //   width: 150,
-      //   cellRendererFramework: (params) => {
-      //     return params.value === "Deliver" ? (
-      //       <div className="badge badge-pill badge-success">
-      //         {params.data.status}
-      //       </div>
-      //     ) : params.value === "Pending" ? (
-      //       <div className="badge badge-pill badge-primary">
-      //         {params.data.status}
-      //       </div>
-      //     ) : params.value === "Cancelled" ? (
-      //       <div className="badge badge-pill badge-danger">
-      //         {params.data.status}
-      //       </div>
-      //     ) : params.value === "Returned" ? (
-      //       <div className="badge badge-pill badge-warning">
-      //         {params.data.status}
-      //       </div>
-      //     ) : null;
-      //   },
-      // },
-  //     {
-  //       headerName: "Actions",
-  //       field: "transactions",
-  //       width: 150,
-  //       cellRendererFramework: (params) => {
-  //         return (
-  //           <div className="actions cursor-pointer">
-  //             <Edit
-  //               className="mr-50"
-  //               size={15}
-  //               onClick={() => history.push("/app/user/edit")}
-  //             />
-  //             <Trash2
-  //               size={15}
-  //               onClick={() => {
-  //                 let selectedData = this.gridApi.getSelectedRows();
-  //                 this.gridApi.updateRowData({ remove: selectedData });
-  //               }}
-  //             />
-  //           </div>
-  //         );
-  //       },
-  //     },
+      {
+        headerName: "Status",
+        field: "status",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return params.value === "Delivery" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
+            </div>
+          ) : params.value === "Pending" ? (
+            <div className="badge badge-pill badge-primary">
+              {params.data.status}
+            </div>
+          ) : params.value === "Cancel" ? (
+            <div className="badge badge-pill badge-danger">
+              {params.data.status}
+            </div>
+          ) : params.value === "Returned" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
+          ) : params.value === "Complete" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
+          ) : null;
+        },
+      },
+      //     {
+      //       headerName: "Actions",
+      //       field: "transactions",
+      //       width: 150,
+      //       cellRendererFramework: (params) => {
+      //         return (
+      //           <div className="actions cursor-pointer">
+      //             <Edit
+      //               className="mr-50"
+      //               size={15}
+      //               onClick={() => history.push("/app/user/edit")}
+      //             />
+      //             <Trash2
+      //               size={15}
+      //               onClick={() => {
+      //                 let selectedData = this.gridApi.getSelectedRows();
+      //                 this.gridApi.updateRowData({ remove: selectedData });
+      //               }}
+      //             />
+      //           </div>
+      //         );
+      //       },
+      //     },
     ],
-   };
+  };
 
   async componentDidMount() {
     await axiosConfig.get("/getorder").then((response) => {
@@ -276,9 +252,7 @@ class AllOrder extends React.Component {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       <Row className="app-user-list">
-        <Col sm="12">
-         
-        </Col>
+        <Col sm="12"></Col>
         <Col sm="12">
           <Card>
             <Row className="m-2">

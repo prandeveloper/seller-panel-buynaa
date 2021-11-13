@@ -15,87 +15,42 @@ import axiosConfig from "../../../axiosConfig";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import {
-  // Edit,
-  // Trash2,
+  Edit,
+  Trash2,
   // Clipboard,
   // Printer,
   // Download,
   ChevronDown,
 } from "react-feather";
 //import classnames from "classnames";
-//import { history } from "../../../history";
+import { history } from "../../../history";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 class PendingOrder extends React.Component {
   state = {
-    rowData: null,
-    pageSize: 20,
-    isVisible: true,
-    reload: false,
-    collapse: true,
-    status: "Opened",
-    role: "All",
-    selectStatus: "All",
-    verified: "All",
-    department: "All",
+    rowData: [],
+    paginationPageSize: 20,
+    currenPageSize: "",
+    getPageSize: "",
     defaultColDef: {
       sortable: true,
+      editable: true,
+      resizable: true,
+      suppressMenu: true,
     },
-    searchVal: "",
+
     columnDefs: [
       {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 150,
+        width: 100,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-      {
-        headerName: "User Name",
-        field: "user",
-        filter: true,
-        width: 250,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              {/* <span>{params.data?.user?.username}</span> */}
-              <span>{params.data.user}</span>
 
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Product Ordered",
-        field: "item_name",
-        filter: true,
-        width: 220,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              {/* <span>{params.data?.product?.item_name}</span> */}
-              <span>{params.data.item_name}</span>
-
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Product Code",
-        field: "product.code",
-        filter: true,
-        width: 220,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data?.product?.code}</span>
-            </div>
-          );
-        },
-      },
       {
         headerName: "Order ID",
         field: "orderId",
@@ -110,10 +65,68 @@ class PendingOrder extends React.Component {
         },
       },
       {
-        headerName: "Purchased Price",
-        field: "purchaseprice",
+        headerName: "Order Type",
+        field: "order_type",
         filter: true,
         width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {/* <span>{params.data?.user?.order_type}</span> */}
+              <span>{params.data.order_type}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Customer Name",
+        field: "customer_name",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>
+                {params.data.customer?.first_name}{" "}
+                {params.data.customer?.last_name}
+              </span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Product Name",
+        field: "product.product_name",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data?.product?.product_name}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Total Qty ",
+        field: "qty",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.qty}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Amount",
+        field: "purchaseprice",
+        filter: true,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -123,40 +136,28 @@ class PendingOrder extends React.Component {
         },
       },
       {
-        headerName: "Reached Location",
-        field: "reachedlocation",
+        headerName: "Address",
+        field: "delivery_address",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.reachedlocation}</span>
+              <span>{params.data.delivery_address}</span>
             </div>
           );
         },
       },
+
       {
-        headerName: "Shipping Date",
-        field: "shippingdate",
+        headerName: "Order Date",
+        field: "order_date",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.shippingdate}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Delivered Date",
-        field: "deliverdondate",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.deliverdondate}</span>
+              <span>{params.data.order_date}</span>
             </div>
           );
         },
@@ -167,7 +168,7 @@ class PendingOrder extends React.Component {
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
-          return params.value === "Deliver" ? (
+          return params.value === "Delivery" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
             </div>
@@ -175,7 +176,7 @@ class PendingOrder extends React.Component {
             <div className="badge badge-pill badge-primary">
               {params.data.status}
             </div>
-          ) : params.value === "Cancelled" ? (
+          ) : params.value === "Cancel" ? (
             <div className="badge badge-pill badge-danger">
               {params.data.status}
             </div>
@@ -183,38 +184,43 @@ class PendingOrder extends React.Component {
             <div className="badge badge-pill badge-warning">
               {params.data.status}
             </div>
+          ) : params.value === "Complete" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
           ) : null;
         },
       },
-      // {
-      //   headerName: "Actions",
-      //   field: "transactions",
-      //   width: 150,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="actions cursor-pointer">
-      //         <Edit
-      //           className="mr-50"
-      //           size={15}
-      //           onClick={() => history.push("/app/user/edit")}
-      //         />
-      //         <Trash2
-      //           size={15}
-      //           onClick={() => {
-      //             let selectedData = this.gridApi.getSelectedRows();
-      //             this.gridApi.updateRowData({ remove: selectedData });
-      //           }}
-      //         />
-      //       </div>
-      //     );
-      //   },
-      // },
+      //     {
+      //       headerName: "Actions",
+      //       field: "transactions",
+      //       width: 150,
+      //       cellRendererFramework: (params) => {
+      //         return (
+      //           <div className="actions cursor-pointer">
+      //             <Edit
+      //               className="mr-50"
+      //               size={15}
+      //               onClick={() => history.push("/app/user/edit")}
+      //             />
+      //             <Trash2
+      //               size={15}
+      //               onClick={() => {
+      //                 let selectedData = this.gridApi.getSelectedRows();
+      //                 this.gridApi.updateRowData({ remove: selectedData });
+      //               }}
+      //             />
+      //           </div>
+      //         );
+      //       },
+      //     },
     ],
   };
 
   async componentDidMount() {
     await axiosConfig.get("/pending_order").then((response) => {
       let rowData = response.data.data;
+
       this.setState({ rowData });
     });
   }
@@ -242,19 +248,17 @@ class PendingOrder extends React.Component {
       });
     }
   };
-
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       <Row className="app-user-list">
-        <Col sm="12">
-        </Col>
+        <Col sm="12"></Col>
         <Col sm="12">
           <Card>
             <Row className="m-2">
               <Col>
                 <h1 col-sm-6 className="float-left">
-                  Pending Order List
+                  Pendng Order
                 </h1>
               </Col>
             </Row>
@@ -354,4 +358,5 @@ class PendingOrder extends React.Component {
     );
   }
 }
+
 export default PendingOrder;

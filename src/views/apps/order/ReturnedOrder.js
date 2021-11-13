@@ -15,18 +15,17 @@ import axiosConfig from "../../../axiosConfig";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import {
-  // Edit,
-  // Trash2,
+  Edit,
+  Trash2,
   // Clipboard,
   // Printer,
   // Download,
   ChevronDown,
 } from "react-feather";
 //import classnames from "classnames";
-//import { history } from "../../../history";
+import { history } from "../../../history";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
-
 class ReturnedOrder extends React.Component {
   state = {
     rowData: [],
@@ -39,90 +38,137 @@ class ReturnedOrder extends React.Component {
       resizable: true,
       suppressMenu: true,
     },
+
     columnDefs: [
       {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 150,
+        width: 100,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
+
       {
         headerName: "Order ID",
-        field: "order_id",
+        field: "orderId",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.order_id}</span>
+              <span>{params.data.orderId}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Item",
-        field: "user.username",
+        headerName: "Order Type",
+        field: "order_type",
         filter: true,
-        width: 250,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data?.user?.username}</span>
+              {/* <span>{params.data?.user?.order_type}</span> */}
+              <span>{params.data.order_type}</span>
             </div>
           );
         },
       },
-      // {
-      //   headerName: "Product Ordered",
-      //   field: "product.item_name",
-      //   filter: true,
-      //   width: 220,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data?.product?.item_name}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
       {
-        headerName: "Returned Amount",
-        field: "returnId",
+        headerName: "Customer Name",
+        field: "customer_name",
         filter: true,
-        width: 220,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data?.returnId}</span>
+              <span>
+                {params.data.customer?.first_name}{" "}
+                {params.data.customer?.last_name}
+              </span>
             </div>
           );
         },
       },
-    
-      // {
-      //   headerName: "Reason Of Return",
-      //   field: "reason",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.reason}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-     {
-        headerName: "Refund Status",
+
+      {
+        headerName: "Product Name",
+        field: "product.product_name",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data?.product?.product_name}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Total Qty ",
+        field: "qty",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.qty}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Amount",
+        field: "purchaseprice",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.purchaseprice}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Address",
+        field: "delivery_address",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.delivery_address}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Order Date",
+        field: "order_date",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.order_date}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Status",
         field: "status",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
-          return params.value === "Deliver" ? (
+          return params.value === "Delivery" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
             </div>
@@ -134,46 +180,51 @@ class ReturnedOrder extends React.Component {
             <div className="badge badge-pill badge-danger">
               {params.data.status}
             </div>
-          ) : params.value === "Return" ? (
+          ) : params.value === "Returned" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
+          ) : params.value === "Complete" ? (
             <div className="badge badge-pill badge-warning">
               {params.data.status}
             </div>
           ) : null;
         },
       },
-      // {
-      //   headerName: "Actions",
-      //   field: "transactions",
-      //   width: 150,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="actions cursor-pointer">
-      //         <Edit
-      //           className="mr-50"
-      //           size={15}
-      //           onClick={() => history.push("/app/user/edit")}
-      //         />
-      //         <Trash2
-      //           size={15}
-      //           onClick={() => {
-      //             let selectedData = this.gridApi.getSelectedRows();
-      //             this.gridApi.updateRowData({ remove: selectedData });
-      //           }}
-      //         />
-      //       </div>
-      //     );
-      //   },
-      // },
+      //     {
+      //       headerName: "Actions",
+      //       field: "transactions",
+      //       width: 150,
+      //       cellRendererFramework: (params) => {
+      //         return (
+      //           <div className="actions cursor-pointer">
+      //             <Edit
+      //               className="mr-50"
+      //               size={15}
+      //               onClick={() => history.push("/app/user/edit")}
+      //             />
+      //             <Trash2
+      //               size={15}
+      //               onClick={() => {
+      //                 let selectedData = this.gridApi.getSelectedRows();
+      //                 this.gridApi.updateRowData({ remove: selectedData });
+      //               }}
+      //             />
+      //           </div>
+      //         );
+      //       },
+      //     },
     ],
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/allreturn_order").then((response) => {
+    await axiosConfig.get("/cancel_order").then((response) => {
       let rowData = response.data.data;
 
       this.setState({ rowData });
     });
   }
+
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -197,20 +248,17 @@ class ReturnedOrder extends React.Component {
       });
     }
   };
- 
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       <Row className="app-user-list">
-        <Col sm="12">
-          
-        </Col>
+        <Col sm="12"></Col>
         <Col sm="12">
           <Card>
             <Row className="m-2">
               <Col>
                 <h1 col-sm-6 className="float-left">
-                  Returned Order List
+                  Returned Order
                 </h1>
               </Col>
             </Row>
@@ -310,4 +358,5 @@ class ReturnedOrder extends React.Component {
     );
   }
 }
+
 export default ReturnedOrder;

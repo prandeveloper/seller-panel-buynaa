@@ -45,8 +45,8 @@ class StoreList extends React.Component {
       },
 
       {
-        headerName: "Image",
-        field: "store_logo",
+        headerName: "Logo ",
+        field: "shoplogo_img",
         filter: true,
         width: 120,
         cellRendererFramework: (params) => {
@@ -54,7 +54,7 @@ class StoreList extends React.Component {
             <div className="d-flex align-items-center cursor-pointer">
               <img
                 className="rounded-circle"
-                src={params.data.store_logo}
+                src={params.data.shoplogo_img}
                 alt="user"
                 height="45"
                 width="45"
@@ -64,14 +64,23 @@ class StoreList extends React.Component {
         },
       },
       {
-        headerName: "Store ID",
-        field: " storeID",
-        filter: true,
+        headerName: "Image",
+        field: "storeImg",
+        filter: false,
         width: 200,
+        setColumnVisible: false,
         cellRendererFramework: (params) => {
           return (
-            <div>
-              <span>{params.data.storeID}</span>
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.storeImg.map((i) => (
+                <img
+                  className=" rounded-circle border-black m-0"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
             </div>
           );
         },
@@ -90,55 +99,113 @@ class StoreList extends React.Component {
           );
         },
       },
-
       {
-        headerName: "Owner",
-        field: "owner_name	",
+        headerName: "Store Description",
+        field: " store_desc",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.owner_name}</span>
+              <span>{params.data.store_desc}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Website",
+        field: "websiteUrl	",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.websiteUrl}</span>
             </div>
           );
         },
       },
       {
         headerName: "Email",
-        field: "email	",
+        field: "store_email	",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.email}</span>
+              <span>{params.data.store_email}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Mobile No.",
+        headerName: "Phone No's.",
         field: "mobile	",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>
+                {params.data.phone_no},{params.data.altphone_no},
+                {params.data.altphone_no2}
+              </span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Open Days",
+        field: "day",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.day}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Time",
+        field: "startTym-endTym	",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>
+                {params.data.startTym}-{params.data.endTym}
+              </span>
             </div>
           );
         },
       },
       {
         headerName: "Address",
-        field: "address",
+        field: "address_line1,address_line2",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.address}</span>
+              <span>
+                {params.data.address_line1} {params.data.address_line2}
+              </span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "LandMark",
+        field: "landmark",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.landmark}</span>
             </div>
           );
         },
@@ -170,14 +237,189 @@ class StoreList extends React.Component {
         },
       },
       {
-        headerName: "Country",
-        field: "country",
+        headerName: "PinCode",
+        field: "pincode",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.country}</span>
+              <span>{params.data.pincode}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "GST No.",
+        field: "gst_no",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.gst_no}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Business Type",
+        field: "business_type",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.business_type}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "PAN No.",
+        field: "pan_no",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.pan_no}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Comapny PAN no.",
+        field: "company_panno",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.company_panno}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Address Proof",
+        field: "address_proof",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.address_proof}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "GST Image",
+        field: "gstImg",
+        filter: false,
+        width: 200,
+        setColumnVisible: false,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.gstImg.map((i) => (
+                <img
+                  className=" rounded-circle border-black m-0"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "PAN Img",
+        field: "storepan_img",
+        filter: false,
+        width: 200,
+        setColumnVisible: false,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.storepan_img.map((i) => (
+                <img
+                  className=" rounded-circle border-black m-0"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Trade Licence",
+        field: "tradelicence_img",
+        filter: false,
+        width: 200,
+        setColumnVisible: false,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.tradelicence_img.map((i) => (
+                <img
+                  className=" rounded-circle border-black m-0"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Comp.PAN Img",
+        field: "companypan_img",
+        filter: false,
+        width: 200,
+        setColumnVisible: false,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.companypan_img.map((i) => (
+                <img
+                  className=" rounded-circle border-black m-0"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Address Proof",
+        field: "address_proof_img",
+        filter: false,
+        width: 200,
+        setColumnVisible: false,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.address_proof_img.map((i) => (
+                <img
+                  className=" rounded-circle border-black m-0"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
             </div>
           );
         },
@@ -236,7 +478,7 @@ class StoreList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/allstore").then((response) => {
+    await axiosConfig.get("/getstore").then((response) => {
       const rowData = response.data.data;
       console.log(rowData);
       console.log(response.data.data);

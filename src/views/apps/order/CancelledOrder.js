@@ -11,23 +11,21 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-
 import axiosConfig from "../../../axiosConfig";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import {
-  // Edit,
-  // Trash2,
+  Edit,
+  Trash2,
   // Clipboard,
   // Printer,
   // Download,
   ChevronDown,
 } from "react-feather";
 //import classnames from "classnames";
-//import { history } from "../../../history";
+import { history } from "../../../history";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
-
 class CancelledOrder extends React.Component {
   state = {
     rowData: [],
@@ -40,145 +38,137 @@ class CancelledOrder extends React.Component {
       resizable: true,
       suppressMenu: true,
     },
+
     columnDefs: [
       {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 150,
+        width: 100,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
+
+      {
+        headerName: "Order ID",
+        field: "orderId",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.orderId}</span>
+            </div>
+          );
+        },
+      },
       {
         headerName: "Order Type",
-        field: "user.username",
-        filter: true,
-        width: 250,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data?.user?.username}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Order Id",
-        field: "orderId",
+        field: "order_type",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.orderId}</span>
+              {/* <span>{params.data?.user?.order_type}</span> */}
+              <span>{params.data.order_type}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Reason For Cancellation",
-        field: "product.item_name",
-        filter: true,
-        width: 220,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              {/* <span>{params.data?.product?.item_name}</span> */}
-              <span>{params.data.item_name}</span>
-
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Refund Method",
-        field: "product.code",
-        filter: true,
-        width: 220,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data?.product?.code}</span>
-              <span>{params.data.code}</span>
-
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Customer",
-        field: "orderId",
+        headerName: "Customer Name",
+        field: "customer_name",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.orderId}</span>
+              <span>
+                {params.data.customer?.first_name}{" "}
+                {params.data.customer?.last_name}
+              </span>
             </div>
           );
         },
       },
-      // {
-      //   headerName: "Purchased Price",
-      //   field: "purchaseprice",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.purchaseprice}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-      // {
-      //   headerName: "Reached Location",
-      //   field: "reachedlocation",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.reachedlocation}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-      // {
-      //   headerName: "Shipping Date",
-      //   field: "shippingdate",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.shippingdate}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-      // {
-      //   headerName: "Delivered Date",
-      //   field: "deliverdondate",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.deliverdondate}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+
       {
-        headerName: "Refund Status",
+        headerName: "Product Name",
+        field: "product.product_name",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data?.product?.product_name}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Total Qty ",
+        field: "qty",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.qty}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Amount",
+        field: "purchaseprice",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.purchaseprice}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Address",
+        field: "delivery_address",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.delivery_address}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Order Date",
+        field: "order_date",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.order_date}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Status",
         field: "status",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
-          return params.value === "Deliver" ? (
+          return params.value === "Delivery" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
             </div>
@@ -194,32 +184,36 @@ class CancelledOrder extends React.Component {
             <div className="badge badge-pill badge-warning">
               {params.data.status}
             </div>
+          ) : params.value === "Complete" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
           ) : null;
         },
       },
-      {
-        headerName: "Actions",
-        field: "transactions",
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="actions cursor-pointer">
-              <Edit
-                className="mr-50"
-                size={15}
-                onClick={() => history.push("/app/user/edit")}
-              />
-              <Trash2
-                size={15}
-                onClick={() => {
-                  let selectedData = this.gridApi.getSelectedRows();
-                  this.gridApi.updateRowData({ remove: selectedData });
-                }}
-              />
-            </div>
-          );
-        },
-      },
+      //     {
+      //       headerName: "Actions",
+      //       field: "transactions",
+      //       width: 150,
+      //       cellRendererFramework: (params) => {
+      //         return (
+      //           <div className="actions cursor-pointer">
+      //             <Edit
+      //               className="mr-50"
+      //               size={15}
+      //               onClick={() => history.push("/app/user/edit")}
+      //             />
+      //             <Trash2
+      //               size={15}
+      //               onClick={() => {
+      //                 let selectedData = this.gridApi.getSelectedRows();
+      //                 this.gridApi.updateRowData({ remove: selectedData });
+      //               }}
+      //             />
+      //           </div>
+      //         );
+      //       },
+      //     },
     ],
   };
 
@@ -258,14 +252,13 @@ class CancelledOrder extends React.Component {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       <Row className="app-user-list">
-        <Col sm="12">
-         </Col>
+        <Col sm="12"></Col>
         <Col sm="12">
           <Card>
             <Row className="m-2">
               <Col>
                 <h1 col-sm-6 className="float-left">
-                  Cancelled Order List
+                  Cancelled Order
                 </h1>
               </Col>
             </Row>

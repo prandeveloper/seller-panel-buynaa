@@ -164,6 +164,14 @@ const navigationConfig = [
         navLink: "/app/order/allOrder",
       },
       {
+        id: "pendingOrder",
+        title: "Pending Order",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/order/pendingOrder",
+      },
+      {
         id: "cancelledOrder",
         title: "Cancelled Order",
         type: "item",
