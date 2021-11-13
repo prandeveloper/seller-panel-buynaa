@@ -55,9 +55,6 @@ const editBrand = lazy(() => import("./views/apps/products/brand/EditBrand"));
 const unitList = lazy(() => import("./views/apps/products/unit/UnitList"));
 const addUnit = lazy(() => import("./views/apps/products/unit/AddUnit"));
 const editUnit = lazy(() => import("./views/apps/products/unit/EditUnit"));
-const varientList = lazy(() =>
-  import("./views/apps/products/varient/VarientList")
-);
 const coupon = lazy(() => import("./views/apps/products/coupon/Coupon"));
 const addCoupon = lazy(() => import("./views/apps/products/coupon/AddCoupon"));
 const categoryList = lazy(() => import("./views/apps/category/CategoryList"));
@@ -705,10 +702,6 @@ class AppRouter extends React.Component {
             path="/app/products/unit/editUnit/:id"
             component={editUnit}
           />
-          <AppRoute
-            path="/app/products/varient/varientList"
-            component={varientList}
-          />
           <AppRoute path="/app/products/coupon/coupon" component={coupon} />
           <AppRoute
             path="/app/products/coupon/addCoupon"
@@ -757,10 +750,6 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/products/unit/editUnit/:id"
             component={editUnit}
-          />
-          <AppRoute
-            path="/app/products/varient/varientList"
-            component={varientList}
           />
           <AppRoute path="/app/products/coupon" component={coupon} />
           <AppRoute path="/app/order/allorder" component={allOrder} />
