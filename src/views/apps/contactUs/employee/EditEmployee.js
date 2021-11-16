@@ -12,18 +12,18 @@ import {
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
-// import { useParams } from "react-router-dom";
-//import { ToastContainer, toast } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
 
 export class EditEmployee extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: "",
+      employee_name: "",
+      phone_no: "",
+      email: "",
+      password: "",
+      designation: "",
       brand_img: "",
-      desc: "",
       sortorder: "",
       status: "",
       selectedFile: null,
@@ -105,13 +105,15 @@ export class EditEmployee extends Component {
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-              Edit Employee
+                Edit Employee
               </h1>
             </Col>
             <Col>
               <Button
                 className=" btn btn-danger float-right"
-                onClick={() => history.push("/app/contactUs/employee/employeeList")}
+                onClick={() =>
+                  history.push("/app/contactUs/employee/employeeList")
+                }
               >
                 Back
               </Button>
