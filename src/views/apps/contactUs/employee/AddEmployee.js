@@ -59,6 +59,9 @@ export class AddEmployee extends Component {
     //   for (var value of data.values()) {
     //     console.log(value);
     //  }
+    //   for (var value of data.values()) {
+    //     console.log(value);
+    //  }
     axiosConfig
       .post("/addemployee", data)
       .then((response) => {

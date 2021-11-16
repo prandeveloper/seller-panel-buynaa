@@ -451,19 +451,22 @@ class StoreList extends React.Component {
           return (
             <div className="actions cursor-pointer">
               <Eye
+                size="25px"
+                color="green"
                 className="mr-50"
-                size={20}
                 onClick={() =>
                   history.push(`/app/myStore/viewStore/${params.data._id}`)
                 }
               />
               <Edit
                 className="mr-50"
-                size={20}
+                size="25px"
+                color="blue"
                 onClick={() => history.push("/app/myStore/editStore")}
               />
               <Trash2
-                size={20}
+                size="25px"
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);

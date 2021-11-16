@@ -1099,7 +1099,7 @@ class AppRouter extends React.Component {
             component={addCustomer}
           />
           <AppRoute
-            path="/app/contactUs/customer/editCustomer"
+            path="/app/contactUs/customer/editCustomer/:id"
             component={editCustomer}
           />
           <AppRoute
@@ -1111,7 +1111,7 @@ class AppRouter extends React.Component {
             component={addSupplier}
           />
           <AppRoute
-            path="/app/contactUs/supplier/editSupplier"
+            path="/app/contactUs/supplier/editSupplier/:id"
             component={editSupplier}
           />
           <AppRoute

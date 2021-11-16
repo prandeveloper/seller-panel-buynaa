@@ -12,42 +12,48 @@ import {
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
-// import { useParams } from "react-router-dom";
-//import { ToastContainer, toast } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import swal from "sweetalert";
 
 export class EditSupplier extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: "",
-      brand_img: "",
-      desc: "",
+      first_name: "",
+      last_name: "",
+      email: "",
+      phone_no: "",
+      company: "",
+      address_one: "",
+      address_two: "",
+      state: "",
+      city: "",
+      postcode: "",
+      gst_no: "",
       sortorder: "",
       status: "",
-      selectedFile: null,
-      selectedName: "",
     };
   }
 
-  onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files[0] });
-    this.setState({ selectedName: event.target.files[0].name });
-    console.log(event.target.files[0]);
-  };
-
   componentDidMount() {
-    console.log(this.props.match.params);
+    //console.log(this.props.match.params);
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonebrand/${id}`)
+      .get(`/getonesupplier/${id}`)
       .then((response) => {
         console.log(response);
         this.setState({
-          brand_img: response.data.data.brand_img,
-          name: response.data.data.name,
-          desc: response.data.data.desc,
+          first_name: response.data.data.first_name,
+          last_name: response.data.data.last_name,
+          email: response.data.data.email,
+          phone_no: response.data.data.phone_no,
+          company: response.data.data.company,
+          address_one: response.data.data.address_one,
+          address_two: response.data.data.address_two,
+          state: response.data.data.state,
+          city: response.data.data.city,
+          gst_no: response.data.data.gst_no,
+          postcode: response.data.data.postcode,
           sortorder: response.data.data.sortorder,
           status: response.data.data.status,
         });
@@ -67,31 +73,13 @@ export class EditSupplier extends Component {
   submitHandler = (e) => {
     e.preventDefault();
     //console.log(this.props.match.params, this.state);
-    const data = new FormData();
-    data.append("name", this.state.name);
-    data.append("desc", this.state.desc);
-    data.append("sortorder", this.state.sortorder);
-    data.append("status", this.state.status);
-    // console.log(this.state.selectedFile);
-    if (this.state.selectedFile !== null) {
-      data.append(
-        "brand_img",
-        this.state.selectedFile,
-        this.state.selectedName
-      );
-    }
 
-    // for (var value of data.values()) {
-    //    console.log(value);
-    // }
-    // for (var key of data.keys()) {
-    //    console.log(key);
-    // }
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editbrand/${id}`, data)
+      .post(`/edit_supplier/${id}`, this.state)
       .then((response) => {
         console.log(response);
+        swal("Success!", "Updated SuccessFull!", "success");
         this.props.history.push("/app/contactUs/supplier/supplierList");
       })
       .catch((error) => {
@@ -111,7 +99,9 @@ export class EditSupplier extends Component {
             <Col>
               <Button
                 className=" btn btn-danger float-right"
-                onClick={() => history.push("/app/contactUs/supplier/supplierList")}
+                onClick={() =>
+                  history.push("/app/contactUs/supplier/supplierList")
+                }
               >
                 Back
               </Button>
@@ -122,12 +112,132 @@ export class EditSupplier extends Component {
               <Row className="mb-2">
                 <Col lg="6" md="6">
                   <FormGroup>
-                    <Label>Supplier Name</Label>
+                    <Label>FirstName</Label>
                     <Input
                       type="text"
-                      placeholder="Brand Name"
-                      name="name"
-                      value={this.state.name}
+                      placeholder="First Name"
+                      name="first_name"
+                      value={this.state.first_name}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>LastName</Label>
+                    <Input
+                      type="text"
+                      placeholder="Last Name"
+                      name="last_name"
+                      value={this.state.last_name}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Supplier Email</Label>
+                    <Input
+                      type="email"
+                      placeholder="Customer Email"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Phone Number</Label>
+                    <Input
+                      type="number"
+                      placeholder="Phone Number"
+                      name="phone_no"
+                      value={this.state.phone_no}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Company</Label>
+                    <Input
+                      type="text"
+                      placeholder="Company"
+                      name="company"
+                      value={this.state.company}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Address 1</Label>
+                    <Input
+                      type="text"
+                      placeholder="Address 1"
+                      name="address_one"
+                      value={this.state.address_one}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Address 2</Label>
+                    <Input
+                      type="text"
+                      placeholder="Address 2"
+                      name="address_two"
+                      value={this.state.address_two}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>State</Label>
+                    <Input
+                      type="text"
+                      placeholder="State"
+                      name="state"
+                      value={this.state.state}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>City</Label>
+                    <Input
+                      type="text"
+                      placeholder="City"
+                      name="city"
+                      value={this.state.city}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Post Code</Label>
+                    <Input
+                      type="number"
+                      placeholder="Post Code"
+                      name="postcode"
+                      value={this.state.postcode}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>GST Number</Label>
+                    <Input
+                      type="text"
+                      placeholder="Gst Number"
+                      name="gst_no"
+                      value={this.state.gst_no}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
@@ -143,26 +253,6 @@ export class EditSupplier extends Component {
                       value={this.state.sortorder}
                       onChange={this.changeHandler}
                     />
-                  </FormGroup>
-                </Col>
-
-                <Col lg="6" md="6">
-                  <FormGroup>
-                    <Label>Description</Label>
-                    <Input
-                      type="textarea"
-                      placeholder="Description"
-                      name="desc"
-                      value={this.state.desc}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-
-                <Col lg="6" md="6">
-                  <FormGroup>
-                    <Label>Brand Image / Logo</Label>
-                    <Input type="file" onChange={this.onChangeHandler} />
                   </FormGroup>
                 </Col>
 
@@ -194,7 +284,7 @@ export class EditSupplier extends Component {
               </Row>
               <Row>
                 <Button.Ripple
-                  color="danger"
+                  color="primary"
                   type="submit"
                   className="mr-1 mb-1"
                 >

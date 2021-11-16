@@ -19,7 +19,6 @@ export class AddSupplier extends Component {
 
     this.state = {
       first_name: "",
-      first_name: "",
       last_name: "",
       email: "",
       phone_no: "",
@@ -43,28 +42,16 @@ export class AddSupplier extends Component {
   };
   submitHandler = (e) => {
     e.preventDefault();
-    // const data = new FormData();
-    // data.append("name", this.state.name);
-    // data.append("sortorder", this.state.sortorder);
-    // data.append("desc", this.state.desc);
-    // data.append("status", this.state.status);
-    // if (this.state.selectedFile !== null) {
-    //   data.append(
-    //     "brand_img",
-    //     this.state.selectedFile,
-    //     this.state.selectedName
-    //   );
-    // }
-    //   for (var value of data.values()) {
-    //     console.log(value);
-    //  }
+
     axiosConfig
       .post("/addsupplier", this.state)
       .then((response) => {
         console.log(response);
+        swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/contactUs/supplier/supplierList");
       })
       .catch((error) => {
+        swal("Error!", "Error Received", "error");
         console.log(error);
       });
   };

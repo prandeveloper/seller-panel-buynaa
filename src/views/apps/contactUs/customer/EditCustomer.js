@@ -12,42 +12,33 @@ import {
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
-// import { useParams } from "react-router-dom";
-//import { ToastContainer, toast } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import swal from "sweetalert";
+import axios from "axios";
 
 export class EditCustomer extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      name: "",
-      brand_img: "",
-      desc: "",
+      first_name: "",
+      last_name: "",
+      customer_email: "",
+      mobile_no: "",
       sortorder: "",
       status: "",
-      selectedFile: null,
-      selectedName: "",
     };
   }
 
-  onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files[0] });
-    this.setState({ selectedName: event.target.files[0].name });
-    console.log(event.target.files[0]);
-  };
-
   componentDidMount() {
-    console.log(this.props.match.params);
     let { id } = this.props.match.params;
-    axiosConfig
-      .get(`/viewonebrand/${id}`)
+    axios
+      .get(`http://35.154.86.59/api/user/getonecustomer/${id}`)
       .then((response) => {
         console.log(response);
         this.setState({
-          brand_img: response.data.data.brand_img,
-          name: response.data.data.name,
-          desc: response.data.data.desc,
+          first_name: response.data.data.first_name,
+          last_name: response.data.data.last_name,
+          customer_email: response.data.data.customer_email,
+          mobile_no: response.data.data.mobile_no,
           sortorder: response.data.data.sortorder,
           status: response.data.data.status,
         });
@@ -66,35 +57,16 @@ export class EditCustomer extends Component {
 
   submitHandler = (e) => {
     e.preventDefault();
-    //console.log(this.props.match.params, this.state);
-    const data = new FormData();
-    data.append("name", this.state.name);
-    data.append("desc", this.state.desc);
-    data.append("sortorder", this.state.sortorder);
-    data.append("status", this.state.status);
-    // console.log(this.state.selectedFile);
-    if (this.state.selectedFile !== null) {
-      data.append(
-        "brand_img",
-        this.state.selectedFile,
-        this.state.selectedName
-      );
-    }
-
-    // for (var value of data.values()) {
-    //    console.log(value);
-    // }
-    // for (var key of data.keys()) {
-    //    console.log(key);
-    // }
     let { id } = this.props.match.params;
-    axiosConfig
-      .post(`/editbrand/${id}`, data)
+    axios
+      .post(`http://35.154.86.59/api/user/editcustomer/${id}`, this.state)
       .then((response) => {
         console.log(response);
+        swal("Success!", "Updated SuccessFull!", "success");
         this.props.history.push("/app/contactUs/customer/customerList");
       })
       .catch((error) => {
+        swal("Error!", "Error Received", "error");
         console.log(error);
       });
   };
@@ -111,7 +83,9 @@ export class EditCustomer extends Component {
             <Col>
               <Button
                 className=" btn btn-danger float-right"
-                onClick={() => history.push("/app/products/customer/customerList")}
+                onClick={() =>
+                  history.push("/app/contactUs/customer/customerList")
+                }
               >
                 Back
               </Button>
@@ -122,12 +96,48 @@ export class EditCustomer extends Component {
               <Row className="mb-2">
                 <Col lg="6" md="6">
                   <FormGroup>
-                    <Label>CustomerName</Label>
+                    <Label>FirstName</Label>
                     <Input
                       type="text"
-                      placeholder="Customer Name"
-                      name="name"
-                      value={this.state.name}
+                      placeholder="First Name"
+                      name="first_name"
+                      value={this.state.first_name}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>LastName</Label>
+                    <Input
+                      type="text"
+                      placeholder="Last Name"
+                      name="last_name"
+                      value={this.state.last_name}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Customer Email</Label>
+                    <Input
+                      type="email"
+                      placeholder="Customer Email"
+                      name="customer_email"
+                      value={this.state.customer_email}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Mobile Number</Label>
+                    <Input
+                      type="number"
+                      placeholder="Mobile Number"
+                      name="mobile_no"
+                      value={this.state.mobile_no}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
@@ -146,27 +156,7 @@ export class EditCustomer extends Component {
                   </FormGroup>
                 </Col>
 
-                <Col lg="6" md="6">
-                  <FormGroup>
-                    <Label>Description</Label>
-                    <Input
-                      type="textarea"
-                      placeholder="Description"
-                      name="desc"
-                      value={this.state.desc}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-
-                <Col lg="6" md="6">
-                  <FormGroup>
-                    <Label>Brand Image / Logo</Label>
-                    <Input type="file" onChange={this.onChangeHandler} />
-                  </FormGroup>
-                </Col>
-
-                <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
+                <Col lg="6" md="6" sm="6" className="mb-1 ">
                   <FormGroup>
                     <Label className="mb-1">Status</Label>
                     <div
@@ -174,12 +164,14 @@ export class EditCustomer extends Component {
                       onChange={(e) => this.changeHandler1(e)}
                     >
                       <input
-                        style={{ marginRight: "3px" }}
+                        style={{ marginRight: "3px", fontWeight: 800 }}
                         type="radio"
                         name="status"
                         value="Active"
                       />
-                      <span style={{ marginRight: "20px" }}>Active</span>
+                      <span style={{ marginRight: "20px", fontWeight: 800 }}>
+                        Active
+                      </span>
 
                       <input
                         style={{ marginRight: "3px" }}
@@ -194,11 +186,11 @@ export class EditCustomer extends Component {
               </Row>
               <Row>
                 <Button.Ripple
-                  color="danger"
+                  color="primary"
                   type="submit"
-                  className="mr-1 mb-1"
+                  className="ml-2 mb-1"
                 >
-                  Update Customer
+                  Add Customer
                 </Button.Ripple>
               </Row>
             </Form>

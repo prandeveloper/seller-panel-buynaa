@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
+import swal from "sweetalert";
 
 export class AddCustomer extends Component {
   constructor(props) {
@@ -53,10 +54,12 @@ export class AddCustomer extends Component {
       .post("http://35.154.86.59/api/user/customersignup", this.state)
       .then((response) => {
         console.log(response);
+        swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/contactUs/customer/customerList");
       })
       .catch((error) => {
         console.log(error);
+        swal("Error!", "Error Received", "error");
       });
   };
   render() {
