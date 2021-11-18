@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
 import swal from "sweetalert";
+import { history } from "../../../history";
 
 export default class AddStore extends Component {
   constructor(props) {
@@ -208,7 +209,7 @@ export default class AddStore extends Component {
             <Col>
               <Button
                 className=" btn btn-danger float-right"
-                onClick={() => history.push("/app/myStore/storesList")}
+                onClick={() => history.push("/app/myStore/storeList")}
               >
                 Back
               </Button>

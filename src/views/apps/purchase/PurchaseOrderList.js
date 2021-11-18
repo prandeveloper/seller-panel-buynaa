@@ -11,19 +11,20 @@ import {
   DropdownToggle,
   Button,
 } from "reactstrap";
-import axiosConfig from "../../../../axiosConfig";
-import { ContextLayout } from "../../../../utility/context/Layout";
+import axiosConfig from "../../../axiosConfig";
+import ReactHtmlParser from "react-html-parser";
+import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
-import { Edit, Trash2, ChevronDown } from "react-feather";
+import { Eye, Trash2, ChevronDown } from "react-feather";
 //import classnames from "classnames";
-import { history } from "../../../../history";
-import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../../assets/scss/pages/users.scss";
+import { history } from "../../../history";
+import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../../assets/scss/pages/users.scss";
 import Moment from "react-moment";
 import "moment-timezone";
 
-class ReceiveHistory extends React.Component {
+class PurchaseOrderList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -45,41 +46,9 @@ class ReceiveHistory extends React.Component {
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
-      },  
-      {
-        headerName: " Customer Id",
-        field: "description",
-        //filter: true,
-        filter: "agSetColumnFilter",
-        width: 500,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <div className="">
-                <span>{params.data.description}</span>
-              </div>
-            </div>
-          );
-        },
       },
       {
-        headerName: "Cutomer Name",
-        field: "description",
-        //filter: true,
-        filter: "agSetColumnFilter",
-        width: 500,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <div className="">
-                <span>{params.data.description}</span>
-              </div>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Receive Date",
+        headerName: "Posted Date",
         field: "createdAt",
         //filter: true,
         filter: "agSetColumnFilter",
@@ -96,41 +65,9 @@ class ReceiveHistory extends React.Component {
           );
         },
       },
-      {
-        headerName: " Description",
-        field: "description",
-        //filter: true,
-        filter: "agSetColumnFilter",
-        width: 500,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <div className="">
-                <span>{params.data.description}</span>
-              </div>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: " City",
-        field: "description",
-        //filter: true,
-        filter: "agSetColumnFilter",
-        width: 500,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <div className="">
-                <span>{params.data.description}</span>
-              </div>
-            </div>
-          );
-        },
-      },
 
       {
-        headerName: " Location",
+        headerName: " Policy Description",
         field: "description",
         //filter: true,
         filter: "agSetColumnFilter",
@@ -139,7 +76,7 @@ class ReceiveHistory extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
-                <span>{params.data.description}</span>
+                <span>{ReactHtmlParser(params.data.description)}</span>
               </div>
             </div>
           );
@@ -153,7 +90,16 @@ class ReceiveHistory extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Edit className="mr-50" size={20} />
+              {/* <Edit className="mr-50" size={20} /> */}
+              <Eye
+                className="mr-50"
+                size={20}
+                onClick={() =>
+                  history.push(
+                    `/app/privacyPolicy/viewPolicy/${params.data._id}`
+                  )
+                }
+              />
               <Trash2
                 size={20}
                 onClick={() => {
@@ -178,7 +124,7 @@ class ReceiveHistory extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(` /delprivacypolicy/${id}`).then((response) => {
+    await axiosConfig.get(`/delprivacypolicy/${id}`).then((response) => {
       console.log(response);
     });
   }
@@ -211,24 +157,22 @@ class ReceiveHistory extends React.Component {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       <Row className="app-user-list">
-        <Col sm="12">
-          
-        </Col>
+        <Col sm="12"></Col>
         <Col sm="12">
           <Card>
             <Row className="m-2">
               <Col>
                 <h1 col-sm-6 className="float-left">
-                Receive History List
+                  Purchase Order List
                 </h1>
               </Col>
               <Col>
-                <Button
+                {/* <Button
                   className=" btn btn-danger float-right"
-                  onClick={() => history.push("/app/purchasesAndExpenses/receiveHistory/addReceiveHistory")}
+                  onClick={() => history.push("/app/privacyPolicy/addPolicy")}
                 >
-                  Add Receive History
-                </Button>
+                  Add New Policy
+                </Button> */}
               </Col>
             </Row>
             <CardBody>
@@ -327,4 +271,5 @@ class ReceiveHistory extends React.Component {
     );
   }
 }
-export default ReceiveHistory;
+
+export default PurchaseOrderList;

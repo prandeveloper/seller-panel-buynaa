@@ -43,20 +43,13 @@ const navigationConfig = [
     navLink: "/app/myStore/storeList",
     collapsed: true,
   },
+
   {
-    id: "productManagment",
-    title: "Product Managment",
+    id: "Inventory",
+    title: "Invebtory",
     type: "collapse",
     icon: <Icon.ShoppingBag size={20} />,
     children: [
-      {
-        id: "brandList",
-        title: "Brand",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/products/brand/brandList",
-      },
       {
         id: "ProductsList",
         title: "Products",
@@ -66,12 +59,45 @@ const navigationConfig = [
         navLink: "/app/products/product/productsList",
       },
       {
+        id: "brandList",
+        title: "Brand",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/products/brand/brandList",
+      },
+
+      {
         id: "unitList",
         title: "Unit",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
         navLink: "/app/products/unit/unitList",
+      },
+      {
+        id: "productCategory",
+        title: "Category",
+        type: "collapse",
+        icon: <Icon.ShoppingBag size={20} />,
+        children: [
+          {
+            id: "categoryList",
+            title: "Category List",
+            type: "item",
+            icon: <Icon.Circle size={12} />,
+            permissions: ["admin", "editor"],
+            navLink: "/app/category/categoryList",
+          },
+          {
+            id: "subCategory",
+            title: "Sub-Category",
+            type: "item",
+            icon: <Icon.Circle size={12} />,
+            permissions: ["admin", "editor"],
+            navLink: "/app/category/subCategory",
+          },
+        ],
       },
       // {
       //   id: "varientList  ",
@@ -89,31 +115,6 @@ const navigationConfig = [
       //   permissions: ["admin", "editor"],
       //   navLink: "/app/products/coupon/coupon",
       // },
-    ],
-  },
-
-  {
-    id: "productCategory",
-    title: "Category",
-    type: "collapse",
-    icon: <Icon.ShoppingBag size={20} />,
-    children: [
-      {
-        id: "categoryList",
-        title: "Category List",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/category/categoryList",
-      },
-      {
-        id: "subCategory",
-        title: "Sub-Category",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/category/subCategory",
-      },
     ],
   },
   {
@@ -233,6 +234,30 @@ const navigationConfig = [
 
     // navLink: "/pages/shipping",
     collapsed: true,
+  },
+  {
+    id: "purchase",
+    title: "Purchase",
+    type: "collapse",
+    icon: <Icon.TrendingUp size={20} />,
+    children: [
+      {
+        id: "newPruchaseOrder",
+        title: "New Purchase Order",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/purchase/newPurchaseOrder",
+      },
+      {
+        id: "purchaseOrderList",
+        title: "Purchase Order List",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/purchase/purchaseOrderList",
+      },
+    ],
   },
   {
     id: "sales",
@@ -993,38 +1018,7 @@ export default navigationConfig;
 //     },
 //   ]
 // },
-// {
-//   id: "purchasesAndExpenses",
-//   title: "Purchases And Expenses",
-//   type: "collapse",
-//   icon: <Icon.User size={20} />,
-//   children: [
-//     {
-//       id: "purchasesByItem",
-//       title: "By Item",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/purchasesAndExpenses/purchasesByItem/PurchasesByItem",
-//     },
-//     {
-//       id: "receiveHistory",
-//       title: "Receive History",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/purchasesAndExpenses/receiveHistory/ReceiveHistory",
-//     },
-//     {
-//       id: "billableExpenseDetails",
-//       title: "Billable Expense Details",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/purchasesAndExpenses/billableExpenseDetails/BillableExpenseDetails",
-//     },
-//   ]
-// },
+
 // {
 //   id: "billingList",
 //   title: "Billing",
@@ -1257,32 +1251,7 @@ export default navigationConfig;
 //  // permissions: ["admin", "editor"],
 //   navLink: "/app/contactUs/enquiryFormList",
 // },
-// {
-//   id: "rewardPoint",
-//   title: "Rewards Points",
-//   type: "item",
-//   icon: <Icon.Rewind size={20} />,
-//   // icon: <Icon.Circle size={12} />,
-//   permissions: ["admin", "editor"],
-//   navLink: "/app/reward/rewardPoint",
-// },
 
-// {
-//   id: "mobileApp",
-//   title: "Mobile App",
-//   type: "collapse",
-//   icon: <Icon.Phone size={20} />,
-//   children: [
-//     {
-//       id: "appBanner",
-//       title: "App Banner",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/mobileApp/appBanner/AppBanner",
-//     },
-//   ],
-// },
 // {
 //   id: "reports",
 //   title: "Reports",
@@ -1399,14 +1368,6 @@ export default navigationConfig;
 //   icon: <Icon.MessageSquare size={20} />,
 //   permissions: ["admin", "editor"],
 //   navLink: "/chat",
-// },
-// {
-//   id: "staffList",
-//   title: "Staff",
-//   type: "item",
-//   icon: <Icon.Circle size={12} />,
-//   permissions: ["admin", "editor"],
-//   navLink: "/app/staff/staffList",
 // },
 
 // {

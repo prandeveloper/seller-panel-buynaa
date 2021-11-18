@@ -21,10 +21,7 @@ const ecommerceDashboard = lazy(() =>
 );
 // const sellerDashboard = lazy(()=> import("./views/dashboard/seller/SellerDeshboard"));
 // My Component starts here
-const staffList = lazy(() => import("./views/apps/staff/StaffList"));
-const editStaff = lazy(() => import("./views/apps/staff/EditStaff"));
-const viewStaff = lazy(() => import("./views/apps/staff/ViewStaff"));
-const addStaff = lazy(() => import("./views/apps/staff/AddStaff"));
+
 const sellerList = lazy(() => import("./views/apps/seller/SellerList"));
 const editSeller = lazy(() => import("./views/apps/seller/EditSeller"));
 const viewSeller = lazy(() => import("./views/apps/seller/ViewSeller"));
@@ -90,6 +87,12 @@ const invoiceSetting = lazy(() => import("./views/apps/order/InvoiceSetting"));
 const invoiceDesign = lazy(() => import("./views/apps/order/InvoiceDesign"));
 
 const status = lazy(() => import("./views/apps/order/Status"));
+const newPurchaseOrder = lazy(() =>
+  import("./views/apps/purchase/NewPurchaseOrder")
+);
+const purchaseOrderList = lazy(() =>
+  import("./views/apps/purchase/PurchaseOrderList")
+);
 
 const addPushNotification = lazy(() =>
   import("./views/apps/marketing/pushNotification/AddPushNotification")
@@ -131,7 +134,7 @@ const offerByBrand = lazy(() =>
   import("./views/apps/offerAndCoupon/OfferByBrand")
 );
 const buyGet = lazy(() => import("./views/apps/offerAndCoupon/BuyGet"));
-const rewardPoint = lazy(() => import("./views/apps/rewards/RewardPoint"));
+
 const dealOfDay = lazy(() =>
   import("./views/apps/offerAndCoupon/dealOfDay/DealOfDay")
 );
@@ -160,11 +163,6 @@ const addSalesByCust = lazy(() => import("./views/apps/sales/AddSalesByCust"));
 const viewSalesByCust = lazy(() =>
   import("./views/apps/sales/ViewSalesByCust")
 );
-
-const productList = lazy(() => import("./views/apps/product/ProductList"));
-const editProduct = lazy(() => import("./views/apps/product/EditProduct"));
-const viewProduct = lazy(() => import("./views/apps/product/ViewProduct"));
-const addProduct = lazy(() => import("./views/apps/product/AddProduct"));
 
 const stockAdjustment = lazy(() =>
   import("./views/apps/stockControl/StockAdjustment")
@@ -269,40 +267,6 @@ const viewHisByProTyp = lazy(() =>
   import("./views/apps/byProduct/ViewHisByProTyp")
 );
 
-const menuManagementList = lazy(() =>
-  import("./views/apps/menuManagement/MenuManagementList")
-);
-const addMenuManagement = lazy(() =>
-  import("./views/apps/menuManagement/AddMenuManagement")
-);
-const editMenuManagement = lazy(() =>
-  import("./views/apps/menuManagement/EditMenuManagement")
-);
-
-const billableExpenseDetails = lazy(() =>
-  import(
-    "./views/apps/purchasesAndExpenses/billableExpenseDetails/BillableExpenseDetails"
-  )
-);
-const addBillableExpenseDetails = lazy(() =>
-  import(
-    "./views/apps/purchasesAndExpenses/billableExpenseDetails/AddBillableExpenseDetails"
-  )
-);
-
-const purchasesByItem = lazy(() =>
-  import("./views/apps/purchasesAndExpenses/purchasesByItem/PurchasesByItem")
-);
-const addPurchasesByItem = lazy(() =>
-  import("./views/apps/purchasesAndExpenses/purchasesByItem/AddPurchasesByItem")
-);
-
-const receiveHistory = lazy(() =>
-  import("./views/apps/purchasesAndExpenses/receiveHistory/ReceiveHistory")
-);
-const adRreceiveHistory = lazy(() =>
-  import("./views/apps/purchasesAndExpenses/receiveHistory/AddReceiveHistory")
-);
 const mostViewProductReport = lazy(() =>
   import("./views/apps/report/MostViewProductReport")
 );
@@ -373,9 +337,7 @@ const addSupplier = lazy(() =>
 const editSupplier = lazy(() =>
   import("./views/apps/contactUs/supplier/EditSupplier")
 );
-const appBanner = lazy(() =>
-  import("./views/apps/mobileApp/appBanner/AppBanner")
-);
+
 const importDemo = lazy(() =>
   import("./views/apps/helpAndSupport/importDemo/ImportDemo")
 );
@@ -636,10 +598,6 @@ class AppRouter extends React.Component {
           />
           {/* <AppRoute exact path="/seller-dashboard" component={sellerDashboard} /> */}
           {/* My components starts all my app components*/}
-          <AppRoute path="/app/staff/staffList" component={staffList} />
-          <AppRoute path="/app/staff/editStaff" component={editStaff} />
-          <AppRoute path="/app/staff/viewStaff/:id" component={viewStaff} />
-          <AppRoute path="/app/staff/addStaff" component={addStaff} />
           <AppRoute path="/app/billing/billingList" component={billingList} />
           <AppRoute path="/app/billing/editBilling" component={editBilling} />
           <AppRoute
@@ -770,6 +728,14 @@ class AppRouter extends React.Component {
           />
           <AppRoute path="/app/order/status" component={status} />
           <AppRoute
+            path="/app/purchase/newPurchaseOrder"
+            component={newPurchaseOrder}
+          />
+          <AppRoute
+            path="/app/purchase/purchaseOrderList"
+            component={purchaseOrderList}
+          />
+          <AppRoute
             path="/app/marketing/advertiesement/advertiesementList"
             component={advertiesementList}
           />
@@ -826,7 +792,6 @@ class AppRouter extends React.Component {
             path="/app/offerAndCoupon/flashSale/flashSale"
             component={flashSale}
           />
-          <AppRoute path="/app/reward/rewardPoint" component={rewardPoint} />
           <AppRoute path="/app/commission/commission" component={commission} />
           <AppRoute path="/app/churnRate/churnRate" component={churnRate} />
           {/* <AppRoute path="/app/pendingPayment/pendingPayment" component={pendingPayment} /> */}
@@ -858,13 +823,6 @@ class AppRouter extends React.Component {
             path="/app/sales/viewSalesByCust"
             component={viewSalesByCust}
           />
-          <AppRoute path="/app/product/productList" component={productList} />
-          <AppRoute path="/app/product/editProduct" component={editProduct} />
-          <AppRoute
-            path="/app/product/viewProduct/:id"
-            component={viewProduct}
-          />
-          <AppRoute path="/app/product/addProduct" component={addProduct} />
           <AppRoute
             path="/app/stockControl/stockTransferRequest"
             component={stockTransferRequest}
@@ -1001,18 +959,6 @@ class AppRouter extends React.Component {
             component={viewHisByProTyp}
           />
           <AppRoute
-            path="/app/menuManagement/menuManagementList"
-            component={menuManagementList}
-          />
-          <AppRoute
-            path="/app/menuManagement/addMenuManagement"
-            component={addMenuManagement}
-          />
-          <AppRoute
-            path="/app/menuManagement/editMenuManagement"
-            component={editMenuManagement}
-          />
-          <AppRoute
             path="/app/store/stores/storesList"
             component={storesList}
           />
@@ -1024,30 +970,6 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/store/storesRequest/addStoresRequest"
             component={addStoresRequest}
-          />
-          <AppRoute
-            path="/app/purchasesAndExpenses/billableExpenseDetails/addBillableExpenseDetails"
-            component={addBillableExpenseDetails}
-          />
-          <AppRoute
-            path="/app/purchasesAndExpenses/billableExpenseDetails/billableExpenseDetails"
-            component={billableExpenseDetails}
-          />
-          <AppRoute
-            path="/app/purchasesAndExpenses/purchasesByItem/addPurchasesByItem"
-            component={addPurchasesByItem}
-          />
-          <AppRoute
-            path="/app/purchasesAndExpenses/purchasesByItem/purchasesByItem"
-            component={purchasesByItem}
-          />
-          <AppRoute
-            path="/app/purchasesAndExpenses/receiveHistory/addReceiveHistory"
-            component={adRreceiveHistory}
-          />
-          <AppRoute
-            path="/app/purchasesAndExpenses/receiveHistory/receiveHistory"
-            component={receiveHistory}
           />
           <AppRoute path="/app/pageLayout/pageLayout" component={pageLayout} />
           <AppRoute path="/app/siteSetting/smsSetting" component={smsSetting} />
@@ -1119,10 +1041,6 @@ class AppRouter extends React.Component {
             component={enquiryFormList}
           />
           <AppRoute path="/app/contactUs/jobRequest" component={jobRequest} />
-          <AppRoute
-            path="/app/mobileApp/appBanner/AppBanner"
-            component={appBanner}
-          />
           <AppRoute
             path="/app/helpAndSupport/importDemo/ImportDemo"
             component={importDemo}
