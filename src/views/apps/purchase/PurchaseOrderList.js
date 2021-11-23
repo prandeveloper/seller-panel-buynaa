@@ -224,6 +224,18 @@ class PurchaseOrderList extends React.Component {
                       </UncontrolledDropdown>
                     </div>
                     <div className="d-flex flex-wrap justify-content-between mb-1">
+                      <div className="mr-1 mt-sm-1">
+                        <h3>Order Date</h3>
+                      </div>
+                      <div className="table-input mr-1">
+                        <Input
+                          type="date"
+                          onChange={(e) =>
+                            this.updateSearchQuery(e.target.value)
+                          }
+                          value={this.state.value}
+                        />
+                      </div>
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."

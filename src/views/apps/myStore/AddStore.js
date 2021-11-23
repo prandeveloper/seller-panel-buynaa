@@ -21,7 +21,6 @@ export default class AddStore extends Component {
     super(props);
     this.state = {
       store_name: "",
-
       store_desc: "",
       websiteUrl: "",
       store_email: "",

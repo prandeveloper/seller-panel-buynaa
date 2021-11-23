@@ -23,22 +23,22 @@ $gray-800: #1e1e1e; // $gray-dark
 $gray-900: #2a2e30;
 $black: #22292f;
 
-// $blue: #0000FF; //$info
-// $red: #FF0000; //$danger
-// $orange: #FFA500; //$warning
-// $green: #008000; //$success
-// $cyan: #0909FF; //$primary
+//$blue: #0000ff; //$info
+$blue: #0048cd; //$info
+$red: #ff0000; //$danger
+$orange: #ffa500; //$warning
+$green: #008000; //$success
+$cyan: #0909ff; //$primary
 
-$blue: #00cfe8; //$info
-$red: #ea5455; //$danger
-$orange: #ff9f43; //$warning
-$green: #28c76f; //$success
-$cyan: #7367f0; //$primary
+// $blue: #00cfe8; //$info
+// $red: #ea5455; //$danger
+// $orange: #ff9f43; //$warning
+// $green: #28c76f; //$success
+// $cyan: #7367f0; //$primary
 
 $primary: $cyan;
 $info: $blue;
 $warning: $orange;
-
 
 // Spacing
 //
@@ -54,29 +54,29 @@ $spacers: map-merge(
   (
     0: 0,
     25: (
-      $spacer * 0.25
+      $spacer * 0.25,
     ),
     50: (
-      $spacer * 0.5
+      $spacer * 0.5,
     ),
     75: (
-      $spacer * 0.75
+      $spacer * 0.75,
     ),
     1: (
-      $spacer
+      $spacer,
     ),
     2: (
-      $spacer * 1.5
+      $spacer * 1.5,
     ),
     3: (
-      $spacer * 3
+      $spacer * 3,
     ),
     4: (
-      $spacer * 3.5
+      $spacer * 3.5,
     ),
     5: (
-      $spacer * 4
-    )
+      $spacer * 4,
+    ),
   ),
   $spacers
 );

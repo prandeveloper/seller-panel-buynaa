@@ -45,6 +45,9 @@ const viewProducts = lazy(() =>
 const addProducts = lazy(() =>
   import("./views/apps/products/product/AddProducts")
 );
+const addMyProduct = lazy(() =>
+  import("./views/apps/products/product/AddMyProduct")
+);
 const brandList = lazy(() => import("./views/apps/products/brand/BrandList"));
 const addBrand = lazy(() => import("./views/apps/products/brand/AddBrand"));
 const viewBrand = lazy(() => import("./views/apps/products/brand/ViewBrand"));
@@ -367,6 +370,7 @@ const general = lazy(() => import("./views/apps/siteSetting/General"));
 const userProfile = lazy(() => import("./views/pages/profile/UserProfile"));
 const editStore = lazy(() => import("./views/apps/myStore/EditStore"));
 const addStore = lazy(() => import("./views/apps/myStore/AddStore"));
+const addMyStore = lazy(() => import("./views/apps/myStore/AddMyStore"));
 const viewStore = lazy(() => import("./views/apps/myStore/ViewStore"));
 const storeList = lazy(() => import("./views/apps/myStore/StoreList"));
 const sliderList = lazy(() => import("./views/apps/slider/SliderList"));
@@ -640,6 +644,10 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/products/product/addProducts"
             component={addProducts}
+          />
+          <AppRoute
+            path="/app/products/product/addMyProduct"
+            component={addMyProduct}
           />
           <AppRoute
             path="/app/products/brand/brandList"
@@ -1081,6 +1089,7 @@ class AppRouter extends React.Component {
           <AppRoute path="/pages/profile/userProfile" component={userProfile} />
           <AppRoute path="/app/myStore/editStore" component={editStore} />
           <AppRoute path="/app/myStore/addStore" component={addStore} />
+          <AppRoute path="/app/myStore/addMyStore" component={addMyStore} />
           <AppRoute path="/app/myStore/viewStore/:id" component={viewStore} />
           <AppRoute path="/app/myStore/storeList" component={storeList} />
           <AppRoute path="/app/profile/editProfile" component={editProfile} />

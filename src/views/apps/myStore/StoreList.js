@@ -542,7 +542,7 @@ class StoreList extends React.Component {
                 <Col>
                   <Button
                     className=" btn btn-danger float-right"
-                    onClick={() => history.push("/app/myStore/addStore")}
+                    onClick={() => history.push("/app/myStore/addMyStore")}
                   >
                     Add Store
                   </Button>

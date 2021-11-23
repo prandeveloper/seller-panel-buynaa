@@ -439,7 +439,7 @@ class ProductsList extends React.Component {
                   <Button
                     className=" btn btn-danger float-right"
                     onClick={() =>
-                      history.push("/app/products/product/addProducts")
+                      history.push("/app/products/product/addMyProduct")
                     }
                   >
                     Add Product

@@ -1,17 +1,16 @@
 import React from "react";
-import { 
-  
-  Form, 
-  FormGroup, 
-  Input, 
-  Label, 
+import {
+  Form,
+  FormGroup,
+  Input,
+  Label,
   Button,
   CardHeader,
-  Card, 
+  Card,
   Col,
   Row,
   Container,
- } from "reactstrap";
+} from "reactstrap";
 import glogo from "../../../../assets/img/pages/glogo.png";
 
 import Checkbox from "../../../../components/@vuexy/checkbox/CheckboxesVuexy";
@@ -24,52 +23,55 @@ class RegisterFirebase extends React.Component {
     email: "",
     password: "",
     name: "",
-    confirmPass: ""
-  }
+    confirmPass: "",
+  };
 
-  handleRegister = e => {
-    e.preventDefault()
+  handleRegister = (e) => {
+    e.preventDefault();
     this.props.signupWithFirebase(
       this.state.email,
       this.state.password,
       this.state.name
-    )
-  }
+    );
+  };
 
   render() {
     return (
       <Container>
-      <Row className="m-0 justify-content-center">
-        
-      <Col
-        sm="8"
-        xl="7"
-        lg="10"
-        md="8"
-        className="d-flex justify-content-center"
-      >
-        <Col lg="8" md="12" className="p-1">
-        <Card className="rounded-0  px-2 pb-3 login-tabs-container">
-        <CardHeader className="pb-1 justify-content-center">
-        <img src={glogo} class="img-fluid" alt="..." />
-                {/* <img src={glogo} alt="glogo" /> */}
-                <br/>
-              </CardHeader>
-      <Form onSubmit={this.handleRegister}>
-        <FormGroup className="form-label-group position-relative has-icon-left">
-          <div class="form-group">
-            <Label>Name</Label>
-              <Input type="text"
-                  class="form-control mt-1 mb-3"
-                  type="text"
-                  placeholder="Name"
-                  value={this.state.name}
-                  onChange={e => this.setState({ name: e.target.value })}
-                  required
-                  name="name"/>
-            </div>
-        </FormGroup>
-        {/* <FormGroup className="form-label-group position-relative has-icon-left">
+        <Row className="m-0 justify-content-center">
+          <Col
+            sm="8"
+            xl="7"
+            lg="10"
+            md="8"
+            className="d-flex justify-content-center"
+          >
+            <Col lg="8" md="12" className="p-1">
+              <Card className="rounded-0  px-2 pb-3 login-tabs-container">
+                <CardHeader className="pb-1 justify-content-center">
+                  <img src={glogo} class="img-fluid" alt="..." />
+                  {/* <img src={glogo} alt="glogo" /> */}
+                  <br />
+                </CardHeader>
+                <Form onSubmit={this.handleRegister}>
+                  <FormGroup className="form-label-group position-relative has-icon-left">
+                    <div class="form-group">
+                      <Label>Name</Label>
+                      <Input
+                        type="text"
+                        class="form-control mt-1 mb-3"
+                        type="text"
+                        placeholder="Name"
+                        value={this.state.name}
+                        onChange={(e) =>
+                          this.setState({ name: e.target.value })
+                        }
+                        required
+                        name="name"
+                      />
+                    </div>
+                  </FormGroup>
+                  {/* <FormGroup className="form-label-group position-relative has-icon-left">
           <Input
             type="text"
             placeholder="Name"
@@ -80,7 +82,7 @@ class RegisterFirebase extends React.Component {
           <Label>Name</Label>
         </FormGroup> */}
 
-        {/* <FormGroup className="form-label-group">
+                  {/* <FormGroup className="form-label-group">
           <Input
             type="text"
             placeholder="Email"
@@ -90,35 +92,38 @@ class RegisterFirebase extends React.Component {
           />
           <Label>Email</Label>
         </FormGroup> */}
-        <FormGroup className="form-label-group position-relative has-icon-left">
-          <div class="form-group">
-            <Label>Gmail</Label>
-              <Input 
-                    type="text"
-                    placeholder="Email"
-                    value={this.state.email}
-                    onChange={e => this.setState({ email: e.target.value })}
-                    required
-                    name="email"/>
-          </div>
-        </FormGroup>
+                  <FormGroup className="form-label-group position-relative has-icon-left">
+                    <div class="form-group">
+                      <Label>Gmail</Label>
+                      <Input
+                        type="text"
+                        placeholder="Email"
+                        value={this.state.email}
+                        onChange={(e) =>
+                          this.setState({ email: e.target.value })
+                        }
+                        required
+                        name="email"
+                      />
+                    </div>
+                  </FormGroup>
 
- 
-        <FormGroup className="form-label-group position-relative has-icon-left">
-                  <div class="form-group">
-                    <Label>Password</Label>
-                    <Input
-                    type="password"
-                      placeholder="Password"
-                      value={this.state.password}
-                      onChange={(e) => this.setState({ password: e.target.value })}
-                      required
-                    />
-                  </div>
-                </FormGroup>
+                  <FormGroup className="form-label-group position-relative has-icon-left">
+                    <div class="form-group">
+                      <Label>Password</Label>
+                      <Input
+                        type="password"
+                        placeholder="Password"
+                        value={this.state.password}
+                        onChange={(e) =>
+                          this.setState({ password: e.target.value })
+                        }
+                        required
+                      />
+                    </div>
+                  </FormGroup>
 
-        
-        {/* <FormGroup className="form-label-group">
+                  {/* <FormGroup className="form-label-group">
           <Input
             type="password"
             placeholder="Password"
@@ -128,59 +133,57 @@ class RegisterFirebase extends React.Component {
           />
           <Label>Password</Label>
         </FormGroup> */}
-        <FormGroup className="form-label-group">
-        <div class="form-group">
-            <Label>Confirm Password</Label>
-              <Input
-                    type="password"
-                    placeholder="Confirm Password"
-                    required
-                    value={this.state.confirmPass}
-                    onChange={(e) => this.setState({ confirmPass: e.target.value })}
-                  />
-          </div>
-        </FormGroup>
-        <FormGroup>
-          <Checkbox
-            color="primary"
-            icon={<Check className="vx-icon" size={16} />}
-            label=" I accept the terms & conditions."
-            defaultChecked={true}
-          />
-        </FormGroup>
-        <div className="d-flex justify-content-between">
-          <Button.Ripple
-            onClick={() => history.push("/pages/login")}
-            color="primary"
-            outline
-          >
-            Login
-          </Button.Ripple>
-          <Button.Ripple color="primary" type="submit">
-            Register
-          </Button.Ripple>
-        </div>
-      </Form>
-      </Card>
-      </Col>
-    </Col>
-    </Row>
-    </Container>
-    )
+                  <FormGroup className="form-label-group">
+                    <div class="form-group">
+                      <Label>Confirm Password</Label>
+                      <Input
+                        type="password"
+                        placeholder="Confirm Password"
+                        required
+                        value={this.state.confirmPass}
+                        onChange={(e) =>
+                          this.setState({ confirmPass: e.target.value })
+                        }
+                      />
+                    </div>
+                  </FormGroup>
+                  <FormGroup>
+                    <Checkbox
+                      color="primary"
+                      icon={<Check className="vx-icon" size={16} />}
+                      label=" I accept the terms & conditions."
+                      defaultChecked={true}
+                    />
+                  </FormGroup>
+                  <div className="d-flex justify-content-between">
+                    <Button.Ripple
+                      onClick={() => history.push("/pages/login")}
+                      color="primary"
+                      outline
+                    >
+                      Login
+                    </Button.Ripple>
+                    <Button.Ripple color="primary" type="submit">
+                      Register
+                    </Button.Ripple>
+                  </div>
+                </Form>
+              </Card>
+            </Col>
+          </Col>
+        </Row>
+      </Container>
+    );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    values: state.auth.register
-  }
-}
+    values: state.auth.register,
+  };
+};
 export default connect(mapStateToProps, { signupWithFirebase })(
   RegisterFirebase
-)
-
-
-
-
+);
 
 // import React from "react"
 // import {

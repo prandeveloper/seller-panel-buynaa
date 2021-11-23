@@ -415,7 +415,7 @@ export default class AddProducts extends Component {
                   >
                     <input
                       style={{ marginRight: "3px" }}
-                      type="radio"
+                      type="checkbox"
                       name="stock"
                       value="Available"
                     />
@@ -425,7 +425,7 @@ export default class AddProducts extends Component {
 
                     <input
                       style={{ marginRight: "3px" }}
-                      type="radio"
+                      type="checkbox"
                       name="stock"
                       value="UnAvailable"
                     />
