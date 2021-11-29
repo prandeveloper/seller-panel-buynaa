@@ -351,7 +351,8 @@ class ProductsList extends React.Component {
             <div className="actions cursor-pointer">
               <Eye
                 className="mr-50"
-                size={20}
+                size="25px"
+                color="green"
                 onClick={() =>
                   history.push(
                     `/app/products/product/viewProducts/${params.data._id}`
@@ -360,11 +361,14 @@ class ProductsList extends React.Component {
               />
               <Edit
                 className="mr-50"
-                size={20}
+                 size="25px"
+                 color="blue"
                 onClick={() => history.push("/app/user/edit")}
               />
               <Trash2
-                size={20}
+                 className="mr-50"
+                 size="25px"
+                 color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);

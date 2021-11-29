@@ -33,7 +33,7 @@ class AddMyStore extends React.Component {
       store_email: "",
       phone_no: "",
       altphone_no: "",
-      altphone_no2: "",
+      // altphone_no2: "",
       day: "",
       startTym: "",
       endTym: "",
@@ -81,6 +81,8 @@ class AddMyStore extends React.Component {
   //   this.setState({ selectedName: event.target.files[0].name });
   //   console.log(event.target.files[0]);
   // };
+
+
   onChangeHandler = (event) => {
     this.setState({ selectedFile: event.target.files });
     this.setState({ selectedName: event.target.files.name });
@@ -135,7 +137,7 @@ class AddMyStore extends React.Component {
     data.append("store_email", this.state.store_email);
     data.append("phone_no", this.state.phone_no);
     data.append("altphone_no", this.state.altphone_no);
-    data.append("altphone_no2", this.state.altphone_no2);
+    // data.append("altphone_no2", this.state.altphone_no2);
     data.append("day", this.state.day);
     data.append("startTym", this.state.startTym);
     data.append("endTym", this.state.endTym);
@@ -296,7 +298,7 @@ class AddMyStore extends React.Component {
                 />
               </FormGroup>
             </Col>
-            <Col md="6" sm="12">
+            {/* <Col md="6" sm="12">
               <FormGroup>
                 <Label>Alt Phone No2.</Label>
                 <Input
@@ -307,7 +309,7 @@ class AddMyStore extends React.Component {
                   onChange={this.changeHandler}
                 />
               </FormGroup>
-            </Col>
+            </Col> */}
             <Col md="6" sm="12">
               <FormGroup>
                 <Label>Day</Label>
@@ -327,7 +329,7 @@ class AddMyStore extends React.Component {
             </Col>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label>Start Time</Label>
+                <Label>Opening Time</Label>
                 <Input
                   type="time"
                   name="startTym"
@@ -339,14 +341,18 @@ class AddMyStore extends React.Component {
             </Col>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label>End Time</Label>
+                <Label>Closing Time</Label>
+    
                 <Input
+                id="appt-time"
                   type="time"
                   name="endTym"
+                  min="12:00"
                   placeholder="End Time"
                   value={this.state.endTym}
-                  onChange={this.changeHandler}
-                />
+                  onChange={this.changeHandler} />
+                  
+               
               </FormGroup>
             </Col>
           </Row>
@@ -529,7 +535,7 @@ class AddMyStore extends React.Component {
                 />
               </FormGroup>
             </Col>
-            <Col md="6" sm="12">
+            {/* <Col md="6" sm="12">
               <FormGroup>
                 <Label>Store Pan Image</Label>
                 <CustomInput
@@ -538,7 +544,7 @@ class AddMyStore extends React.Component {
                   onChange={this.onChangeHandler3}
                 />
               </FormGroup>
-            </Col>
+            </Col> */}
             <Col md="6" sm="12">
               <FormGroup>
                 <Label>Trade Licence Image</Label>
@@ -549,6 +555,14 @@ class AddMyStore extends React.Component {
                 />
               </FormGroup>
             </Col>
+            <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Personal Image</Label>
+                  <CustomInput
+                    type="file"
+                    multiple
+                    onChange={this.onChangeHandler3}
+                  />
+                </Col>
             <Col md="6" sm="12">
               <FormGroup>
                 <Label>Company Pan Image</Label>

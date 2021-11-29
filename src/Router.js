@@ -81,13 +81,16 @@ const viewCompletedPaymentsList = lazy(() =>
   import("./views/apps/sellerPayout/pendingPayments/ViewCompletedPayments")
 );
 
-const allOrder = lazy(() => import("./views/apps/order/AllOrder"));
-const pendingOrder = lazy(() => import("./views/apps/order/PendingOrder"));
-const orderDelivered = lazy(() => import("./views/apps/order/OrderDelivered"));
-const cancelledOrder = lazy(() => import("./views/apps/order/CancelledOrder"));
-const returnedOrder = lazy(() => import("./views/apps/order/ReturnedOrder"));
-const invoiceSetting = lazy(() => import("./views/apps/order/InvoiceSetting"));
-const invoiceDesign = lazy(() => import("./views/apps/order/InvoiceDesign"));
+// const allOrder = lazy(() => import("./views/apps/order/AllOrder"));
+// const pendingOrder = lazy(() => import("./views/apps/order/PendingOrder"));
+// const orderDelivered = lazy(() => import("./views/apps/order/OrderDelivered"));
+// const cancelledOrder = lazy(() => import("./views/apps/order/CancelledOrder"));
+// const returnedOrder = lazy(() => import("./views/apps/order/ReturnedOrder"));
+// const invoiceSetting = lazy(() => import("./views/apps/order/InvoiceSetting"));
+// const invoiceDesign = lazy(() => import("./views/apps/order/InvoiceDesign"));
+const newOrders = lazy(() => import("./views/apps/orders/NewOrders"));
+const orderList = lazy(() => import("./views/apps/orders/OrderList"));
+
 
 const status = lazy(() => import("./views/apps/order/Status"));
 const newPurchaseOrder = lazy(() =>
@@ -95,6 +98,12 @@ const newPurchaseOrder = lazy(() =>
 );
 const purchaseOrderList = lazy(() =>
   import("./views/apps/purchase/PurchaseOrderList")
+);
+const purchaseInvoiceList = lazy(() =>
+  import("./views/apps/purchase/PurchaceInvoiceList")
+);
+const purchaseInvoice = lazy(() =>
+  import("./views/apps/purchase/PurchaseInvoice")
 );
 
 const addPushNotification = lazy(() =>
@@ -373,6 +382,8 @@ const addStore = lazy(() => import("./views/apps/myStore/AddStore"));
 const addMyStore = lazy(() => import("./views/apps/myStore/AddMyStore"));
 const viewStore = lazy(() => import("./views/apps/myStore/ViewStore"));
 const storeList = lazy(() => import("./views/apps/myStore/StoreList"));
+const addStorePage = lazy(() => import("./views/apps/myStore/AddStorePage"));
+
 const sliderList = lazy(() => import("./views/apps/slider/SliderList"));
 const addSlider = lazy(() => import("./views/apps/slider/AddSlider"));
 
@@ -585,6 +596,7 @@ const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
 const mapStateToProps = (state) => {
   return {
     user: state.auth.login.userRole,
+  
   };
 };
 const AppRoute = connect(mapStateToProps)(RouteConfig);
@@ -718,7 +730,7 @@ class AppRouter extends React.Component {
             component={editUnit}
           />
           <AppRoute path="/app/products/coupon" component={coupon} />
-          <AppRoute path="/app/order/allorder" component={allOrder} />
+          {/* <AppRoute path="/app/order/allorder" component={allOrder} />
           <AppRoute path="/app/order/pendingOrder" component={pendingOrder} />
           <AppRoute
             path="/app/order/orderDelivered"
@@ -733,7 +745,10 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/order/invoiceSetting"
             component={invoiceSetting}
-          />
+          /> */}
+          <AppRoute path="/app/orders/newOrders" component={newOrders} />
+          <AppRoute path="/app/orders/orderList" component={orderList} />
+
           <AppRoute path="/app/order/status" component={status} />
           <AppRoute
             path="/app/purchase/newPurchaseOrder"
@@ -744,9 +759,18 @@ class AppRouter extends React.Component {
             component={purchaseOrderList}
           />
           <AppRoute
+            path="/app/purchase/purchaseInvoiceList"
+            component={purchaseInvoiceList}
+          />
+            <AppRoute
+            path="/app/purchase/purchaseInvoice"
+            component={purchaseInvoice}
+          />
+          <AppRoute
             path="/app/marketing/advertiesement/advertiesementList"
             component={advertiesementList}
           />
+         
           <AppRoute
             path="/app/marketing/advertiesement/addAdvertiesement"
             component={addAdvertiesement}
@@ -1092,6 +1116,8 @@ class AppRouter extends React.Component {
           <AppRoute path="/app/myStore/addMyStore" component={addMyStore} />
           <AppRoute path="/app/myStore/viewStore/:id" component={viewStore} />
           <AppRoute path="/app/myStore/storeList" component={storeList} />
+          <AppRoute path="/app/myStore/addStorePage" component={addStorePage} />
+         
           <AppRoute path="/app/profile/editProfile" component={editProfile} />
           <AppRoute
             path="/app/mysubs/mySubscription"

@@ -78,18 +78,15 @@ class ReturnedOrder extends React.Component {
           );
         },
       },
-      {
+      { 
         headerName: "Customer Name",
-        field: "customer_name",
+        field: "customername",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>
-                {params.data.customer?.first_name}{" "}
-                {params.data.customer?.last_name}
-              </span>
+            <div>
+              <span>{params.data?.customer?.customername}</span>
             </div>
           );
         },

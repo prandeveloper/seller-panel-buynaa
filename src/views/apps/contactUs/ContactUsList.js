@@ -226,13 +226,16 @@ class ContactUsList extends React.Component {
             <div className="actions cursor-pointer">
               {/* <Edit className="mr-50" size={20} /> */}
               <Trash2
-                size={20}
+                 className="mr-50"
+                 size="25px"
+                 color="blue"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
                   this.gridApi.updateRowData({ remove: selectedData });
                 }}
               />
+            
             </div>
           );
         },

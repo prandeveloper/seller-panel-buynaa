@@ -182,7 +182,8 @@ class EmployeeList extends React.Component {
             <div className="actions cursor-pointer">
               <Edit
                 className="mr-50"
-                size={15}
+                size="25px"
+                color="blue"
                 onClick={() =>
                   history.push(
                     `/app/contactUs/employee/editEmployee/${params.data._id}`
@@ -190,7 +191,9 @@ class EmployeeList extends React.Component {
                 }
               />
               <Trash2
-                size={15}
+                 className="mr-50"
+                 size="25px"
+                 color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);

@@ -13,7 +13,7 @@ const Footer = props => {
         "d-none": props.footerType === "hidden"
       })}
     >
-      <p className="mb-0 clearfix">
+      {/* <p className="mb-0 clearfix">
         <span className="float-md-left d-block d-md-inline-block mt-25">
           COPYRIGHT © {new Date().getFullYear()}
           <a
@@ -29,7 +29,7 @@ const Footer = props => {
           <span className="align-middle">Hand-crafted & Made with</span>{" "}
           <Heart className="text-danger" size={15} />
         </span>
-      </p>
+      </p> */}
       {props.hideScrollToTop === false ? (
         <ScrollToTop showUnder={160}>
           <Button color="primary" className="btn-icon scroll-top">

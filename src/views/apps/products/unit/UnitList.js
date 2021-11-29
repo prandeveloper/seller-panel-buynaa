@@ -111,8 +111,9 @@ class UnitList extends React.Component {
           return (
             <div className="actions cursor-pointer">
               <Edit
-                className="mr-75 "
-                size={20}
+                className="mr-50"
+                size="25px"
+                color="blue"
                 onClick={() =>
                   history.push(
                     `/app/admin/products/unit/editUnit/${params.data._id}`
@@ -120,7 +121,9 @@ class UnitList extends React.Component {
                 }
               />
               <Trash2
-                size={20}
+                 className="mr-50"
+                 size="25px"
+                 color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   console.log(selectedData);

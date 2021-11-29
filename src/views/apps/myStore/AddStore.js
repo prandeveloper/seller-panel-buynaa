@@ -26,7 +26,7 @@ export default class AddStore extends Component {
       store_email: "",
       phone_no: "",
       altphone_no: "",
-      altphone_no2: "",
+      // altphone_no2: "",
       day: "",
       startTym: "",
       endTym: "",
@@ -122,7 +122,7 @@ export default class AddStore extends Component {
     data.append("store_email", this.state.store_email);
     data.append("phone_no", this.state.phone_no);
     data.append("altphone_no", this.state.altphone_no);
-    data.append("altphone_no2", this.state.altphone_no2);
+    // data.append("altphone_no2", this.state.altphone_no2);
     data.append("day", this.state.day);
     data.append("startTym", this.state.startTym);
     data.append("endTym", this.state.endTym);
@@ -277,7 +277,7 @@ export default class AddStore extends Component {
                     onChange={this.changeHandler}
                   />
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
+                {/* <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Alt Phone No2.</Label>
                   <Input
                     type="number"
@@ -286,7 +286,7 @@ export default class AddStore extends Component {
                     value={this.state.altphone_no2}
                     onChange={this.changeHandler}
                   />
-                </Col>
+                </Col> */}
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Day</Label>
                   <CustomInput
@@ -303,7 +303,7 @@ export default class AddStore extends Component {
                   </CustomInput>
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Start Time</Label>
+                  <Label>Opening Time</Label>
                   <Input
                     type="time"
                     name="startTym"
@@ -313,7 +313,7 @@ export default class AddStore extends Component {
                   />
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>End Time</Label>
+                  <Label>Closing Time</Label>
                   <Input
                     type="time"
                     name="endTym"
@@ -471,20 +471,21 @@ export default class AddStore extends Component {
                     onChange={this.onChangeHandler2}
                   />
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Store Pan Image</Label>
-                  <CustomInput
-                    type="file"
-                    multiple
-                    onChange={this.onChangeHandler3}
-                  />
-                </Col>
+              
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Tradelicence Image</Label>
                   <CustomInput
                     type="file"
                     multiple
                     onChange={this.onChangeHandler4}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Personal Image</Label>
+                  <CustomInput
+                    type="file"
+                    multiple
+                    onChange={this.onChangeHandler3}
                   />
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">

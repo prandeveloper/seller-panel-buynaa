@@ -148,7 +148,7 @@ class StoreList extends React.Component {
             <div>
               <span>
                 {params.data.phone_no},{params.data.altphone_no},
-                {params.data.altphone_no2}
+                {/* {params.data.altphone_no2} */}
               </span>
             </div>
           );

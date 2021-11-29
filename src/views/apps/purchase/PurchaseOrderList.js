@@ -16,7 +16,7 @@ import ReactHtmlParser from "react-html-parser";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
-import { Eye, Trash2, ChevronDown } from "react-feather";
+import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
 //import classnames from "classnames";
 import { history } from "../../../history";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
@@ -48,7 +48,7 @@ class PurchaseOrderList extends React.Component {
         // headerCheckboxSelection: true,
       },
       {
-        headerName: "Posted Date",
+        headerName: "Purchase Order ID",
         field: "createdAt",
         //filter: true,
         filter: "agSetColumnFilter",
@@ -65,21 +65,21 @@ class PurchaseOrderList extends React.Component {
           );
         },
       },
-
       {
-        headerName: " Policy Description",
-        field: "description",
-        //filter: true,
-        filter: "agSetColumnFilter",
-        width: 500,
+        headerName: "Status",
+        field: "status",
+        filter: true,
+        width: 150,
         cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <div className="">
-                <span>{ReactHtmlParser(params.data.description)}</span>
-              </div>
+          return params.value === "Active" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
             </div>
-          );
+          ) : params.value === "Inactive" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
+          ) : null;
         },
       },
 
@@ -90,18 +90,23 @@ class PurchaseOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Edit className="mr-50" size={20} /> */}
               <Eye
+                size="25px"
+                color="green"
                 className="mr-50"
-                size={20}
                 onClick={() =>
-                  history.push(
-                    `/app/privacyPolicy/viewPolicy/${params.data._id}`
-                  )
+                  history.push(`/app/myStore/viewStore/${params.data._id}`)
                 }
               />
+              <Edit
+                className="mr-50"
+                size="25px"
+                color="blue"
+                onClick={() => history.push("/app/myStore/editStore")}
+              />
               <Trash2
-                size={20}
+                size="25px"
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
@@ -230,13 +235,24 @@ class PurchaseOrderList extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           type="date"
+                          placeholder="Created At From"
                           onChange={(e) =>
-                            this.updateSearchQuery(e.target.value)
+                          this.updateSearchQuery(e.target.value)
                           }
                           value={this.state.value}
                         />
                       </div>
-                      <div className="table-input mr-1">
+                      {/* <div className="table-input mr-1">
+                        <Input
+                          placeholder="Created At To"
+                          type="date"
+                          onChange={(e) =>
+                          this.updateSearchQuery(e.target.value)
+                          }
+                          value={this.state.value}
+                        />
+                      </div> */}
+                      {/* <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
                           onChange={(e) =>
@@ -244,7 +260,7 @@ class PurchaseOrderList extends React.Component {
                           }
                           value={this.state.value}
                         />
-                      </div>
+                      </div> */}
                       <div className="export-btn">
                         <Button.Ripple
                           color="primary"
