@@ -1,5 +1,13 @@
 import React from "react";
-import { Card, CardBody, Row, Col, Button } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardHeader,
+  Row,
+  Col,
+  Button,
+} from "reactstrap";
 import { history } from "../../../../history";
 import ReactHtmlParser, {
   processNodes,
@@ -8,7 +16,26 @@ import ReactHtmlParser, {
 } from "react-html-parser";
 import "../../../../assets/scss/pages/app-ecommerce-shop.scss";
 import axiosConfig from "../../../../axiosConfig";
+import Swiper from "react-id-swiper";
+import "swiper/css/swiper.css";
+import "../../../../assets/scss/plugins/extensions/swiper.scss";
 
+const params = {
+  spaceBetween: 10,
+  centeredSlides: true,
+  autoplay: {
+    delay: 2500,
+    disableOnInteraction: false,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+};
 class ViewProducts extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +49,7 @@ class ViewProducts extends React.Component {
     axiosConfig
       .get(`/getoneproduct/${id}`)
       .then((response) => {
+        console.log(response.data.data);
         this.setState({ data: response.data.data });
       })
       .catch((error) => {
@@ -55,7 +83,25 @@ class ViewProducts extends React.Component {
           </Row>
           <CardBody className="pb-0">
             <Row className="mb-5 mt-2">
-              <Col
+              <Col lg="5">
+                <Card>
+                  <CardBody>
+                    <Swiper {...params}>
+                      <div>
+                        {this.state.data.product_img?.map((i) => (
+                          <img
+                            src={i}
+                            alt="Google Home"
+                            height="350"
+                            width="350"
+                          />
+                        ))}
+                      </div>
+                    </Swiper>
+                  </CardBody>
+                </Card>
+              </Col>
+              {/* <Col
                 className="d-flex align-items-start justify-content-center mb-2 mb-md-0"
                 sm="12"
                 md="5"
@@ -66,7 +112,7 @@ class ViewProducts extends React.Component {
                   height="300"
                   width="250"
                 />
-              </Col>
+              </Col> */}
 
               <Col md="7" sm="12">
                 <h4>Product Name</h4>
@@ -120,7 +166,6 @@ class ViewProducts extends React.Component {
                 <h4>Stock Available </h4>
                 <h6>{this.state.data.stock}</h6>
                 <hr />
-           
               </Col>
             </Row>
           </CardBody>

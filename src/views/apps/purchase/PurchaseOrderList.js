@@ -48,11 +48,11 @@ class PurchaseOrderList extends React.Component {
         // headerCheckboxSelection: true,
       },
       {
-        headerName: "Purchase Order ID",
+        headerName: "Purchase Order No",
         field: "createdAt",
         //filter: true,
         filter: "agSetColumnFilter",
-        width: 180,
+        width: 400,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -86,18 +86,27 @@ class PurchaseOrderList extends React.Component {
       {
         headerName: "Actions",
         field: "transactions",
-        width: 150,
+        width: 500,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Eye
+              {/* <Eye
                 size="25px"
                 color="green"
                 className="mr-50"
                 onClick={() =>
                   history.push(`/app/myStore/viewStore/${params.data._id}`)
                 }
-              />
+              /> */}
+              <Button color="primary" outline className="mr-2">
+                PDF
+              </Button>
+              <Button color="primary" outline className="mr-2">
+                Create Invoice
+              </Button>
+              <Button color="primary" outline className="mr-2">
+                Destroy
+              </Button>
               <Edit
                 className="mr-50"
                 size="25px"
@@ -237,7 +246,7 @@ class PurchaseOrderList extends React.Component {
                           type="date"
                           placeholder="Created At From"
                           onChange={(e) =>
-                          this.updateSearchQuery(e.target.value)
+                            this.updateSearchQuery(e.target.value)
                           }
                           value={this.state.value}
                         />

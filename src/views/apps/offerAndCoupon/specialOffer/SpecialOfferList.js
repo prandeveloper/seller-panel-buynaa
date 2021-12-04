@@ -38,7 +38,7 @@ class SpecialOfferList extends React.Component {
       {
         headerName: "S.no",
         field: "sortorder",
-        width: 150,
+        width: 100,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
@@ -46,7 +46,7 @@ class SpecialOfferList extends React.Component {
       },
       {
         headerName: "Image",
-        field: "product_img",
+        field: "offer_img",
         filter: false,
         width: 120,
         cellRendererFramework: (params) => {
@@ -54,7 +54,7 @@ class SpecialOfferList extends React.Component {
             <div className="d-flex align-items-center cursor-pointer">
               <img
                 className="rounded-circle  mr-4"
-                src={params.data.product_img}
+                src={params.data.offer_img}
                 alt=" brand"
                 height="40"
                 width="40"
@@ -65,69 +65,56 @@ class SpecialOfferList extends React.Component {
       },
       {
         headerName: "Product Name",
-        field: "product",
+        field: "product?.product_name",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className=" mr-4">
-              <span>{params.data.product}</span>
+              <span>{params.data.product?.product_name}</span>
             </div>
           );
         },
       },
-      // {
-      //   headerName: "Price",
-      //   field: "product_price",
-      //   filter: true,
-      //   width: 150,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className=" mr-4">
-      //         <span>{params.data.product_price}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-      // {
-      //   headerName: "Quantity",
-      //   field: "product_qty",
-      //   filter: true,
-      //   width: 120,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className=" mr-4">
-      //         <span>{params.data.product_qty}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-      // {
-      //   headerName: "Title",
-      //   field: "exclusivedeal_title",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className=" mr-4">
-      //         <span>{params.data.exclusivedeal_title}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-      // {
-      //   headerName: "Description",
-      //   field: "description",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.description}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        headerName: "Price",
+        field: "rate",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.rate}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Quantity",
+        field: "product_qty",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.product_qty}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Title",
+        field: "specialoffer_title",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.specialoffer_title}</span>
+            </div>
+          );
+        },
+      },
 
       {
         headerName: "Status",
@@ -177,22 +164,20 @@ class SpecialOfferList extends React.Component {
     ],
   };
 
-  // async componentDidMount() {
-  //   await axiosConfig.get("/allexclusive_deal").then((response) => {
-  //     let rowData = response.data.data;
-  //     console.log(rowData);
-  //     this.setState({ rowData });
-  //   });
-  // }
+  async componentDidMount() {
+    await axiosConfig.get("/Getoffer").then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
+  }
 
-  //   async runthisfunction(id) {
-  //     console.log(id);
-  //     await axios
-  //       .get(`http://65.2.150.118:4444/api/admin/delbundleoffer/${id}`)
-  //       .then((response) => {
-  //         console.log(response);
-  //       });
-  //   }
+  async runthisfunction(id) {
+    console.log(id);
+    await axiosConfig.get(`/del_offer/${id}`).then((response) => {
+      console.log(response);
+    });
+  }
 
   onGridReady = (params) => {
     this.gridApi = params.api;
@@ -222,9 +207,7 @@ class SpecialOfferList extends React.Component {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       <Row className="app-user-list">
-        <Col sm="12">
-
-        </Col>
+        <Col sm="12"></Col>
         <Col sm="12">
           <Card>
             <Row className="m-2">
@@ -237,7 +220,9 @@ class SpecialOfferList extends React.Component {
                 <Button
                   className=" btn btn-danger float-right"
                   onClick={() =>
-                    history.push("/app/offerAndCoupon/specialOffer/addSpecialOffer")
+                    history.push(
+                      "/app/offerAndCoupon/specialOffer/addSpecialOffer"
+                    )
                   }
                 >
                   Add Special Offer

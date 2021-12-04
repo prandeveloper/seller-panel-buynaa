@@ -13,39 +13,51 @@ import {
   CardHeader,
   Button,
   Container,
-  }
-  from "reactstrap";
+} from "reactstrap";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
+import axiosConfig from "../../../axiosConfig";
 //import { history } from "../../../history";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../assets/scss/pages/users.scss"
+import "../../../assets/scss/pages/users.scss";
 
 class NewPurchaseOrder extends React.Component {
   constructor(props) {
-    super(props)
-      {
-        this.state = {
-          addTextbox:[{}]
-        }
-      }
-    }
-    addControls()
+    super(props);
     {
-      this.setState((
-      {
-        addTextbox:[...this.state.addTextbox,{}]
-      }
-      ))
+      this.state = {
+        supplierC: [],
+      };
+      this.state = {
+        addTextbox: [{}],
+      };
     }
-    delControl(i){
-      this.state.addTextbox.splice(i,1);
-      this.setState({})
-      }
+  }
+
+  componentDidMount() {
+    //Supploer
+    axiosConfig
+      .get("/Getsupplier")
+      .then((response) => {
+        this.setState({ supplierC: response.data.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  addControls() {
+    this.setState({
+      addTextbox: [...this.state.addTextbox, {}],
+    });
+  }
+  delControl(i) {
+    this.state.addTextbox.splice(i, 1);
+    this.setState({});
+  }
 
   render() {
-    const steps= [
-       {
+    const steps = [
+      {
         title: "1",
         content: (
           <Row>
@@ -54,9 +66,9 @@ class NewPurchaseOrder extends React.Component {
                 <Label> Select Supplier </Label>
                 <CustomInput type="select">
                   <option>Add Supplier</option>
-                  <option>Add Supplier</option>
-                  <option>Add Supplier</option>
-                  <option>Add Supplier</option>
+                  {this.state.supplierC?.map((supplierS) => (
+                    <option key={supplierS._id}>{supplierS.company}</option>
+                  ))}
                 </CustomInput>
               </FormGroup>
             </Col>
@@ -68,7 +80,7 @@ class NewPurchaseOrder extends React.Component {
             </Col>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label> Amount Are </Label>
+                <Label> Amount </Label>
                 <CustomInput type="select">
                   <option>Select</option>
                   <option>Tax Includive</option>
@@ -92,94 +104,93 @@ class NewPurchaseOrder extends React.Component {
           </Row>
         ),
       },
-     
+
       {
         title: "2",
         content: (
-        <div>
-          {this.state.addTextbox.map((index)=>(
           <div>
-            {
-            index ?
-             <div id="btn">
-              <Row>
-                <Col flax="left" lg="6" md="6" sm="6" className="mb-2">
-              
-                <Button
-                  color="primary"
-                  onClick={()=>this.addControls()}
-                >
-                  Add 
-                </Button>
-                <div className="New-line">
-               <hr/>
-                <div className="form-check">
-                    <input 
-                      className="form-check-input"  
-                      type="checkbox" 
-                      value=""  
-                      onClick={()=>this.delControl(index)} 
-                    />
-                    <label className="mr-1 mb-1" style={{color: "red"}}>
-                      Remove
-                    </label>
-                    </div>
+            {this.state.addTextbox.map((index) => (
+              <div>
+                {index ? (
+                  <div id="btn">
+                    <Row>
+                      <Col flax="left" lg="6" md="6" sm="6" className="mb-2">
+                        <Button
+                          color="primary"
+                          onClick={() => this.addControls()}
+                        >
+                          Add
+                        </Button>
+                        <div className="New-line">
+                          <hr />
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value=""
+                              onClick={() => this.delControl(index)}
+                            />
+                            <label
+                              className="mr-1 mb-1"
+                              style={{ color: "red" }}
+                            >
+                              Remove
+                            </label>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
                   </div>
-              </Col>
-            </Row>
+                ) : null}
+
+                <Row>
+                  <Col md="4" sm="12">
+                    <FormGroup>
+                      <Label> Product Name </Label>
+                      <Input type="text" placeholder=" Product Name" />
+                    </FormGroup>
+                  </Col>
+                  <Col md="4" sm="12">
+                    <FormGroup>
+                      <Label> SKU </Label>
+                      <Input type="text" placeholder="SKU" />
+                    </FormGroup>
+                  </Col>
+                  <Col md="4" sm="12">
+                    <FormGroup>
+                      <Label> HSN </Label>
+                      <Input type="text" rows="5" placeholder="HSN" />
+                    </FormGroup>
+                  </Col>
+                  <Col md="3" sm="12">
+                    <FormGroup>
+                      <Label> Quantity </Label>
+                      <Input type="text" rows="5" placeholder="Quantity" />
+                    </FormGroup>
+                  </Col>
+                  <Col md="3" sm="12">
+                    <FormGroup>
+                      <Label> Cost price </Label>
+                      <Input type="text" rows="5" placeholder="Cost price" />
+                    </FormGroup>
+                  </Col>
+                  <Col md="3" sm="12">
+                    <FormGroup>
+                      <Label> GST </Label>
+                      <Input type="text" rows="5" placeholder="GST" />
+                    </FormGroup>
+                  </Col>
+                  <Col md="3" sm="12">
+                    <FormGroup>
+                      <Label> Discount </Label>
+                      <Input type="text" rows="5" placeholder="Discount" />
+                    </FormGroup>
+                  </Col>
+                </Row>
+              </div>
+            ))}
           </div>
-        :null
-        }
-      
-            <Row>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label>  Product Name </Label>
-                  <Input type="text" placeholder=" Product Name" />
-                </FormGroup>
-              </Col>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label>  SKU </Label>
-                  <Input type="text" placeholder="SKU" />
-                </FormGroup>
-              </Col>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label> HSN  </Label>
-                  <Input type="text" rows="5" placeholder="HSN" />
-                </FormGroup>
-              </Col>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label> Quantity  </Label>
-                  <Input type="text" rows="5" placeholder="Quantity" />
-                </FormGroup>
-              </Col>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label> Cost price  </Label>
-                  <Input type="text" rows="5" placeholder="Cost price" />
-                </FormGroup>
-              </Col>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label> GST  </Label>
-                  <Input type="text" rows="5" placeholder="GST" />
-                </FormGroup>
-              </Col>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label> Discount  </Label>
-                  <Input type="text" rows="5" placeholder="Discount" />
-                </FormGroup>
-              </Col>
-            </Row>
-          </div>
-          ))}
-      
-      </div>
-    ),
+        ),
       },
       {
         title: 3,
@@ -187,44 +198,41 @@ class NewPurchaseOrder extends React.Component {
           <Row>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label>  Transportation Cost </Label>
+                <Label> Transportation Cost </Label>
                 <Input type="text" placeholder="Transportation Cost" />
               </FormGroup>
             </Col>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label>  Tax </Label>
+                <Label> Tax </Label>
                 <Input type="text" placeholder="Tax" />
               </FormGroup>
             </Col>
-         
+
             <Col md="6" sm="12">
               <FormGroup>
-                <Label>  Grand Total </Label>
+                <Label> Grand Total </Label>
                 <Input type="text" placeholder="Grand Total" />
               </FormGroup>
             </Col>
-        
+
             <Col md="6" sm="12">
               <FormGroup>
-                <Label>  Instructions </Label>
-                <Input type="text" placeholder="Instructions"/>
+                <Label> Instructions </Label>
+                <Input type="text" placeholder="Instructions" />
               </FormGroup>
             </Col>
 
-{/* <div id="btn">     <Button type="submit" class="btn btn-outline-primary">Back</Button>
+            {/* <div id="btn">     <Button type="submit" class="btn btn-outline-primary">Back</Button>
            <Button type="submit" class="btn btn-primary">Create Purchase order</Button></div>        */}
-           
           </Row>
         ),
       },
-    ]
+    ];
     return (
-  
       <Card>
         <CardHeader>
           <h1>New Purchase Order</h1>
-         
         </CardHeader>
         <CardBody>
           <Wizard
@@ -234,20 +242,14 @@ class NewPurchaseOrder extends React.Component {
           />
         </CardBody>
       </Card>
-
     );
   }
 }
 
 export default NewPurchaseOrder;
 
-
-
-
-
-
-
-              {/* <Col md="6" sm="12">
+{
+  /* <Col md="6" sm="12">
               <FormGroup>
                 <Label> Grand Total </Label>
                 <CustomInput type="select" name="select" id="status">
@@ -256,8 +258,10 @@ export default NewPurchaseOrder;
                   <option>Finished</option>
                 </CustomInput>
               </FormGroup>
-            </Col> */}
-               {/* <Col md="6" sm="12">
+            </Col> */
+}
+{
+  /* <Col md="6" sm="12">
               <FormGroup>
                 <Label> Tax </Label>
                 <CustomInput type="select" name="select" id="location">
@@ -267,8 +271,10 @@ export default NewPurchaseOrder;
                   <option>Boston</option>
                 </CustomInput>
               </FormGroup>
-            </Col> */}
-            {/* <Col md="6" sm="12">
+            </Col> */
+}
+{
+  /* <Col md="6" sm="12">
               <FormGroup>
                 <Label> Event Status </Label>
                 <Label className="mr-2">Requirements :</Label>
@@ -291,4 +297,5 @@ export default NewPurchaseOrder;
                   </div>
                 </div>
               </FormGroup>
-            </Col> */}
+            </Col> */
+}

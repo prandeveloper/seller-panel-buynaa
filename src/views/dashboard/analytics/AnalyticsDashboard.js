@@ -1,5 +1,14 @@
 import React from "react";
-import { Row, Col, Card, CardTitle, CardText } from "reactstrap";
+import {
+  Row,
+  Col,
+  Card,
+  CardTitle,
+  CardText,
+  Accordion,
+  AccordionHeader,
+  AccordionItem,
+} from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
 import DispatchedOrders from "./DispatchedOrders";
 import "../../../assets/scss/pages/dashboard-analytics.scss";
@@ -108,25 +117,21 @@ class AnalyticsDashboard extends React.Component {
               style={{ borderColor: "white" }}
             >
               <CardTitle className="mb-1" tag="h4" style={{ color: "white" }}>
-              
                 Total Products
-              
               </CardTitle>
 
               <CardText tag="h3" style={{ color: "white" }}>
-                {this.state.product.totalProduct}
+                {this.state.product.data}
               </CardText>
             </Card>
           </Col>
           <Col lg="3" md="12">
             <Card className="bg-success" body inverse>
               <CardTitle className="mb-1" tag="h4" style={{ color: "white" }}>
-              
                 Total Users
               </CardTitle>
 
               <CardText tag="h3" style={{ color: "white" }}>
-              
                 {this.state.users.totalUser}
               </CardText>
             </Card>
@@ -259,8 +264,3 @@ class AnalyticsDashboard extends React.Component {
 }
 
 export default AnalyticsDashboard;
-
-
-
-
-

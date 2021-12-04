@@ -19,6 +19,7 @@ const analyticsDashboard = lazy(() =>
 const ecommerceDashboard = lazy(() =>
   import("./views/dashboard/ecommerce/EcommerceDashboard")
 );
+// const home = lazy(() => import("./views/pages/landingPage/Home"));
 // const sellerDashboard = lazy(()=> import("./views/dashboard/seller/SellerDeshboard"));
 // My Component starts here
 
@@ -91,7 +92,6 @@ const viewCompletedPaymentsList = lazy(() =>
 const newOrders = lazy(() => import("./views/apps/orders/NewOrders"));
 const orderList = lazy(() => import("./views/apps/orders/OrderList"));
 
-
 const status = lazy(() => import("./views/apps/order/Status"));
 const newPurchaseOrder = lazy(() =>
   import("./views/apps/purchase/NewPurchaseOrder")
@@ -142,17 +142,7 @@ const couponsList = lazy(() =>
 const addCoupons = lazy(() =>
   import("./views/apps/offerAndCoupon/coupons/AddCoupons")
 );
-const offerByBrand = lazy(() =>
-  import("./views/apps/offerAndCoupon/OfferByBrand")
-);
-const buyGet = lazy(() => import("./views/apps/offerAndCoupon/BuyGet"));
 
-const dealOfDay = lazy(() =>
-  import("./views/apps/offerAndCoupon/dealOfDay/DealOfDay")
-);
-const flashSale = lazy(() =>
-  import("./views/apps/offerAndCoupon/flashSale/FlashSale")
-);
 const commission = lazy(() => import("./views/apps/commission/Commission"));
 const churnRate = lazy(() => import("./views/apps/churnRate/ChurnRate"));
 // const pendingPayment = lazy(() => import("./views/apps/pendingPayment/PendingPayment"));
@@ -297,24 +287,10 @@ const addStoresRequest = lazy(() =>
   import("./views/apps/store/storesRequest/AddStoresRequest")
 );
 
-const blogList = lazy(() => import("./views/apps/website/blog/BlogList"));
-const addBlog = lazy(() => import("./views/apps/website/blog/AddBlog"));
-const newsList = lazy(() => import("./views/apps/website/news/NewsList"));
-const addNews = lazy(() => import("./views/apps/website/news/AddNews"));
-const videosList = lazy(() => import("./views/apps/website/videos/VideosList"));
-const addVideo = lazy(() => import("./views/apps/website/videos/AddVideo"));
-const websitePdf = lazy(() => import("./views/apps/website/WebsitePdf"));
-
 const walletList = lazy(() => import("./views/apps/wallet/WalletList"));
 const addWallet = lazy(() => import("./views/apps/wallet/AddWallet"));
 const viewWallet = lazy(() => import("./views/apps/wallet/ViewWallet"));
 
-const websiteProImg = lazy(() =>
-  import("./views/apps/website/websiteProduct/WebsiteProImg")
-);
-const addProImg = lazy(() =>
-  import("./views/apps/website/websiteProduct/AddProImg")
-);
 const contactUsList = lazy(() =>
   import("./views/apps/contactUs/ContactUsList")
 );
@@ -596,7 +572,6 @@ const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
 const mapStateToProps = (state) => {
   return {
     user: state.auth.login.userRole,
-  
   };
 };
 const AppRoute = connect(mapStateToProps)(RouteConfig);
@@ -612,6 +587,7 @@ class AppRouter extends React.Component {
             path="/ecommerce-dashboard"
             component={ecommerceDashboard}
           />
+          {/* <AppRoute path="/pages/home" component={home} fullLayout /> */}
           {/* <AppRoute exact path="/seller-dashboard" component={sellerDashboard} /> */}
           {/* My components starts all my app components*/}
           <AppRoute path="/app/billing/billingList" component={billingList} />
@@ -748,7 +724,6 @@ class AppRouter extends React.Component {
           /> */}
           <AppRoute path="/app/orders/newOrders" component={newOrders} />
           <AppRoute path="/app/orders/orderList" component={orderList} />
-
           <AppRoute path="/app/order/status" component={status} />
           <AppRoute
             path="/app/purchase/newPurchaseOrder"
@@ -762,7 +737,7 @@ class AppRouter extends React.Component {
             path="/app/purchase/purchaseInvoiceList"
             component={purchaseInvoiceList}
           />
-            <AppRoute
+          <AppRoute
             path="/app/purchase/purchaseInvoice"
             component={purchaseInvoice}
           />
@@ -770,7 +745,6 @@ class AppRouter extends React.Component {
             path="/app/marketing/advertiesement/advertiesementList"
             component={advertiesementList}
           />
-         
           <AppRoute
             path="/app/marketing/advertiesement/addAdvertiesement"
             component={addAdvertiesement}
@@ -810,19 +784,6 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/offerAndCoupon/coupons/addCoupons"
             component={addCoupons}
-          />
-          <AppRoute
-            path="/app/offerAndCoupon/offerByBrand"
-            component={offerByBrand}
-          />
-          <AppRoute path="/app/offerAndCoupon/buyGet" component={buyGet} />
-          <AppRoute
-            path="/app/offerAndCoupon/dealOfDay/dealOfDay"
-            component={dealOfDay}
-          />
-          <AppRoute
-            path="/app/offerAndCoupon/flashSale/flashSale"
-            component={flashSale}
           />
           <AppRoute path="/app/commission/commission" component={commission} />
           <AppRoute path="/app/churnRate/churnRate" component={churnRate} />
@@ -1010,24 +971,6 @@ class AppRouter extends React.Component {
             component={emailSetting}
           />
           <AppRoute path="/app/siteSetting/general" component={general} />
-          <AppRoute path="/app/website/blog/blogList" component={blogList} />
-          <AppRoute path="/app/website/blog/addBlog" component={addBlog} />
-          <AppRoute path="/app/website/news/newsList" component={newsList} />
-          <AppRoute path="/app/website/news/addNews" component={addNews} />
-          <AppRoute path="/app/website/websitePdf" component={websitePdf} />
-          <AppRoute
-            path="/app/website/websiteProduct/websiteProImg"
-            component={websiteProImg}
-          />
-          <AppRoute
-            path="/app/website/websiteProduct/addProImg"
-            component={addProImg}
-          />
-          <AppRoute
-            path="/app/website/videos/videosList"
-            component={videosList}
-          />
-          <AppRoute path="/app/website/videos/addVideo" component={addVideo} />
           <AppRoute
             path="/app/contactUs/contactUsList"
             component={contactUsList}
@@ -1117,7 +1060,6 @@ class AppRouter extends React.Component {
           <AppRoute path="/app/myStore/viewStore/:id" component={viewStore} />
           <AppRoute path="/app/myStore/storeList" component={storeList} />
           <AppRoute path="/app/myStore/addStorePage" component={addStorePage} />
-         
           <AppRoute path="/app/profile/editProfile" component={editProfile} />
           <AppRoute
             path="/app/mysubs/mySubscription"
