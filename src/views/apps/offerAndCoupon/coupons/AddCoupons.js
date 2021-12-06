@@ -9,7 +9,7 @@ import {
   CustomInput,
   Label,
   Button,
-  FormGroup
+  FormGroup,
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
@@ -19,21 +19,16 @@ export class AddBundleOffer extends Component {
     super(props);
 
     this.state = {
-      name: "",
-      selectedFile: null,
-      selectedName: "",
-      sortorder: "",
-      desc: "",
-      product_img: "",
+      CouponTitle: "",
+      product: "",
+      description: "",
+      startDate: "",
+      expireOn: "",
+      usage_limit: "",
+      amount: "",
       status: "",
     };
   }
-
-  onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files[0] });
-    this.setState({ selectedName: event.target.files[0].name });
-    console.log(event.target.files[0]);
-  };
 
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
@@ -89,7 +84,6 @@ export class AddBundleOffer extends Component {
           </Row>
           <CardBody>
             <Form className="m-1" onSubmit={this.submitHandler}>
-         
               <Row className="mb-2">
                 <Col lg="6" md="6">
                   <Label>Coupon code: </Label>
@@ -161,29 +155,29 @@ export class AddBundleOffer extends Component {
                 <Col lg="6" md="6" className="mb-1">
                   <Label>Expiry Date:</Label>
                   <Input
-                    type="date" 
+                    type="date"
                     id="birthday"
                     name="birthday"
                     // value={this.state.sortorder}
                     // onChange={this.changeHandler}
                   />
                 </Col>
-              
+
                 <Col lg="6" md="6" sm="6" className="mb-2">
-          <FormGroup>
-            <Label>  Only For Registered Users:</Label>
-              <div>
-                <CustomInput 
-                  type="switch" 
-                  id="exampleCustomSwitch9" 
-                  name="item_name"
-                  // value={this.state.item_name}
-                  // onChange={this.changeHandler}
-                  label=""
-                />
-              </div>
-          </FormGroup>
-        </Col>
+                  <FormGroup>
+                    <Label> Only For Registered Users:</Label>
+                    <div>
+                      <CustomInput
+                        type="switch"
+                        id="exampleCustomSwitch9"
+                        name="item_name"
+                        // value={this.state.item_name}
+                        // onChange={this.changeHandler}
+                        label=""
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
 
                 {/* <Col lg="6" md="6">
                   <Label>Image</Label>
@@ -214,9 +208,17 @@ export class AddBundleOffer extends Component {
                 </Col> */}
               </Row>
               <Row>
-              <Button.Ripple  className="mr-1 mb-1" type="reset" color="danger">reset</Button.Ripple>
-                <Button.Ripple  className="mr-1 mb-1"  type="create"  color="primary"
-                  
+                <Button.Ripple
+                  className="mr-1 mb-1"
+                  type="reset"
+                  color="danger"
+                >
+                  reset
+                </Button.Ripple>
+                <Button.Ripple
+                  className="mr-1 mb-1"
+                  type="create"
+                  color="primary"
                 >
                   Create
                 </Button.Ripple>

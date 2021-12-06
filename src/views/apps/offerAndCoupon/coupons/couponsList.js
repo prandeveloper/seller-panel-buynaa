@@ -34,102 +34,127 @@ class BundleOffer extends React.Component {
       suppressMenu: true,
     },
     columnDefs: [
-  
       {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 150,
+        width: 100,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-      {
-        headerName: "Code",
-        field: "product_img",
-        filter: false,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <img
-                className="rounded-circle  mr-4"
-                src={params.data?.product_img}
-                alt=" brand"
-                height="40"
-                width="40"
-              />
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Amount",
-        field: "product_price",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="">
-              <span>{params.data.product_price}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Max Usage",
-        field: "product",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="">
-              <span>{params.data.product?.item_name}</span>
-            </div>
-          );
-        },
-      },
- 
       // {
-      //   headerName: "Quantity",
-      //   field: "product_qty",
-      //   filter: true,
+      //   headerName: "Code",
+      //   field: "product_img",
+      //   filter: false,
       //   width: 120,
       //   cellRendererFramework: (params) => {
       //     return (
-      //       <div className=" mr-4">
-      //         <span>{params.data.product_qty}</span>
+      //       <div className="d-flex align-items-center cursor-pointer">
+      //         <img
+      //           className="rounded-circle  mr-4"
+      //           src={params.data?.product_img}
+      //           alt=" brand"
+      //           height="40"
+      //           width="40"
+      //         />
       //       </div>
       //     );
       //   },
       // },
       {
-        headerName: "Detail",
-        field: "bundleoffer_title",
+        headerName: "Offer Code",
+        field: "offer_code",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
-            <div className=" mr-4">
-              <span>{params.data.bundleoffer_title}</span>
+            <div className="">
+              <span>{params.data.offer_code}</span>
             </div>
           );
         },
       },
-      // {
-      //   headerName: "Description",
-      //   field: "description",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.description}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        headerName: "Product Name",
+        field: "product?.product_name",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="">
+              <span>{params.data.product?.product_name}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Start Date",
+        field: "startDate",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="">
+              <span>{params.data.startDate}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Expire On",
+        field: "expireOn",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.expireOn}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Usage Limit",
+        field: "usage_limit",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.usage_limit}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Amont",
+        field: "amount",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.amount}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Description",
+        field: "description",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.description}</span>
+            </div>
+          );
+        },
+      },
 
       {
         headerName: "Status",
@@ -155,7 +180,7 @@ class BundleOffer extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Edit
+              {/* <Edit
                 className="mr-50"
                 size={15}
                 // onClick={() =>
@@ -163,7 +188,7 @@ class BundleOffer extends React.Component {
                 //     `/app/products/brand/editBrand/${params.data._id}`
                 //   )
                 // }
-              />
+              /> */}
               <Trash2
                 size={15}
                 onClick={() => {
@@ -180,7 +205,7 @@ class BundleOffer extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/allbundleoffer").then((response) => {
+    await axiosConfig.get("/getcoupon").then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
@@ -189,7 +214,7 @@ class BundleOffer extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/delbundleoffer/${id}`).then((response) => {
+    await axiosConfig.get(`/delcoupon/${id}`).then((response) => {
       console.log(response);
     });
   }
@@ -217,14 +242,12 @@ class BundleOffer extends React.Component {
       });
     }
   };
-  
+
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       <Row className="app-user-list">
-        <Col sm="12">
-         
-        </Col>
+        <Col sm="12"></Col>
         <Col sm="12">
           <Card>
             <Row className="m-2">

@@ -44,21 +44,16 @@ class SpecialOfferList extends React.Component {
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
+
       {
-        headerName: "Image",
-        field: "offer_img",
-        filter: false,
-        width: 120,
+        headerName: "Offer Title",
+        field: "offerTitle",
+        filter: true,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <img
-                className="rounded-circle  mr-4"
-                src={params.data.offer_img}
-                alt=" brand"
-                height="40"
-                width="40"
-              />
+            <div className=" mr-4">
+              <span>{params.data.offerTitle}</span>
             </div>
           );
         },
@@ -77,40 +72,14 @@ class SpecialOfferList extends React.Component {
         },
       },
       {
-        headerName: "Price",
-        field: "rate",
+        headerName: "Percentage Off",
+        field: "percentageOff",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className=" mr-4">
-              <span>{params.data.rate}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Quantity",
-        field: "product_qty",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div className=" mr-4">
-              <span>{params.data.product_qty}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Title",
-        field: "specialoffer_title",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className=" mr-4">
-              <span>{params.data.specialoffer_title}</span>
+              <span>{params.data.percentageOff}</span>
             </div>
           );
         },
@@ -140,7 +109,7 @@ class SpecialOfferList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Edit
+              {/* <Edit
                 className="mr-50"
                 size={15}
                 // onClick={() =>
@@ -148,9 +117,10 @@ class SpecialOfferList extends React.Component {
                 //     `/app/products/brand/editBrand/${params.data._id}`
                 //   )
                 // }
-              />
+              /> */}
               <Trash2
-                size={15}
+                style={{ color: "red" }}
+                size={20}
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
@@ -174,7 +144,7 @@ class SpecialOfferList extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/del_offer/${id}`).then((response) => {
+    await axiosConfig.get(`/deloffer/${id}`).then((response) => {
       console.log(response);
     });
   }

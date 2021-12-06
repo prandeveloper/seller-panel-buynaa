@@ -20,15 +20,11 @@ export class AddSpecialOffer extends Component {
     super(props);
 
     this.state = {
-      specialoffer_title: "",
+      offerTitle: "",
       product: "",
-      rate: "",
-      product_qty: "",
-      offer_img: "",
+      percentageOff: "",
       sortorder: "",
       status: "",
-      selectedFile: null,
-      selectedName: "",
     };
     this.state = {
       productS: [],
@@ -48,12 +44,6 @@ export class AddSpecialOffer extends Component {
       });
   }
 
-  onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files[0] });
-    this.setState({ selectedName: event.target.files[0].name });
-    console.log(event.target.files[0]);
-  };
-
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
@@ -62,17 +52,9 @@ export class AddSpecialOffer extends Component {
   };
   submitHandler = (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("specialoffer_title", this.state.specialoffer_title);
-    data.append("product", this.state.product);
-    data.append("rate", this.state.rate);
-    data.append("product_qty", this.state.product_qty);
-    data.append("sortorder", this.state.sortorder);
-    data.append("status", this.state.status);
-    data.append("offer_img", this.state.selectedFile, this.state.selectedName);
 
     axiosConfig
-      .post("/add_specialoffer", data)
+      .post("/addOffer", this.state)
       .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
@@ -112,11 +94,11 @@ export class AddSpecialOffer extends Component {
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row className="mb-2">
                 <Col lg="6" md="6">
-                  <Label>OfferTitle</Label>
+                  <Label>Offer Title</Label>
                   <Input
                     type="text"
-                    name="specialoffer_title"
-                    value={this.state.specialoffer_title}
+                    name="offerTitle"
+                    value={this.state.offerTitle}
                     onChange={this.changeHandler}
                   />
                 </Col>
@@ -139,27 +121,13 @@ export class AddSpecialOffer extends Component {
                 </Col>
 
                 <Col lg="6" md="6" className="mb-1">
-                  <Label>Quantity</Label>
+                  <Label>Percentage Off</Label>
                   <Input
-                    type="number"
-                    name="product_qty"
-                    value={this.state.product_qty}
+                    type="text"
+                    name="percentageOff"
+                    value={this.state.percentageOff}
                     onChange={this.changeHandler}
                   />
-                </Col>
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Rate</Label>
-                  <Input
-                    type="number"
-                    name="rate"
-                    value={this.state.rate}
-                    onChange={this.changeHandler}
-                  />
-                </Col>
-
-                <Col lg="6" md="6">
-                  <Label>Image</Label>
-                  <CustomInput type="file" onChange={this.onChangeHandler} />
                 </Col>
 
                 <Col lg="6" md="6" className="mb-1">
