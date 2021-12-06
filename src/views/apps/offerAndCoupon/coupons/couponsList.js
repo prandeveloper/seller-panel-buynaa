@@ -64,7 +64,7 @@ class BundleOffer extends React.Component {
       //   },
       // },
       {
-        headerName: "Offer Code",
+        headerName: "Coupon Code",
         field: "offer_code",
         filter: true,
         width: 150,
@@ -72,6 +72,19 @@ class BundleOffer extends React.Component {
           return (
             <div className="">
               <span>{params.data.offer_code}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Coupon Title",
+        field: "CouponTitle",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="">
+              <span>{params.data.CouponTitle}</span>
             </div>
           );
         },

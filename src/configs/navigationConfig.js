@@ -141,7 +141,7 @@ const navigationConfig = [
     children: [
       {
         id: "specialOfferList",
-        title: "Special Offers",
+        title: "Offers",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],

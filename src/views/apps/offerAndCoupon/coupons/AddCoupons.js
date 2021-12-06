@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
+import swal from "sweetalert";
 
 export class AddBundleOffer extends Component {
   constructor(props) {
@@ -28,6 +29,22 @@ export class AddBundleOffer extends Component {
       amount: "",
       status: "",
     };
+    this.state = {
+      productS: [],
+    };
+  }
+
+  async componentDidMount() {
+    //Product List
+    axiosConfig
+      .get("/getproduct")
+      .then((response) => {
+        console.log(response);
+        this.setState({ productS: response.data.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   changeHandler1 = (e) => {
@@ -38,24 +55,13 @@ export class AddBundleOffer extends Component {
   };
   submitHandler = (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("name", this.state.name);
-    data.append("sortorder", this.state.sortorder);
-    data.append("desc", this.state.desc);
-    // data.append("status", this.state.status);
-    data.append(
-      "product_img",
-      this.state.selectedFile,
-      this.state.selectedName
-    );
-    //   for (var value of data.values()) {
-    //     console.log(value);
-    //  }
+
     axiosConfig
-      .post(" /addproductcategory", data)
+      .post("/addcoupon", this.state)
       .then((response) => {
         console.log(response);
-        //this.props.history.push("/app/category/category");
+        swal("Success!", "Submitted SuccessFull!", "success");
+        this.props.history.push("/app/offerAndCoupon/coupons/couponsList");
       })
       .catch((error) => {
         console.log(error);
@@ -85,105 +91,81 @@ export class AddBundleOffer extends Component {
           <CardBody>
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row className="mb-2">
-                <Col lg="6" md="6">
-                  <Label>Coupon code: </Label>
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Coupon Title </Label>
                   <Input
                     type="text"
-                    name="code"
-                    // value={this.state.name}
-                    // onChange={this.changeHandler}
+                    name="CouponTitle"
+                    value={this.state.CouponTitle}
+                    onChange={this.changeHandler}
                   />
                 </Col>
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Discount type: </Label>
-                  <Input
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Product </Label>
+                  <CustomInput
                     type="select"
-                    name="desc"
-                    // value={this.state.desc}
-                    // onChange={this.changeHandler}
-                  />
+                    name="product"
+                    value={this.state.product}
+                    onChange={this.changeHandler}
+                  >
+                    <option>Select Product</option>
+                    {this.state.productS.map((productH) => (
+                      <option key={productH._id} value={productH._id}>
+                        {productH.product_name}
+                      </option>
+                    ))}
+                  </CustomInput>
                 </Col>
-
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Amount: </Label>
-                  <Input
-                    type="number"
-                    name="Price"
-                    // value={this.state.sortorder}
-                    // onChange={this.changeHandler}
-                  />
-                </Col>
-
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Linked to:</Label>
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Description </Label>
                   <Input
                     type="text"
-                    name="Quantity"
-                    // value={this.state.sortorder}
-                    // onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Max Usage Limit: </Label>
-                  <Input
-                    type="text"
-                    name="Quantity"
-                    // value={this.state.sortorder}
-                    // onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Min Amount: </Label>
-                  <Input
-                    type="number"
-                    name="Price"
-                    // value={this.state.sortorder}
-                    // onChange={this.changeHandler}
+                    name="description"
+                    value={this.state.description}
+                    onChange={this.changeHandler}
                   />
                 </Col>
 
-                {/* <Col lg="6" md="6" className="mb-1">
-                  <Label>Description</Label>
-                  <Input
-                    type="text"
-                    name="Description"
-                    // value={this.state.sortorder}
-                    // onChange={this.changeHandler}
-                  />
-                </Col> */}
-
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Expiry Date:</Label>
+                <Col lg="6" md="6" className="mb-2">
+                  <Label> Coupon Start Date</Label>
                   <Input
                     type="date"
-                    id="birthday"
-                    name="birthday"
-                    // value={this.state.sortorder}
-                    // onChange={this.changeHandler}
+                    name="startDate"
+                    value={this.state.startDate}
+                    onChange={this.changeHandler}
                   />
                 </Col>
 
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <FormGroup>
-                    <Label> Only For Registered Users:</Label>
-                    <div>
-                      <CustomInput
-                        type="switch"
-                        id="exampleCustomSwitch9"
-                        name="item_name"
-                        // value={this.state.item_name}
-                        // onChange={this.changeHandler}
-                        label=""
-                      />
-                    </div>
-                  </FormGroup>
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Coupon Expire date </Label>
+                  <Input
+                    type="date"
+                    name="expireOn"
+                    value={this.state.expireOn}
+                    onChange={this.changeHandler}
+                  />
                 </Col>
 
-                {/* <Col lg="6" md="6">
-                  <Label>Image</Label>
-                  <CustomInput type="file" onChange={this.onChangeHandler} />
-                </Col> */}
-                {/* <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Usage Limit</Label>
+                  <Input
+                    type="text"
+                    name="usage_limit"
+                    value={this.state.usage_limit}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" className="mb-1">
+                  <Label>Amount </Label>
+                  <Input
+                    type="text"
+                    name="amount"
+                    value={this.state.amount}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+
+                <Col lg="6" md="6" sm="6" className="mb-2 ">
                   <Label className="mb-1">Status</Label>
                   <div
                     className="form-label-group"
@@ -195,7 +177,12 @@ export class AddBundleOffer extends Component {
                       name="status"
                       value="Active"
                     />
-                    <span style={{ marginRight: "20px" }}>Active</span>
+                    <span
+                      className="font-weight-bolder"
+                      style={{ marginRight: "20px" }}
+                    >
+                      Active
+                    </span>
 
                     <input
                       style={{ marginRight: "3px" }}
@@ -203,24 +190,22 @@ export class AddBundleOffer extends Component {
                       name="status"
                       value="Inactive"
                     />
-                    <span style={{ marginRight: "3px" }}>Inactive</span>
+                    <span
+                      className="font-weight-bolder"
+                      style={{ marginRight: "3px" }}
+                    >
+                      Inactive
+                    </span>
                   </div>
-                </Col> */}
+                </Col>
               </Row>
               <Row>
                 <Button.Ripple
                   className="mr-1 mb-1"
-                  type="reset"
-                  color="danger"
-                >
-                  reset
-                </Button.Ripple>
-                <Button.Ripple
-                  className="mr-1 mb-1"
-                  type="create"
+                  type="submit"
                   color="primary"
                 >
-                  Create
+                  Add Coupon
                 </Button.Ripple>
               </Row>
             </Form>
