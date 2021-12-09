@@ -49,7 +49,7 @@ class UnitList extends React.Component {
         field: "units_title",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2 mr-4">
@@ -64,7 +64,7 @@ class UnitList extends React.Component {
         field: "value",
         filter: true,
         width: 120,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.value}</span>
@@ -77,7 +77,7 @@ class UnitList extends React.Component {
         field: "desc",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.desc}</span>
@@ -91,7 +91,7 @@ class UnitList extends React.Component {
         filter: true,
         width: 150,
 
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return params.value === "Active" ? (
             <div className="badge badge-pill badge-success ml-2">
               {params.data.status}
@@ -107,7 +107,7 @@ class UnitList extends React.Component {
         headerName: "Actions",
         field: "transactions",
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="actions cursor-pointer">
               <Edit
@@ -115,15 +115,13 @@ class UnitList extends React.Component {
                 size="25px"
                 color="blue"
                 onClick={() =>
-                  history.push(
-                    `/app/admin/products/unit/editUnit/${params.data._id}`
-                  )
+                  history.push(`/app/products/unit/editUnit/${params.data._id}`)
                 }
               />
               <Trash2
-                 className="mr-50"
-                 size="25px"
-                 color="red"
+                className="mr-50"
+                size="25px"
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   console.log(selectedData);
@@ -139,7 +137,7 @@ class UnitList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/viewallunits").then((response) => {
+    await axiosConfig.get("/viewallunits").then(response => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
@@ -148,12 +146,12 @@ class UnitList extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/delunits/${id}`).then((response) => {
+    await axiosConfig.get(`/delunits/${id}`).then(response => {
       console.log(response);
     });
   }
 
-  onGridReady = (params) => {
+  onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -163,11 +161,11 @@ class UnitList extends React.Component {
     });
   };
 
-  updateSearchQuery = (val) => {
+  updateSearchQuery = val => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = (val) => {
+  filterSize = val => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -193,9 +191,7 @@ class UnitList extends React.Component {
               <Col>
                 <Button
                   className=" btn btn-danger float-right"
-                  onClick={() =>
-                    history.push("/app/admin/products/unit/addUnit")
-                  }
+                  onClick={() => history.push("/app/products/unit/addUnit")}
                 >
                   Add New Unit
                 </Button>
@@ -253,9 +249,7 @@ class UnitList extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
-                          onChange={(e) =>
-                            this.updateSearchQuery(e.target.value)
-                          }
+                          onChange={e => this.updateSearchQuery(e.target.value)}
                           value={this.state.value}
                         />
                       </div>
@@ -270,7 +264,7 @@ class UnitList extends React.Component {
                     </div>
                   </div>
                   <ContextLayout.Consumer>
-                    {(context) => (
+                    {context => (
                       <AgGridReact
                         gridOptions={{}}
                         rowSelection="multiple"

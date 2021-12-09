@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import {
   Card,
   CardBody,
@@ -27,23 +26,23 @@ export class AddUnit extends Component {
     };
   }
 
-  changeHandler1 = (e) => {
+  changeHandler1 = e => {
     this.setState({ status: e.target.value });
   };
-  changeHandler = (e) => {
+  changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = (e) => {
+  submitHandler = e => {
     e.preventDefault();
     console.log(this.state);
 
     axiosConfig
       .post("/addunits", this.state)
-      .then((response) => {
+      .then(response => {
         console.log(response);
-        this.props.history.push("/app/admin/products/unit/unitList");
+        this.props.history.push("/app/products/unit/unitList");
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -60,9 +59,7 @@ export class AddUnit extends Component {
             <Col>
               <Button
                 className=" btn btn-danger float-right"
-                onClick={() =>
-                  history.push("/app/admin/products/unit/unitList")
-                }
+                onClick={() => history.push("/app/products/unit/unitList")}
               >
                 Back
               </Button>
@@ -128,7 +125,7 @@ export class AddUnit extends Component {
                     <Label className="mb-1">Status</Label>
                     <div
                       className="form-label-group"
-                      onChange={(e) => this.changeHandler1(e)}
+                      onChange={e => this.changeHandler1(e)}
                     >
                       <input
                         style={{ marginRight: "3px" }}

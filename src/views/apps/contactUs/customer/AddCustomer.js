@@ -28,13 +28,19 @@ export class AddCustomer extends Component {
     };
   }
 
-  changeHandler1 = (e) => {
+  changeHandler1 = e => {
     this.setState({ status: e.target.value });
   };
-  changeHandler = (e) => {
+  changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = (e) => {
+  changeHandler2 = e => {
+    if (e.target.value.length < 11)
+      this.setState({
+        [e.target.name]: e.target.value,
+      });
+  };
+  submitHandler = e => {
     e.preventDefault();
     // const data = new FormData();
     // data.append("employee_name", this.state.employee_name);
@@ -52,12 +58,12 @@ export class AddCustomer extends Component {
     //  }
     axiosConfig
       .post("http://35.154.86.59/api/user/customersignup", this.state)
-      .then((response) => {
+      .then(response => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/contactUs/customer/customerList");
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
         swal("Error!", "Error Received", "error");
       });
@@ -130,7 +136,7 @@ export class AddCustomer extends Component {
                       placeholder="Mobile Number"
                       name="mobile_no"
                       value={this.state.mobile_no}
-                      onChange={this.changeHandler}
+                      onChange={this.changeHandler2}
                     />
                   </FormGroup>
                 </Col>
@@ -153,7 +159,7 @@ export class AddCustomer extends Component {
                     <Label className="mb-1">Status</Label>
                     <div
                       className="form-label-group"
-                      onChange={(e) => this.changeHandler1(e)}
+                      onChange={e => this.changeHandler1(e)}
                     >
                       <input
                         style={{ marginRight: "3px", fontWeight: 800 }}

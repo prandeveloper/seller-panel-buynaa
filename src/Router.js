@@ -82,11 +82,11 @@ const viewCompletedPaymentsList = lazy(() =>
   import("./views/apps/sellerPayout/pendingPayments/ViewCompletedPayments")
 );
 
-// const allOrder = lazy(() => import("./views/apps/order/AllOrder"));
-// const pendingOrder = lazy(() => import("./views/apps/order/PendingOrder"));
-// const orderDelivered = lazy(() => import("./views/apps/order/OrderDelivered"));
-// const cancelledOrder = lazy(() => import("./views/apps/order/CancelledOrder"));
-// const returnedOrder = lazy(() => import("./views/apps/order/ReturnedOrder"));
+const allOrder = lazy(() => import("./views/apps/order/AllOrder"));
+const pendingOrder = lazy(() => import("./views/apps/order/PendingOrder"));
+const orderDelivered = lazy(() => import("./views/apps/order/OrderDelivered"));
+const cancelledOrder = lazy(() => import("./views/apps/order/CancelledOrder"));
+const returnedOrder = lazy(() => import("./views/apps/order/ReturnedOrder"));
 // const invoiceSetting = lazy(() => import("./views/apps/order/InvoiceSetting"));
 // const invoiceDesign = lazy(() => import("./views/apps/order/InvoiceDesign"));
 const newOrders = lazy(() => import("./views/apps/orders/NewOrders"));
@@ -354,7 +354,6 @@ const emailSetting = lazy(() =>
 const general = lazy(() => import("./views/apps/siteSetting/General"));
 const userProfile = lazy(() => import("./views/pages/profile/UserProfile"));
 const editStore = lazy(() => import("./views/apps/myStore/EditStore"));
-const addStore = lazy(() => import("./views/apps/myStore/AddStore"));
 const addMyStore = lazy(() => import("./views/apps/myStore/AddMyStore"));
 const viewStore = lazy(() => import("./views/apps/myStore/ViewStore"));
 const storeList = lazy(() => import("./views/apps/myStore/StoreList"));
@@ -546,10 +545,10 @@ const accessControl = lazy(() =>
 const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
   <Route
     {...rest}
-    render={(props) => {
+    render={props => {
       return (
         <ContextLayout.Consumer>
-          {(context) => {
+          {context => {
             let LayoutTag =
               fullLayout === true
                 ? context.fullLayout
@@ -569,7 +568,7 @@ const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
     }}
   />
 );
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.login.userRole,
   };
@@ -706,7 +705,7 @@ class AppRouter extends React.Component {
             component={editUnit}
           />
           <AppRoute path="/app/products/coupon" component={coupon} />
-          {/* <AppRoute path="/app/order/allorder" component={allOrder} />
+          <AppRoute path="/app/order/allorder" component={allOrder} />
           <AppRoute path="/app/order/pendingOrder" component={pendingOrder} />
           <AppRoute
             path="/app/order/orderDelivered"
@@ -717,7 +716,7 @@ class AppRouter extends React.Component {
             component={cancelledOrder}
           />
           <AppRoute path="/app/order/returnedOrder" component={returnedOrder} />
-          <AppRoute path="/app/order/invoiceDesign" component={invoiceDesign} />
+          {/*<AppRoute path="/app/order/invoiceDesign" component={invoiceDesign} />
           <AppRoute
             path="/app/order/invoiceSetting"
             component={invoiceSetting}
@@ -1054,8 +1053,7 @@ class AppRouter extends React.Component {
             fullLayout
           />
           <AppRoute path="/pages/profile/userProfile" component={userProfile} />
-          <AppRoute path="/app/myStore/editStore" component={editStore} />
-          <AppRoute path="/app/myStore/addStore" component={addStore} />
+          <AppRoute path="/app/myStore/editStore/:id" component={editStore} />
           <AppRoute path="/app/myStore/addMyStore" component={addMyStore} />
           <AppRoute path="/app/myStore/viewStore/:id" component={viewStore} />
           <AppRoute path="/app/myStore/storeList" component={storeList} />

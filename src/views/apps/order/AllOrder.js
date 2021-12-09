@@ -55,8 +55,8 @@ class AllOrder extends React.Component {
         headerName: "Order ID",
         field: "orderId",
         filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
+        width: 250,
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.orderId}</span>
@@ -65,28 +65,30 @@ class AllOrder extends React.Component {
         },
       },
       {
-        headerName: "Order Type",
+        headerName: "Payment Type",
         field: "order_type",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
-            <div className="d-flex align-items-center cursor-pointer">
-              {/* <span>{params.data?.user?.order_type}</span> */}
-              <span>{params.data.order_type}</span>
+            <div className="d-flex align-items-center">
+              <span>{params.data.payment_type}</span>
             </div>
           );
         },
       },
-      { 
+      {
         headerName: "Customer Name",
         field: "customername",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
-              <span>{params.data?.customer?.customername}</span>
+              <span>
+                {params.data?.customer?.first_name}{" "}
+                {params.data?.customer?.last_name}
+              </span>
             </div>
           );
         },
@@ -97,7 +99,7 @@ class AllOrder extends React.Component {
         field: "product.product_name",
         filter: true,
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data?.product?.product_name}</span>
@@ -110,7 +112,7 @@ class AllOrder extends React.Component {
         field: "qty",
         filter: true,
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.qty}</span>
@@ -124,7 +126,7 @@ class AllOrder extends React.Component {
         field: "purchaseprice",
         filter: true,
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.purchaseprice}</span>
@@ -132,12 +134,13 @@ class AllOrder extends React.Component {
           );
         },
       },
+
       {
         headerName: "Address",
         field: "delivery_address",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.delivery_address}</span>
@@ -151,7 +154,7 @@ class AllOrder extends React.Component {
         field: "order_date",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.order_date}</span>
@@ -164,7 +167,7 @@ class AllOrder extends React.Component {
         field: "status",
         filter: true,
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return params.value === "Delivery" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
@@ -215,14 +218,14 @@ class AllOrder extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getorder").then((response) => {
+    await axiosConfig.get("/getorder").then(response => {
       let rowData = response.data.data;
 
       this.setState({ rowData });
     });
   }
 
-  onGridReady = (params) => {
+  onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -232,11 +235,11 @@ class AllOrder extends React.Component {
     });
   };
 
-  updateSearchQuery = (val) => {
+  updateSearchQuery = val => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = (val) => {
+  filterSize = val => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -311,9 +314,7 @@ class AllOrder extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
-                          onChange={(e) =>
-                            this.updateSearchQuery(e.target.value)
-                          }
+                          onChange={e => this.updateSearchQuery(e.target.value)}
                           value={this.state.value}
                         />
                       </div>
@@ -328,7 +329,7 @@ class AllOrder extends React.Component {
                     </div>
                   </div>
                   <ContextLayout.Consumer>
-                    {(context) => (
+                    {context => (
                       <AgGridReact
                         gridOptions={{}}
                         rowSelection="multiple"

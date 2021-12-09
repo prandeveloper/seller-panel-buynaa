@@ -49,7 +49,7 @@ class StoreList extends React.Component {
         field: "shoplogo_img",
         filter: true,
         width: 120,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <img
@@ -69,10 +69,10 @@ class StoreList extends React.Component {
         filter: false,
         width: 200,
         setColumnVisible: false,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.storeImg.map((i) => (
+              {params.data.storeImg.map(i => (
                 <img
                   className=" rounded-circle border-black m-0"
                   src={i}
@@ -91,7 +91,7 @@ class StoreList extends React.Component {
         field: "store_name	",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.store_name}</span>
@@ -104,7 +104,7 @@ class StoreList extends React.Component {
         field: " store_desc",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.store_desc}</span>
@@ -117,7 +117,7 @@ class StoreList extends React.Component {
         field: "websiteUrl	",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.websiteUrl}</span>
@@ -130,7 +130,7 @@ class StoreList extends React.Component {
         field: "store_email	",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.store_email}</span>
@@ -143,7 +143,7 @@ class StoreList extends React.Component {
         field: "mobile	",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>
@@ -159,7 +159,7 @@ class StoreList extends React.Component {
         field: "day",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.day}</span>
@@ -168,16 +168,27 @@ class StoreList extends React.Component {
         },
       },
       {
-        headerName: "Time",
-        field: "startTym-endTym	",
+        headerName: "Opening Time",
+        field: "openingTym",
         filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
+        width: 150,
+        cellRendererFramework: params => {
           return (
             <div>
-              <span>
-                {params.data.startTym}-{params.data.endTym}
-              </span>
+              <span>{params.data.openingTym}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Closing Time",
+        field: "closingTym",
+        filter: true,
+        width: 150,
+        cellRendererFramework: params => {
+          return (
+            <div>
+              <span>{params.data.closingTym}</span>
             </div>
           );
         },
@@ -187,7 +198,7 @@ class StoreList extends React.Component {
         field: "address_line1,address_line2",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>
@@ -202,7 +213,7 @@ class StoreList extends React.Component {
         field: "landmark",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.landmark}</span>
@@ -215,7 +226,7 @@ class StoreList extends React.Component {
         field: "city",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.city}</span>
@@ -228,7 +239,7 @@ class StoreList extends React.Component {
         field: "state",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.state}</span>
@@ -241,7 +252,7 @@ class StoreList extends React.Component {
         field: "pincode",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.pincode}</span>
@@ -254,7 +265,7 @@ class StoreList extends React.Component {
         field: "gst_no",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.gst_no}</span>
@@ -267,7 +278,7 @@ class StoreList extends React.Component {
         field: "business_type",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.business_type}</span>
@@ -280,7 +291,7 @@ class StoreList extends React.Component {
         field: "pan_no",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.pan_no}</span>
@@ -293,7 +304,7 @@ class StoreList extends React.Component {
         field: "company_panno",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.company_panno}</span>
@@ -306,7 +317,7 @@ class StoreList extends React.Component {
         field: "address_proof",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div>
               <span>{params.data.address_proof}</span>
@@ -320,10 +331,10 @@ class StoreList extends React.Component {
         filter: false,
         width: 200,
         setColumnVisible: false,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.gstImg.map((i) => (
+              {params.data.gstImg.map(i => (
                 <img
                   className=" rounded-circle border-black m-0"
                   src={i}
@@ -342,10 +353,10 @@ class StoreList extends React.Component {
         filter: false,
         width: 200,
         setColumnVisible: false,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.storepan_img.map((i) => (
+              {params.data.storepan_img.map(i => (
                 <img
                   className=" rounded-circle border-black m-0"
                   src={i}
@@ -364,10 +375,10 @@ class StoreList extends React.Component {
         filter: false,
         width: 200,
         setColumnVisible: false,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.tradelicence_img.map((i) => (
+              {params.data.tradelicence_img.map(i => (
                 <img
                   className=" rounded-circle border-black m-0"
                   src={i}
@@ -386,10 +397,10 @@ class StoreList extends React.Component {
         filter: false,
         width: 200,
         setColumnVisible: false,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.companypan_img.map((i) => (
+              {params.data.companypan_img.map(i => (
                 <img
                   className=" rounded-circle border-black m-0"
                   src={i}
@@ -408,10 +419,10 @@ class StoreList extends React.Component {
         filter: false,
         width: 200,
         setColumnVisible: false,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.address_proof_img.map((i) => (
+              {params.data.address_proof_img.map(i => (
                 <img
                   className=" rounded-circle border-black m-0"
                   src={i}
@@ -430,7 +441,7 @@ class StoreList extends React.Component {
         field: "status",
         filter: true,
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return params.value === "Active" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
@@ -447,7 +458,7 @@ class StoreList extends React.Component {
         headerName: "Actions",
         field: "transactions",
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="actions cursor-pointer">
               <Eye
@@ -462,7 +473,9 @@ class StoreList extends React.Component {
                 className="mr-50"
                 size="25px"
                 color="blue"
-                onClick={() => history.push("/app/myStore/editStore")}
+                onClick={() =>
+                  history.push(`/app/myStore/editStore/${params.data._id}`)
+                }
               />
               <Trash2
                 size="25px"
@@ -481,7 +494,7 @@ class StoreList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getstore").then((response) => {
+    await axiosConfig.get("/getstore").then(response => {
       const rowData = response.data.data;
       console.log(rowData);
       console.log(response.data.data);
@@ -492,15 +505,15 @@ class StoreList extends React.Component {
   async runthisfunction(id) {
     console.log(id);
     await axiosConfig.get(`/del_store/${id}`).then(
-      (response) => {
+      response => {
         console.log(response);
       },
-      (error) => {
+      error => {
         console.log(error);
       }
     );
   }
-  onGridReady = (params) => {
+  onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -510,11 +523,11 @@ class StoreList extends React.Component {
     });
   };
 
-  updateSearchQuery = (val) => {
+  updateSearchQuery = val => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = (val) => {
+  filterSize = val => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -602,7 +615,7 @@ class StoreList extends React.Component {
                         <div className="table-input mr-1">
                           <Input
                             placeholder="search..."
-                            onChange={(e) =>
+                            onChange={e =>
                               this.updateSearchQuery(e.target.value)
                             }
                             value={this.state.value}
@@ -619,7 +632,7 @@ class StoreList extends React.Component {
                       </div>
                     </div>
                     <ContextLayout.Consumer>
-                      {(context) => (
+                      {context => (
                         <AgGridReact
                           gridOptions={{}}
                           rowSelection="multiple"

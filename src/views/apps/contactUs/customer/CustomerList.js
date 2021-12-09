@@ -57,25 +57,7 @@ class CustomerList extends React.Component {
           );
         },
       },
-      // {
-      //   headerName: "Image",
-      //   field: "upload_picture",
-      //   filter: false,
-      //   width: 120,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <img
-      //           className="rounded-circle  mr-4"
-      //           src={params.data.upload_picture}
-      //           alt=" brand"
-      //           height="40"
-      //           width="40"
-      //         />
-      //       </div>
-      //     );
-      //   },
-      // },
+
       {
         headerName: "First Name",
         field: "first_name",

@@ -31,19 +31,25 @@ export class AddEmployee extends Component {
     };
   }
 
-  onChangeHandler = (event) => {
+  onChangeHandler = event => {
     this.setState({ selectedFile: event.target.files[0] });
     this.setState({ selectedName: event.target.files[0].name });
     console.log(event.target.files[0]);
   };
 
-  changeHandler1 = (e) => {
+  changeHandler1 = e => {
     this.setState({ status: e.target.value });
   };
-  changeHandler = (e) => {
+  changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = (e) => {
+  changeHandler2 = e => {
+    if (e.target.value.length < 11)
+      this.setState({
+        [e.target.name]: e.target.value,
+      });
+  };
+  submitHandler = e => {
     e.preventDefault();
     const data = new FormData();
     data.append("employee_name", this.state.employee_name);
@@ -64,11 +70,11 @@ export class AddEmployee extends Component {
     //  }
     axiosConfig
       .post("/addemployee", data)
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.props.history.push("/app/contactUs/employee/employeeList");
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -116,7 +122,7 @@ export class AddEmployee extends Component {
                       placeholder="Phone Number"
                       name="phone_no"
                       value={this.state.phone_no}
-                      onChange={this.changeHandler}
+                      onChange={this.changeHandler2}
                     />
                   </FormGroup>
                 </Col>
@@ -185,7 +191,7 @@ export class AddEmployee extends Component {
                     <Label className="mb-1">Status</Label>
                     <div
                       className="form-label-group"
-                      onChange={(e) => this.changeHandler1(e)}
+                      onChange={e => this.changeHandler1(e)}
                     >
                       <input
                         style={{ marginRight: "3px", fontWeight: 800 }}

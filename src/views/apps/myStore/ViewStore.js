@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, CardBody, Row, Col, Button, Container } from "reactstrap";
-import { MapPin, Star, Globe, Mail, Clock } from "react-feather";
+import { MapPin, Star, Globe, Mail, Clock, Calendar } from "react-feather";
 import axiosConfig from "../../../axiosConfig";
 import { history } from "../../../history";
 import Carousel from "react-elastic-carousel";
@@ -19,12 +19,12 @@ export class ViewStore extends Component {
     let { id } = this.props.match.params;
     axiosConfig
       .get(`/getonestore/${id}`)
-      .then((response) => {
+      .then(response => {
         console.log(response);
         // console.log(response.data.data);
         this.setState({ data: response.data.data });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }
@@ -49,9 +49,9 @@ export class ViewStore extends Component {
           </Row>
           <CardBody className="pb-0">
             {/* <h1>{this.state.data.storeImg?.length}</h1> */}
-            <div>
+            <Container>
               <Carousel>
-                {this.state.data?.storeImg?.map((i) => (
+                {this.state.data?.storeImg?.map(i => (
                   <img
                     className="border-black m-0"
                     src={i}
@@ -60,15 +60,15 @@ export class ViewStore extends Component {
                   />
                 ))}
               </Carousel>
-            </div>
+            </Container>
 
-            <Row className="justify-content-md-center mt-3">
+            <Row className="justify-content-md-center mt-3 ">
               <Col sm="8" className="">
                 <Card className="">
                   <div className="card-block">
-                    <Row className="">
+                    <Row className="mb-3">
                       <Col className="">
-                        <h2 className="mt-2">{this.state.data.store_name}</h2>
+                        <h3 className="mt-2">{this.state.data.store_name}</h3>
                       </Col>
                       <div className="col-md-auto text-right">
                         {/* <div className="m-t-35">
@@ -118,12 +118,12 @@ export class ViewStore extends Component {
                         </h3>
                       </Col>
                       <div className="col">
-                        <h3>
+                        <h5>
                           {this.state.data.address_line1}{" "}
                           {this.state.data.address_line2}{" "}
                           {this.state.data.landmark} {this.state.data.city}{" "}
                           {this.state.data.state} {this.state.data.pincode}
-                        </h3>
+                        </h5>
                       </div>
                     </Row>
                     <div className="row">
@@ -133,11 +133,11 @@ export class ViewStore extends Component {
                         </h3>
                       </div>
                       <div className="col">
-                        <h3>
+                        <h5>
                           <a href="www.casualdress.com" target="_blank">
                             {this.state.data.websiteUrl}
                           </a>
-                        </h3>
+                        </h5>
                       </div>
                     </div>
                     <Row className="">
@@ -147,9 +147,25 @@ export class ViewStore extends Component {
                         </h3>
                       </Col>
                       <Col className="">
-                        <h3>
+                        <h5>
                           <a href="">{this.state.data.store_email}</a>
+                        </h5>
+                      </Col>
+                    </Row>
+                    <Row className="">
+                      <Col className="col-md-auto">
+                        <h3>
+                          <Calendar className="far fa-" />
                         </h3>
+                      </Col>
+                      <Col className="">
+                        <h5>
+                          <span className="text-success">Opening Days - </span>
+                          <span style={{ textTransform: "capitalize" }}>
+                            {" "}
+                            {this.state.data.day}
+                          </span>{" "}
+                        </h5>
                       </Col>
                     </Row>
                     <Row className="">
@@ -159,11 +175,9 @@ export class ViewStore extends Component {
                         </h3>
                       </Col>
                       <Col className="">
-                        <h3>
-                          <span className="text-success">Open</span>
-                          {this.state.data.day} {this.state.data.startTym}-
-                          {this.state.data.endTym}
-                        </h3>
+                        <h4>
+                          {this.state.data.startTym}-{this.state.data.endTym}
+                        </h4>
                       </Col>
                     </Row>
                     <p className="border-top mb-2 pt-1 mt-2"></p>
@@ -181,7 +195,7 @@ export class ViewStore extends Component {
                       </Col>
                     </Row>
                     <p className="border-top mb-2 pt-1 mt-2"></p>
-                    <Row className="">
+                    {/* <Row className="">
                       <Col className="">
                         <button type="button" className="btn btn-success">
                           Topwear{" "}
@@ -232,9 +246,9 @@ export class ViewStore extends Component {
                           </span>
                         </button>
                       </Col>
-                    </Row>
+                    </Row> */}
                     <p className="border-top m-b-20 p-t-10 m-t-20"></p>
-                    <div className="form-group text-right">
+                    {/* <div className="form-group text-right">
                       <button
                         type="submit"
                         className="btn btn-lg btn-outline-primary"
@@ -244,7 +258,7 @@ export class ViewStore extends Component {
                       <button type="submit" className="btn btn-lg btn-primary">
                         Save
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 </Card>
               </Col>

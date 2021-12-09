@@ -1,220 +1,588 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import {
   Card,
-  CardBody,
   CardHeader,
   CardTitle,
+  CardBody,
+  Row,
   Col,
   Form,
-  Row,
+  Label,
   Input,
   CustomInput,
-  Label,
   Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
 } from "reactstrap";
-// export class EditStore extends Component {
-const EditStore = (props) => {
-  const {
-    // buttonLabel,
-    // requestfordelete,
-    className,
-  } = props;
+import axiosConfig from "../../../axiosConfig";
+import swal from "sweetalert";
+import { history } from "../../../history";
 
-  const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal);
-  // render() {
-  return (
-    <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Edit Store Details</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <Form className="m-1">
-            <Row className="mb-2">
-              <Col lg="4" md="4" sm="4" className="mb-2">
-                <Label>Store ID:</Label>
-                <Input type="email" placeholder="Email" />
-              </Col>
-              <Col lg="4" md="4">
-                <Label>Store Name: </Label>
-                <Input type="text" placeholder="Enter Category" name="" />
-              </Col>
-              <Col lg="4" md="4" sm="4" className="mb-2">
-                <Label>Store Email:</Label>
-                <Input type="email" placeholder="Email" />
-              </Col>{" "}
-              <Col lg="4" md="4" sm="4" className="mb-2">
-                <Label>Mobile Number:</Label>
-                <Input
-                  required
-                  type="text"
-                  placeholder="Mobile Number"
-                  name="mobile_no"
-                  // value={this.state.mobile_no}
-                  // onChange={this.changeHandler}
-                />
-              </Col>
-              <Col lg="4" md="4" sm="4" className="mb-2">
-                <Label>VAT/GSTIN No:</Label>
-                <Input
-                  type="text"
-                  placeholder="VAT/GSTIN No:"
-                  name="num"
-                  // value={this.state.phone_no}
-                  // onChange={this.changeHandler}
-                />
-              </Col>
-              <Col lg="4" md="4" className="mb-1">
-                <Label>Store Address: *</Label>
-                <Input type="textarea" name="text" />
-              </Col>
-              <Col lg="4" md="4" sm="4" className="mb-2">
-                <Label>City / District:</Label>
-                <CustomInput
-                  required
-                  type="select"
-                  placeholder="City"
-                  name="city"
-                  // value={this.state.city}
-                  // onChange={this.changeHandler}
-                >
-                  <option value="indore">Indore</option>
-                  <option value="sagar">Sagar</option>
-                  <option value="jabalpur">Jabalpur</option>
-                  <option value="delhi">Delhi</option>
-                </CustomInput>
-              </Col>
-              <Col lg="4" md="4" sm="4" className="mb-2">
-                <Label>State:</Label>
-                <CustomInput
-                  required
-                  type="select"
-                  placeholder="State"
-                  name="state"
-                  // value={this.state.state}
-                  // onChange={this.changeHandler}
-                >
-                  <option value="state">State</option>
-                  <option value="mp">MP</option>
-                  <option value="goa">Goa</option>
-                  <option value="maharashtra">Maharashtra</option>
-                  <option value="gujarat">Gujarat</option>
-                </CustomInput>
-              </Col>
-              <Col lg="4" md="4" sm="4" className="mb-2">
-                <Label>Country:</Label>
-                <CustomInput
-                  required
-                  type="select"
-                  placeholder="Country"
-                  name="country"
-                  // value={this.state.country}
-                  // onChange={this.changeHandler}
-                >
-                  <option value="country">Country</option>
-                  <option value="algeria">Algeria</option>
-                  <option value="austria">Austria</option>
-                  <option value="canada">Canada</option>
-                  <option value="UK">UK</option>
-                </CustomInput>
-              </Col>
-              <Col lg="4" md="4" sm="4" className="mb-2">
-                <Label>PinCode:</Label>
-                <Input
-                  required
-                  type="text"
-                  placeholder="Pin Code"
-                  name="pincode"
-                  //  value={this.state.pincode}
-                  //  onChange={this.changeHandler}
-                />
-              </Col>
-              <Col lg="4" md="4">
-                <Label>Choose Store Logo:</Label>
-                <Input type="file" name="file" placeholder="logo" />
-              </Col>
-            </Row>
-            <Row>
-              <Button.Ripple
-                color="primary"
-                type="submit"
-                className="mr-1 mb-1"
-              >
-                Update
-              </Button.Ripple>
+export default class EditStore extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      store_name: "",
+      store_desc: "",
+      websiteUrl: "",
+      store_email: "",
+      phone_no: "",
+      altphone_no: "",
+      // altphone_no2: "",
+      day: "",
+      startTym: "",
+      endTym: "",
+      address_line1: "",
+      address_line2: "",
+      landmark: "",
+      state: "",
+      city: "",
+      pincode: "",
+      gst_no: "",
+      business_type: "",
+      pan_no: "",
+      company_panno: "",
+      address_proof: "",
+      storeImg: "",
+      shoplogo_img: "",
+      gstImg: "",
+      storepan_img: "",
+      tradelicence_img: "",
+      companypan_img: "",
+      address_proof_img: "",
+      sortorder: "",
+      selectedFile: undefined,
+      selectedName: "",
+      selectedFile1: undefined,
+      selectedName1: "",
+      selectedFile2: undefined,
+      selectedName2: "",
+      selectedFile3: undefined,
+      selectedName3: "",
+      selectedFile4: undefined,
+      selectedName4: "",
+      selectedFile5: undefined,
+      selectedName5: "",
+      selectedFile6: undefined,
+      selectedName6: "",
+      status: "",
+    };
+  }
+
+  componentDidMount() {
+    let { id } = this.props.match.params;
+    axiosConfig
+      .get(`/getonestore/${id}`)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          store_name: response.data.data.store_name,
+          store_desc: response.data.data.store_desc,
+          websiteUrl: response.data.data.websiteUrl,
+          store_email: response.data.data.store_email,
+          phone_no: response.data.data.phone_no,
+          altphone_no: response.data.data.altphone_no,
+          day: response.data.data.day,
+          startTym: response.data.data.startTym,
+          endTym: response.data.data.endTym,
+          address_line1: response.data.data.address_line1,
+          address_line2: response.data.data.address_line2,
+          landmark: response.data.data.landmark,
+          state: response.data.data.state,
+          city: response.data.data.city,
+          pincode: response.data.data.pincode,
+          gst_no: response.data.data.gst_no,
+          business_type: response.data.data.business_type,
+          pan_no: response.data.data.pan_no,
+          company_panno: response.data.data.company_panno,
+          address_proof: response.data.data.address_proof,
+          sortorder: response.data.data.sortorder,
+          storeImg: response.data.data.storeImg,
+          shoplogo_img: response.data.data.shoplogo_img,
+          gstImg: response.data.data.gstImg,
+          storepan_img: response.data.data.storepan_img,
+          tradelicence_img: response.data.data.tradelicence_img,
+          companypan_img: response.data.data.companypan_img,
+          address_proof_img: response.data.data.address_proof_img,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  // onChangeHandler = (event) => {
+  //   this.setState({ selectedFile: event.target.files[0] });
+  //   this.setState({ selectedName: event.target.files[0].name });
+  //   console.log(event.target.files[0]);
+  // };
+  onChangeHandler = (event) => {
+    this.setState({ selectedFile: event.target.files });
+    this.setState({ selectedName: event.target.files.name });
+    console.log(event.target.files);
+  };
+  onChangeHandler1 = (event) => {
+    this.setState({ selectedFile1: event.target.files });
+    this.setState({ selectedName1: event.target.files.name });
+    console.log(event.target.files);
+  };
+  onChangeHandler2 = (event) => {
+    this.setState({ selectedFile2: event.target.files });
+    this.setState({ selectedName2: event.target.files.name });
+    console.log(event.target.files);
+  };
+  onChangeHandler3 = (event) => {
+    this.setState({ selectedFile3: event.target.files });
+    this.setState({ selectedName3: event.target.files.name });
+    console.log(event.target.files);
+  };
+  onChangeHandler4 = (event) => {
+    this.setState({ selectedFile4: event.target.files });
+    this.setState({ selectedName4: event.target.files.name });
+    console.log(event.target.files);
+  };
+  onChangeHandler5 = (event) => {
+    this.setState({ selectedFile5: event.target.files });
+    this.setState({ selectedName5: event.target.files.name });
+    console.log(event.target.files);
+  };
+  onChangeHandler6 = (event) => {
+    this.setState({ selectedFile6: event.target.files });
+    this.setState({ selectedName6: event.target.files.name });
+    console.log(event.target.files);
+  };
+  changeHandler1 = (e) => {
+    this.setState({ status: e.target.value });
+  };
+  changeHandler = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  submitHandler = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("store_name", this.state.store_name);
+    data.append("store_desc", this.state.store_desc);
+    data.append("websiteUrl", this.state.websiteUrl);
+    data.append("store_email", this.state.store_email);
+    data.append("phone_no", this.state.phone_no);
+    data.append("altphone_no", this.state.altphone_no);
+    data.append("day", this.state.day);
+    data.append("startTym", this.state.startTym);
+    data.append("endTym", this.state.endTym);
+    data.append("address_line1", this.state.address_line1);
+    data.append("address_line2", this.state.address_line2);
+    data.append("landmark", this.state.landmark);
+    data.append("state", this.state.state);
+    data.append("city", this.state.city);
+    data.append("pincode", this.state.pincode);
+    data.append("gst_no", this.state.gst_no);
+    data.append("business_type", this.state.business_type);
+    data.append("pan_no", this.state.pan_no);
+    data.append("company_panno", this.state.company_panno);
+    data.append("address_proof", this.state.address_proof);
+    data.append("sortorder", this.state.sortorder);
+    data.append("status", this.state.status);
+    for (const file of this.state.selectedFile) {
+      if (this.state.selectedFile !== null) {
+        data.append("storeImg", file, file.name);
+      }
+    }
+    for (const file of this.state.selectedFile1) {
+      if (this.state.selectedFile1 !== null) {
+        data.append("shoplogo_img", file, file.name);
+      }
+    }
+    for (const file of this.state.selectedFile2) {
+      if (this.state.selectedFile2 !== null) {
+        data.append("gstImg", file, file.name);
+      }
+    }
+    for (const file of this.state.selectedFile3) {
+      if (this.state.selectedFile3 !== null) {
+        data.append("storepan_img", file, file.name);
+      }
+    }
+    for (const file of this.state.selectedFile4) {
+      if (this.state.selectedFile4 !== null) {
+        data.append("tradelicence_img", file, file.name);
+      }
+    }
+    for (const file of this.state.selectedFile5) {
+      if (this.state.selectedFile5 !== null) {
+        data.append("companypan_img", file, file.name);
+      }
+    }
+    for (const file of this.state.selectedFile6) {
+      if (this.state.selectedFile6 !== null) {
+        data.append("address_proof_img", file, file.name);
+      }
+    }
+
+    for (var key of data.keys()) {
+      console.log(key);
+    }
+    for (var value of data.values()) {
+      console.log(value);
+    }
+
+    axiosConfig
+      .post("/addstore", data)
+      .then((response) => {
+        console.log(response);
+        swal("Success!", "Submitted SuccessFull!", "success");
+        this.props.history.push("/app/myStore/storeList");
+      })
+      .catch((error) => {
+        swal("Error!", "Error Received", "error");
+        console.log(error);
+      });
+  };
+
+  render() {
+    return (
+      <div>
+        <Card>
+          <Row className="m-2">
+            <Col>
+              <h1 col-sm-6 className="float-left">
+                Add Store
+              </h1>
+            </Col>
+            <Col>
               <Button
-                color="danger"
-                type="submit"
-                className="mr-1 mb-1"
-                onClick={toggle}
+                className=" btn btn-danger float-right"
+                onClick={() => history.push("/app/myStore/storeList")}
               >
-                Request for delete !
+                Back
               </Button>
-              <Modal isOpen={modal} toggle={toggle} className={className}>
-                <ModalHeader toggle={toggle}>Modal title</ModalHeader>
-                <ModalBody>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="primary" onClick={toggle}>
-                    Do Something
-                  </Button>{" "}
-                  <Button color="secondary" onClick={toggle}>
-                    Cancel
-                  </Button>
-                </ModalFooter>
-              </Modal>
-            </Row>
-          </Form>
-        </CardBody>
-      </Card>
-    </div>
-  );
-};
-// }
-export default EditStore;
+            </Col>
+          </Row>
+          <CardBody>
+            <Form className="m-1" onSubmit={this.submitHandler}>
+              <Row>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Store Name</Label>
+                  <Input
+                    type="text"
+                    name="store_name"
+                    placeholder="Enter Store Name"
+                    value={this.state.store_name}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Store Description </Label>
+                  <Input
+                    type="text"
+                    name="store_desc"
+                    placeholder="Store description"
+                    value={this.state.store_desc}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Website Url</Label>
+                  <Input
+                    type="text"
+                    name="websiteUrl"
+                    placeholder="Enter Website Url"
+                    value={this.state.websiteUrl}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Store Email</Label>
+                  <Input
+                    type="email"
+                    name="store_email"
+                    placeholder="Email"
+                    value={this.state.store_email}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Phone No.</Label>
+                  <Input
+                    type="number"
+                    name="phone_no"
+                    placeholder="Phone No."
+                    value={this.state.phone_no}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Alt Phone No.</Label>
+                  <Input
+                    type="number"
+                    name="altphone_no"
+                    placeholder="Alt Phone No."
+                    value={this.state.altphone_no}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                {/* <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Alt Phone No2.</Label>
+                  <Input
+                    type="number"
+                    name="altphone_no2"
+                    placeholder="Alt Phone No2."
+                    value={this.state.altphone_no2}
+                    onChange={this.changeHandler}
+                  />
+                </Col> */}
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Day</Label>
+                  <CustomInput
+                    type="select"
+                    name="day"
+                    placeholder="Day"
+                    value={this.state.day}
+                    onChange={this.changeHandler}
+                  >
+                    <option value="Monday - Friday">Monday - Friday</option>
+                    <option value="Monday - Saturday">Monday - Saturday</option>
+                    <option value="Monday - Sunday">Monday - Sunday</option>
+                    <option value="Monday - Thrusday">Monday - Thrusday</option>
+                  </CustomInput>
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Opening Time</Label>
+                  <Input
+                    type="time"
+                    name="startTym"
+                    placeholder="Start Time"
+                    value={this.state.startTym}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Closing Time</Label>
+                  <Input
+                    type="time"
+                    name="endTym"
+                    placeholder="End Time"
+                    value={this.state.endTym}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Address Line1 </Label>
+                  <Input
+                    type="textarea"
+                    name="address_line1"
+                    placeholder="Adderss Line1"
+                    value={this.state.address_line1}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Address Line2 </Label>
+                  <Input
+                    type="textarea"
+                    name="address_line2"
+                    placeholder="Adderss Line2"
+                    value={this.state.address_line2}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Landmark </Label>
+                  <Input
+                    type="text"
+                    name="landmark"
+                    placeholder="Landmark"
+                    value={this.state.landmark}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>State</Label>
+                  <Input
+                    type="text"
+                    name="state"
+                    placeholder="State"
+                    value={this.state.state}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>City</Label>
+                  <Input
+                    type="text"
+                    name="city"
+                    placeholder="City"
+                    value={this.state.city}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>GSTIN No.</Label>
+                  <Input
+                    type="text"
+                    name="gst_no"
+                    value={this.state.gst_no}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Pin Code</Label>
+                  <Input
+                    type="number"
+                    name="pincode"
+                    value={this.state.pincode}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
 
-//  {/* <Col lg="4" md="4">
-//                 <Label> </Label>
-//                 <CustomInput type="select" placeholder="" name="" >
-//                 <option>1</option>
-//                 <option>2</option>
-//                 <option>3</option>
-//                 <option>4</option>
-//                 </CustomInput>
-//               </Col> */}
-//               {/* <Col lg="4" md="4" sm="4" className="mb-2 mt-1">
-//                 <Label className="mb-1">Status</Label>
-//                 <div
-//                   className="form-label-group"
-//                  // onChange={(e) => this.changeHandler1(e)}
-//                 >
-//                   <input
-//                     style={{ marginRight: "3px" }}
-//                     type="radio"
-//                     name="status"
-//                     value="Active"
-//                   />
-//                   <span style={{ marginRight: "20px" }}>Active</span>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Business Type</Label>
+                  <Input
+                    type="text"
+                    name="business_type"
+                    placeholder="Business Type"
+                    value={this.state.business_type}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Pan No.</Label>
+                  <Input
+                    type="text"
+                    name="pan_no"
+                    value={this.state.pan_no}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Company Pan No.</Label>
+                  <Input
+                    type="text"
+                    name="company_panno"
+                    value={this.state.company_panno}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Address Proof ID </Label>
+                  <CustomInput
+                    type="select"
+                    name="address_proof"
+                    placeholder="Adderss Proof"
+                    value={this.state.address_proof}
+                    onChange={this.changeHandler}
+                  >
+                    <option value="Address Proof ID">Address Proof ID</option>
+                    <option value="Electricity Bill">Electricity Bill</option>
+                    <option value="Telephone Bill">Telephone Bill</option>
+                    <option value="Rental Agreementy">Rental Agreement</option>
+                  </CustomInput>
+                </Col>
 
-//                   <input
-//                     style={{ marginRight: "3px" }}
-//                     type="radio"
-//                     name="status"
-//                     value="Inactive"
-//                   />
-//                   <span style={{ marginRight: "3px" }}>Inactive</span>
-//                 </div>
-//               </Col> */}
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Sort Oder</Label>
+                  <Input
+                    type="number"
+                    name="sortorder"
+                    placeholder="Sort Order"
+                    value={this.state.sortorder}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Store image</Label>
+                  <CustomInput
+                    type="file"
+                    multiple
+                    onChange={this.onChangeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Shop Logo Image</Label>
+                  <CustomInput
+                    type="file"
+                    multiple
+                    onChange={this.onChangeHandler1}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>GST Image</Label>
+                  <CustomInput
+                    type="file"
+                    multiple
+                    onChange={this.onChangeHandler2}
+                  />
+                </Col>
+
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Tradelicence Image</Label>
+                  <CustomInput
+                    type="file"
+                    multiple
+                    onChange={this.onChangeHandler4}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Personal Image</Label>
+                  <CustomInput
+                    type="file"
+                    multiple
+                    onChange={this.onChangeHandler3}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Company Pan Image</Label>
+                  <CustomInput
+                    type="file"
+                    multiple
+                    onChange={this.onChangeHandler5}
+                  />
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Address Proof Image</Label>
+                  <CustomInput
+                    type="file"
+                    multiple
+                    onChange={this.onChangeHandler6}
+                  />
+                </Col>
+
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label className="mb-1">Status</Label>
+                  <div
+                    className="form-label-group"
+                    onChange={(e) => this.changeHandler1(e)}
+                  >
+                    <input
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="status"
+                      value="Active"
+                    />
+                    <span style={{ marginRight: "20px" }}>Active</span>
+                    <input
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="status"
+                      value="Inactive"
+                    />
+                    <span style={{ marginRight: "3px" }}>Inactive</span>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Button.Ripple
+                    color="primary"
+                    type="submit"
+                    className="mr-1 mb-1"
+                  >
+                    Add Store
+                  </Button.Ripple>
+                </Col>
+              </Row>
+            </Form>
+          </CardBody>
+        </Card>
+      </div>
+    );
+  }
+}

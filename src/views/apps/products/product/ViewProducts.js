@@ -19,6 +19,7 @@ import axiosConfig from "../../../../axiosConfig";
 import Swiper from "react-id-swiper";
 import "swiper/css/swiper.css";
 import "../../../../assets/scss/plugins/extensions/swiper.scss";
+import Carousel from "react-elastic-carousel";
 
 const params = {
   spaceBetween: 10,
@@ -48,11 +49,11 @@ class ViewProducts extends React.Component {
     let { id } = this.props.match.params;
     axiosConfig
       .get(`/getoneproduct/${id}`)
-      .then((response) => {
+      .then(response => {
         console.log(response.data.data);
         this.setState({ data: response.data.data });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }
@@ -82,10 +83,24 @@ class ViewProducts extends React.Component {
             </Col>
           </Row>
           <CardBody className="pb-0">
+            <Card>
+              <div>
+                <Carousel>
+                  {this.state.data?.product_img?.map(i => (
+                    <img
+                      className="border-black m-0"
+                      src={i}
+                      alt="user avatar"
+                      height="400"
+                    />
+                  ))}
+                </Carousel>
+              </div>
+            </Card>
             <Row className="mb-5 mt-2">
-              <Col lg="5">
+              {/* <Col lg="5">
                 <Card>
-                  <CardBody>
+                   <CardBody>
                     <Swiper {...params}>
                       <div>
                         {this.state.data.product_img?.map((i) => (
@@ -98,9 +113,9 @@ class ViewProducts extends React.Component {
                         ))}
                       </div>
                     </Swiper>
-                  </CardBody>
+                  </CardBody> 
                 </Card>
-              </Col>
+              </Col> */}
               {/* <Col
                 className="d-flex align-items-start justify-content-center mb-2 mb-md-0"
                 sm="12"
