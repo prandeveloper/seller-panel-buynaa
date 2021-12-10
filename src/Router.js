@@ -19,7 +19,7 @@ const analyticsDashboard = lazy(() =>
 const ecommerceDashboard = lazy(() =>
   import("./views/dashboard/ecommerce/EcommerceDashboard")
 );
-// const home = lazy(() => import("./views/pages/landingPage/Home"));
+const home = lazy(() => import("./views/pages/landingPage/Home"));
 // const sellerDashboard = lazy(()=> import("./views/dashboard/seller/SellerDeshboard"));
 // My Component starts here
 
@@ -89,8 +89,6 @@ const cancelledOrder = lazy(() => import("./views/apps/order/CancelledOrder"));
 const returnedOrder = lazy(() => import("./views/apps/order/ReturnedOrder"));
 // const invoiceSetting = lazy(() => import("./views/apps/order/InvoiceSetting"));
 // const invoiceDesign = lazy(() => import("./views/apps/order/InvoiceDesign"));
-const newOrders = lazy(() => import("./views/apps/orders/NewOrders"));
-const orderList = lazy(() => import("./views/apps/orders/OrderList"));
 
 const status = lazy(() => import("./views/apps/order/Status"));
 const newPurchaseOrder = lazy(() =>
@@ -143,7 +141,6 @@ const addCoupons = lazy(() =>
   import("./views/apps/offerAndCoupon/coupons/AddCoupons")
 );
 
-const commission = lazy(() => import("./views/apps/commission/Commission"));
 const churnRate = lazy(() => import("./views/apps/churnRate/ChurnRate"));
 // const pendingPayment = lazy(() => import("./views/apps/pendingPayment/PendingPayment"));
 // const subscription = lazy(() => import("./views/apps/website/Subscription"));
@@ -223,27 +220,6 @@ const viewSystemMails = lazy(() =>
   import("./views/apps/activity/ViewSystemMails")
 );
 
-const fIFOCostLotTracking = lazy(() =>
-  import("./views/apps/inventory/FIFOCostLotTracking")
-);
-const inventoryAgingSummary = lazy(() =>
-  import("./views/apps/inventory/InventoryAgingSummary")
-);
-const inventorySummary = lazy(() =>
-  import("./views/apps/inventory/InventorySummary")
-);
-const leadTimeDemand = lazy(() =>
-  import("./views/apps/inventory/LeadTimeDemand")
-);
-const stockAdjustmentReport = lazy(() =>
-  import("./views/apps/inventory/StockAdjustmentReport")
-);
-const stockSummaryReport = lazy(() =>
-  import("./views/apps/inventory/StockSummaryReport")
-);
-const stockTransferReport = lazy(() =>
-  import("./views/apps/inventory/StockTransferReport")
-);
 const historyByProductCat = lazy(() =>
   import("./views/apps/byProduct/HistoryByProductCat")
 );
@@ -291,13 +267,6 @@ const walletList = lazy(() => import("./views/apps/wallet/WalletList"));
 const addWallet = lazy(() => import("./views/apps/wallet/AddWallet"));
 const viewWallet = lazy(() => import("./views/apps/wallet/ViewWallet"));
 
-const contactUsList = lazy(() =>
-  import("./views/apps/contactUs/ContactUsList")
-);
-const jobRequest = lazy(() => import("./views/apps/contactUs/JobRequest"));
-const enquiryFormList = lazy(() =>
-  import("./views/apps/contactUs/EnquiryFormList")
-);
 const employeeList = lazy(() =>
   import("./views/apps/contactUs/employee/EmployeeList")
 );
@@ -329,14 +298,7 @@ const editSupplier = lazy(() =>
 const importDemo = lazy(() =>
   import("./views/apps/helpAndSupport/importDemo/ImportDemo")
 );
-const privacyPolicy = lazy(() =>
-  import("./views/apps/privacyPolicy/PrivacyPolicy")
-);
-const termsAndCondition = lazy(() =>
-  import("./views/apps/termsAndCondition/TAndCList")
-);
-const addTAndC = lazy(() => import("./views/apps/termsAndCondition/AddTAndC"));
-const addPolicy = lazy(() => import("./views/apps/privacyPolicy/AddPolicy"));
+
 const Login = lazy(() => import("./views/pages/authentication/login/Login"));
 const Subs = lazy(() =>
   import("./views/pages/authentication/subscription/Subs")
@@ -581,11 +543,12 @@ class AppRouter extends React.Component {
       // Set the directory path if you are deploying in sub-folder
       <Router history={history}>
         <Switch>
-          <AppRoute exact path="/" component={analyticsDashboard} />
+          <AppRoute path="/analyticsDashboard" component={analyticsDashboard} />
           <AppRoute
             path="/ecommerce-dashboard"
             component={ecommerceDashboard}
           />
+          <AppRoute exact={true} path="/" component={home} fullLayout />
           {/* <AppRoute path="/pages/home" component={home} fullLayout /> */}
           {/* <AppRoute exact path="/seller-dashboard" component={sellerDashboard} /> */}
           {/* My components starts all my app components*/}
@@ -721,8 +684,6 @@ class AppRouter extends React.Component {
             path="/app/order/invoiceSetting"
             component={invoiceSetting}
           /> */}
-          <AppRoute path="/app/orders/newOrders" component={newOrders} />
-          <AppRoute path="/app/orders/orderList" component={orderList} />
           <AppRoute path="/app/order/status" component={status} />
           <AppRoute
             path="/app/purchase/newPurchaseOrder"
@@ -784,7 +745,6 @@ class AppRouter extends React.Component {
             path="/app/offerAndCoupon/coupons/addCoupons"
             component={addCoupons}
           />
-          <AppRoute path="/app/commission/commission" component={commission} />
           <AppRoute path="/app/churnRate/churnRate" component={churnRate} />
           {/* <AppRoute path="/app/pendingPayment/pendingPayment" component={pendingPayment} /> */}
           <AppRoute
@@ -891,34 +851,6 @@ class AppRouter extends React.Component {
             component={viewSystemMails}
           />
           <AppRoute
-            path="/app/inventory/fIFOCostLotTracking"
-            component={fIFOCostLotTracking}
-          />
-          <AppRoute
-            path="/app/inventory/inventoryAgingSummary"
-            component={inventoryAgingSummary}
-          />
-          <AppRoute
-            path="/app/inventory/inventorySummary"
-            component={inventorySummary}
-          />
-          <AppRoute
-            path="/app/inventory/leadTimeDemand"
-            component={leadTimeDemand}
-          />
-          <AppRoute
-            path="/app/inventory/stockAdjustmentReport"
-            component={stockAdjustmentReport}
-          />
-          <AppRoute
-            path="/app/inventory/stockSummaryReport"
-            component={stockSummaryReport}
-          />
-          <AppRoute
-            path="/app/inventory/stockTransferReport"
-            component={stockTransferReport}
-          />
-          <AppRoute
             path="/app/ByProduct/historyByProductCat"
             component={historyByProductCat}
           />
@@ -971,10 +903,6 @@ class AppRouter extends React.Component {
           />
           <AppRoute path="/app/siteSetting/general" component={general} />
           <AppRoute
-            path="/app/contactUs/contactUsList"
-            component={contactUsList}
-          />
-          <AppRoute
             path="/app/contactUs/employee/employeeList"
             component={employeeList}
           />
@@ -1011,30 +939,12 @@ class AppRouter extends React.Component {
             component={editSupplier}
           />
           <AppRoute
-            path="/app/contactUs/enquiryFormList"
-            component={enquiryFormList}
-          />
-          <AppRoute path="/app/contactUs/jobRequest" component={jobRequest} />
-          <AppRoute
             path="/app/helpAndSupport/importDemo/ImportDemo"
             component={importDemo}
           />
           <AppRoute path="/app/wallet/walletList" component={walletList} />
           <AppRoute path="/app/wallet/addWallet" component={addWallet} />
           <AppRoute path="/app/wallet/viewWallet" component={viewWallet} />
-          <AppRoute
-            path="/app/privacyPolicy/privacyPolicy"
-            component={privacyPolicy}
-          />
-          <AppRoute
-            path="/app/termsAndCondition/tAndCList"
-            component={termsAndCondition}
-          />
-          <AppRoute
-            path="/app/termsAndCondition/addTAndC"
-            component={addTAndC}
-          />
-          <AppRoute path="/app/privacyPolicy/addPolicy" component={addPolicy} />
           <AppRoute path="/app/slider/sliderList" component={sliderList} />
           <AppRoute path="/app/slider/addSlider" component={addSlider} />
           <AppRoute path="/app/user/list" component={userList} />

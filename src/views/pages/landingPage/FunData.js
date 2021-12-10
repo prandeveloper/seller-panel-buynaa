@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/style/style.css";
+import "../../../assets/style/style.css";
 import { FaUser } from "react-icons/fa";
 //import w13 from "../assets/img/w13.jpg";
 import { Row, Col, Container } from "reactstrap";

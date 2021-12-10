@@ -16,7 +16,7 @@ const navigationConfig = [
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/",
+        navLink: "/analyticsDashboard",
       },
     ],
   },
@@ -205,30 +205,6 @@ const navigationConfig = [
     icon: <Icon.File size={20} />,
     navLink: "/app/billing/billingList",
   },
-  // {
-  //   id: "orders",
-  //   title: "Order",
-  //   type: "collapse",
-  //   icon: <Icon.Layers size={20} />,
-  //   children: [
-  //     {
-  //       id: "newOrders",
-  //       title: "New orders",
-  //       type: "item",
-  //       icon: <Icon.Circle size={12} />,
-  //       permissions: ["admin", "editor"],
-  //       navLink: "/app/orders/newOrders",
-  //     },
-  //     {
-  //       id: "orderList",
-  //       title: "Order List",
-  //       type: "item",
-  //       icon: <Icon.Circle size={12} />,
-  //       permissions: ["admin", "editor"],
-  //       navLink: "/app/orders/orderList",
-  //     },
-  //   ],
-  // },
 
   {
     id: "orderManagement",
@@ -963,38 +939,7 @@ export default navigationConfig;
 //     },
 //   ]
 // },
-// {
-//   id: "contactUs",
-//   title: "Contacts",
-//   type: "collapse",
-//   icon: <Icon.PhoneCall size={20} />,
-//   children: [
-//     {
-//       id: "employeeList",
-//       title: "Employee",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/contactUs/employee/employeeList",
-//     },
-//     {
-//       id: "customerList",
-//       title: "Customer",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/contactUs/customer/customerList",
-//     },
-//     {
-//       id: "supplierList",
-//       title: "Supplier",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/contactUs/supplier/supplierList",
-//     },
-//   ]
-// },
+
 // {
 //   id: "activity",
 //   title: "Activity",
@@ -1019,70 +964,7 @@ export default navigationConfig;
 //     },
 //   ]
 // },
-// {
-//   id: "inventory",
-//   title: "Inventory",
-//   type: "collapse",
-//   icon: <Icon.Users size={20} />,
-//   children: [
-//     {
-//       id: "inventorySummary",
-//       title: "Inventory Summary",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/inventory/InventorySummary",
-//     },
-//     {
-//       id: "fIFOCostLotTracking",
-//       title: "FIFO Cost Lot Tracking Summary",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/inventory/FIFOCostLotTracking",
-//     },
-//     {
-//       id: "inventoryAgingSummary",
-//       title: "Inventory Aging Summary",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/inventory/InventoryAgingSummary",
-//     },
-//     {
-//       id: "stockSummaryReport",
-//       title: "Stock Summary Report",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/inventory/StockSummaryReport",
-//     },
-//     {
-//       id: "leadTimeDemand",
-//       title: "Lead Time Demand",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/inventory/LeadTimeDemand",
-//     },
-//     {
-//       id: "stockTransferReport",
-//       title: "Stock Transfer Report",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/inventory/StockTransferReport",
-//     },
-//     {
-//       id: "stockAdjustmentReport",
-//       title: "Stock Adjustment Report",
-//       type: "item",
-//       icon: <Icon.Circle size={12} />,
-//       permissions: ["admin", "editor"],
-//       navLink: "/app/inventory/StockAdjustmentReport",
-//     },
-//   ],
-// },
+
 // {
 //   id: "byProduct",
 //   title: "By Product",
@@ -1116,23 +998,6 @@ export default navigationConfig;
 //   navLink: "/app/billing/billingList",
 // },
 
-// {
-//   id: "privacyPolicy",
-//   title: "Privacy Policy",
-//   type: "item",
-//   icon: <Icon.Save size={20} />,
-//   permissions: ["admin", "editor"],
-//   navLink: "/app/privacyPolicy/privacyPolicy",
-// },
-// {
-//   id: "termsAndCondition",
-//   title: "Terms And Condition",
-//   type: "item",
-//   // icon: <Icon.Circle size={12} />,
-//   icon: <Icon.Thermometer size={20} />,
-//   //permissions: ["admin", "editor"],
-//   navLink: "/app/termsAndCondition/tAndCList",
-// },
 // {
 //   id: "tables",
 //   title: "Tables",
@@ -1241,23 +1106,6 @@ export default navigationConfig;
 // },
 
 // {
-//   id: "jobRequest",
-//   title: "Job Request",
-//   type: "item",
-//   icon: <Icon.Circle size={12} />,
-//   permissions: ["admin", "editor"],
-//   navLink: "/app/contactUs/jobRequest",
-// },
-// {
-//   id: "commission",
-//   title: "Commission",
-//   type: "item",
-//   // icon: <Icon.Circle size={12} />,
-//   icon: <Icon.User size={20} />,
-//   permissions: ["admin", "editor"],
-//   navLink: "/app/commission/commission",
-// },
-// {
 //   id: "importDemo",
 //   title: "Import Demo",
 //   type: "item",
@@ -1283,15 +1131,6 @@ export default navigationConfig;
 //   icon: <Icon.Layout size={20} />,
 //  // permissions: ["admin", "editor"],
 //   navLink: "/app/pageLayout/PageLayout",
-// },
-// {
-//   id: "enquiry",
-//   title: "Enquiry Requests",
-//   type: "item",
-//   icon: <Icon.HelpCircle size={20} />,
-//   // icon: <Icon.Circle size={12} />,
-//  // permissions: ["admin", "editor"],
-//   navLink: "/app/contactUs/enquiryFormList",
 // },
 
 // {

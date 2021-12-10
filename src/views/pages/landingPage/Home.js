@@ -7,20 +7,19 @@ import FunData from "./FunData";
 import FooterHeader from "./FooterHeader";
 import Footer from "./Footer";
 import { Button, Col, Row } from "reactstrap";
-import banner2 from "../assets/img/landing/banner.png";
-import "../assets/style/style.css";
-import "../assets/style/style.css";
+import banner2 from "../../../assets/img/landing/banner.png";
+import "../../../assets/style/style.css";
 
 export class Home extends Component {
   render() {
     return (
       <>
-        <section className="">
+        <section className="bg-light">
           <Row>
             <Col lg="4">
-              <div className="px-5" style={{ bottom: "5rem" }}>
-                <div className="slider-item st-slide-text pt-100">
-                  <div className="slider-text one">
+              <div className="" style={{}}>
+                <div className="slider-item">
+                  <div className="slider-text">
                     <h1 className="fw-bold lh-base">
                       Manage <br /> your Stock the <br />
                       <spn className="text-primary">the right way </spn>
@@ -44,7 +43,7 @@ export class Home extends Component {
                   src={banner2}
                   alt="First slide"
                   className=""
-                  style={{ width: "80rem", height: "90vh" }}
+                  style={{ width: "62rem", height: "100vh" }}
                 />
               </div>
             </Col>

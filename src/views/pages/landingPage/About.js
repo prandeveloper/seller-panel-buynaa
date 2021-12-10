@@ -1,15 +1,14 @@
 import React from "react";
-import "../assets/style/style.css";
-import { FaUser } from "react-icons/fa";
-import logo1 from "../assets/img/landing/images.png";
-import logo2 from "../assets/img/landing/cstomer.png";
-import logo3 from "../assets/img/landing/subscription.png";
-import logo4 from "../assets/img/landing/invenory.png";
-import logo5 from "../assets/img/landing/automate.png";
-import logo6 from "../assets/img/landing/order.png";
-import logo7 from "../assets/img/landing/purchase.png";
-import logo8 from "../assets/img/landing/visibility.png";
-import logo9 from "../assets/img/landing/location.png";
+import "../../../assets/style/style.css";
+import logo1 from "../../../assets/img/landing/images.png";
+import logo2 from "../../../assets/img/landing/cstomer.png";
+import logo3 from "../../../assets/img/landing/subscription.png";
+import logo4 from "../../../assets/img/landing/invenory.png";
+import logo5 from "../../../assets/img/landing/automate.png";
+import logo6 from "../../../assets/img/landing/order.png";
+import logo7 from "../../../assets/img/landing/purchase.png";
+import logo8 from "../../../assets/img/landing/visibility.png";
+import logo9 from "../../../assets/img/landing/location.png";
 //import w13 from "../assets/img/w13.jpg";
 import {
   Row,
@@ -25,9 +24,9 @@ import {
 const About = () => {
   return (
     <div>
-      <Container className="pt-100">
+      <Container className="pt-5 bg-light">
         <Row>
-          <Col lg="12" className="d-flex justify-content-center pb-4">
+          <Col lg="12" className="d-flex justify-content-center pb-5">
             <h1>Why Use Buynaa Stock Management Solution ?</h1>
           </Col>
         </Row>

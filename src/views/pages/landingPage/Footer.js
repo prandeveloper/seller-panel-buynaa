@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-//import apple from "../assets/img/apple.png";
-import "../assets/style/style.css";
+import "../../../assets/style/style.css";
 
 const Footer = () => {
   return (
@@ -20,7 +19,7 @@ const Footer = () => {
             <div className="col-xl-3 col-lg-4 col-md-6">
               <div className="footer-widget">
                 <div className="footer_logo">
-                  <img src={apple} alt="" />
+                  <h2 className="text-light font-weight-bold">Apple</h2>
                 </div>
                 <div className="fw-text">
                   <div className="footer-contact-list mt-20">
@@ -59,15 +58,6 @@ const Footer = () => {
                     <li>
                       <Link to="/on_demand">On-Demand Tuition</Link>
                     </li>
-                    {/* <li><a href="#"></a></li>
-                                            <li><a href="#">Online Tuition</a></li>
-                                            <li><a href="#">On-Demand Tuition</a></li> */}
-                    {/* <li><a href="#">List Requirements</a></li>
-                                            <li><a href="#">Home Tuition</a></li>
-                                            <li><a href="#">Group Tuition</a></li>
-                                            <li> <Link to="tutorsearch">Tutor Search</Link></li>
-                                            <li><a href="#">On Demand</a></li>
-                                            <li><a href="#">Online Tuition</a></li> */}
                   </ul>
                 </div>
               </div>
@@ -122,11 +112,11 @@ const Footer = () => {
                 </div>
                 <div className="footer_btns">
                   <button>
-                    <img src={apple} alt="" />
+                    <h2 className="text-light font-weight-bold">Apple</h2>
                     Apple iOS
                   </button>
                   <button>
-                    <img src={apple} alt="" />
+                    <h2 className="text-light font-weight-bold">Apple</h2>
                     Google Play
                   </button>
                 </div>

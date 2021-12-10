@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Card } from "reactstrap";
-import "../assets/style/style.css";
+import "../../../assets/style/style.css";
 
 export class OurVision extends Component {
   render() {
     return (
       <div id="vision" className="">
         <Card style={{ background: "white", padding: "40px" }}>
-          <div className="how-its-work ptb-50" style={{}}>
+          <div className="how-its-work " style={{}}>
             <div
               className="container p-1"
               style={{
