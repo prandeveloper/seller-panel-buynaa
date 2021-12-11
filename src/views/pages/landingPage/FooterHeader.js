@@ -5,7 +5,7 @@ export class FooterHeader extends Component {
   render() {
     return (
       <Container className="mt-5">
-        <Row className="p-3" style={{ background: "#5454e7" }}>
+        <Row className="p-3" style={{ background: "#1877f2" }}>
           <div className="col-sm-5" style={{ padding: "6px" }}>
             <h2 style={{ color: "white" }}>Get Started With Newsletter</h2>
             <p style={{ padding: "3px", margin: "7px", color: "white" }}>

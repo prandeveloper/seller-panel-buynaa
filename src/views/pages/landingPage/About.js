@@ -24,7 +24,7 @@ import {
 const About = () => {
   return (
     <div>
-      <Container className="pt-5 bg-light">
+      <Container className="pt-5 ">
         <Row>
           <Col lg="12" className="d-flex justify-content-center pb-5">
             <h1>Why Use Buynaa Stock Management Solution ?</h1>

@@ -7,7 +7,7 @@ export class OurMission extends Component {
   render() {
     return (
       <div>
-        <Container className="d-flex justify-content-center">
+        <Container className="d-flex justify-content-center pt-5 pb-5">
           <Row>
             <Col lg="12" className="d-flex justify-content-center pt-4">
               <h4>

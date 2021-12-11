@@ -104,16 +104,6 @@ const purchaseInvoice = lazy(() =>
   import("./views/apps/purchase/PurchaseInvoice")
 );
 
-const addPushNotification = lazy(() =>
-  import("./views/apps/marketing/pushNotification/AddPushNotification")
-);
-const editPushNotification = lazy(() =>
-  import("./views/apps/marketing/pushNotification/EditPushNotification")
-);
-const viewPushNotification = lazy(() =>
-  import("./views/apps/marketing/pushNotification/ViewPushNotification")
-);
-
 const advertiesementList = lazy(() =>
   import("./views/apps/marketing/advertiesement/AdvertiesementList")
 );
@@ -716,18 +706,6 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/marketing/advertiesement/viewAdvertiesement"
             component={viewAdvertiesement}
-          />
-          <AppRoute
-            path="/app/marketing/pushnotification/addPushNotification"
-            component={addPushNotification}
-          />
-          <AppRoute
-            path="/app/marketing/pushnotification/editPushNotification"
-            component={editPushNotification}
-          />
-          <AppRoute
-            path="/app/marketing/pushnotification/viewPushNotification"
-            component={viewPushNotification}
           />
           <AppRoute
             path="/app/offerAndCoupon/specialOffer/specialOfferList"

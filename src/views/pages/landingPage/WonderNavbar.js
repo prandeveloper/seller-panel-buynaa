@@ -11,8 +11,8 @@ import {
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import dlogo from "../assets/img/dlogo.png";
-import "../assets/style/style.css";
+//import dlogo from "../assets/img/dlogo.png";
+import "../../../assets/style/style.css";
 //import SHeader from "./SHeader";
 
 export default function WonderNavbar(props) {
@@ -21,7 +21,7 @@ export default function WonderNavbar(props) {
   const toggle = () => setIsOpen(!isOpen);
   return (
     <div className="my-navbar">
-      <Navbar fixed="fixed" primary expand="lg">
+      <Navbar fixed="fixed" light primary expand="lg">
         <NavbarBrand
           style={{ marginRight: "10rem", marginLeft: "5rem" }}
           className=""

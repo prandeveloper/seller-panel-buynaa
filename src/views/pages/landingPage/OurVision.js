@@ -17,7 +17,13 @@ export class OurVision extends Component {
               }}
             >
               <div className="section-title">
-                <p style={{ fontSize: "20px", color: "blue", fontWeight: 600 }}>
+                <p
+                  style={{
+                    fontSize: "20px",
+                    color: "#1877f2",
+                    fontWeight: 600,
+                  }}
+                >
                   Minimun your costs - Focus on BTL marketing instead of ATL
                   marketing.
                 </p>
