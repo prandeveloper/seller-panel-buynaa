@@ -72,6 +72,9 @@ const viewSubCategory = lazy(() =>
 const editSubCategory = lazy(() =>
   import("./views/apps/category/EditSubCategory")
 );
+const notificationList = lazy(() =>
+  import("./views/apps/notification/NotificationList")
+);
 const pendingPaymentsList = lazy(() =>
   import("./views/apps/sellerPayout/pendingPayments/PendingPaymentsList")
 );
@@ -124,6 +127,9 @@ const specialOfferList = lazy(() =>
 const addSpecialOffer = lazy(() =>
   import("./views/apps/offerAndCoupon/specialOffer/AddSpecialOffer")
 );
+const editOffers = lazy(() =>
+  import("./views/apps/offerAndCoupon/specialOffer/EditOffers")
+);
 const couponsList = lazy(() =>
   import("./views/apps/offerAndCoupon/coupons/couponsList")
 );
@@ -156,8 +162,14 @@ const viewSalesByCust = lazy(() =>
 const stockAdjustment = lazy(() =>
   import("./views/apps/stockControl/StockAdjustment")
 );
+const addStockAdjustment = lazy(() =>
+  import("./views/apps/stockControl/AddStockAdjustment")
+);
 const stockTransferRequest = lazy(() =>
   import("./views/apps/stockControl/StockTransferRequest")
+);
+const addStockTransfer = lazy(() =>
+  import("./views/apps/stockControl/AddStockTransfer")
 );
 
 const salesByitem = lazy(() => import("./views/apps/sales/SalesByItem"));
@@ -640,6 +652,10 @@ class AppRouter extends React.Component {
             component={editSubCategory}
           />
           <AppRoute
+            path="/app/notification/notificationList"
+            component={notificationList}
+          />
+          <AppRoute
             path="/app/sellerPayout/pendingPayments/pendingPaymentsList"
             component={pendingPaymentsList}
           />
@@ -716,6 +732,10 @@ class AppRouter extends React.Component {
             component={addSpecialOffer}
           />
           <AppRoute
+            path="/app/offerAndCoupon/specialOffer/editOffers/:id"
+            component={editOffers}
+          />
+          <AppRoute
             path="/app/offerAndCoupon/coupons/couponsList"
             component={couponsList}
           />
@@ -758,8 +778,16 @@ class AppRouter extends React.Component {
             component={stockTransferRequest}
           />
           <AppRoute
+            path="/app/stockControl/addStockTransfer"
+            component={addStockTransfer}
+          />
+          <AppRoute
             path="/app/stockControl/stockAdjustment"
             component={stockAdjustment}
+          />
+          <AppRoute
+            path="/app/stockControl/addStockAdjustment"
+            component={addStockAdjustment}
           />
           <AppRoute path="/app/sales/salesByitem" component={salesByitem} />
           <AppRoute

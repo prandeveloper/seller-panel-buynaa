@@ -12,6 +12,7 @@ import {
   Button,
 } from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
+import { history } from "../../../history";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
@@ -36,155 +37,154 @@ class StockTransferRequest extends React.Component {
     },
     columnDefs: [
       {
-        headerName: "S.No",
+        headerName: "No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 150,
+        width: 80,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-      
 
       {
-        headerName: "Company Name",
+        headerName: "Referance Number",
         field: "name",
         filter: true,
         resizable: true,
         width: 180,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-            <div className="ml-2">
-              <span>{params.data.mobile_no}</span>
+              <div className="ml-2">
+                <span>{params.data.mobile_no}</span>
+              </div>
             </div>
-          </div>
-        );
+          );
+        },
       },
-    },
-    {
-      headerName: "State",
-      field: "state",
-      filter: true,
-      resizable: true,
-      width: 180,
-      cellRendererFramework: (params) => {
-        return (
-          <div className="d-flex align-items-center cursor-pointer">
-            <div className="ml-2">
-              <span>{params.data.state}</span>
+      {
+        headerName: "Transfer Date",
+        field: "state",
+        filter: true,
+        resizable: true,
+        width: 180,
+        cellRendererFramework: params => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="ml-2">
+                <span>{params.data.state}</span>
+              </div>
             </div>
-          </div>
-        );
+          );
+        },
       },
-    },
-    {
-      headerName: "City",
-      field: "district",
-      filter: true,
-      resizable: true,
-      width: 180,
-      cellRendererFramework: (params) => {
-        return (
-          <div className="d-flex align-items-center cursor-pointer">
-            <div className="ml-2">
-              <span>{params.data.district}</span>
+      {
+        headerName: "From Warehouse",
+        field: "district",
+        filter: true,
+        resizable: true,
+        width: 180,
+        cellRendererFramework: params => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="ml-2">
+                <span>{params.data.district}</span>
+              </div>
             </div>
-          </div>
-        );
+          );
+        },
       },
-    },
-    {
-      headerName: "Address",
-      field: "address",
-      filter: true,
-      resizable: true,
-      width: 180,
-      cellRendererFramework: (params) => {
-        return (
-          <div className="d-flex align-items-center cursor-pointer">
-            <div className="ml-2">
-              <span>{params.data.address}</span>
+      {
+        headerName: "To Warehouse",
+        field: "address",
+        filter: true,
+        resizable: true,
+        width: 180,
+        cellRendererFramework: params => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="ml-2">
+                <span>{params.data.address}</span>
+              </div>
             </div>
-          </div>
-        );
+          );
+        },
       },
-    },
-    {
-      headerName: "Comment",
-      field: "comments",
-      filter: true,
-      resizable: true,
-      width: 180,
-      cellRendererFramework: (params) => {
-        return (
-          <div className="d-flex align-items-center cursor-pointer">
-            <div className="ml-2">
-              <span>{params.data.comments}</span>
+      {
+        headerName: "Delivery Due Date",
+        field: "comments",
+        filter: true,
+        resizable: true,
+        width: 180,
+        cellRendererFramework: params => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="ml-2">
+                <span>{params.data.comments}</span>
+              </div>
             </div>
-          </div>
-        );
+          );
+        },
       },
-    },
-    // {
-    //   headerName: "Merchant Type",
-    //   field: "merchant_type",
-    //   filter: true,
+      {
+        headerName: "Transfer Type",
+        field: "merchant_type",
+        filter: true,
 
-    //   resizable: true,
-    //   width: 180,
-    //   cellRendererFramework: (params) => {
-    //     return (
-    //       <div className="d-flex align-items-center cursor-pointer">
-    //         <div className="ml-2">
-    //           <span>{params.data.comments}</span>
-    //         </div>
-    //       </div>
-    //     );
-    //   },
-    // },
-    {
-      headerName: "Date",
-      field: "renewal_date",
-      filter: true,
-      resizable: true,
-      width: 180,
-      cellRendererFramework: (params) => {
-        return (
-          <div className="d-flex align-items-center cursor-pointer">
-            <div className="ml-2">
-              <span>{params.data.comments}</span>
+        resizable: true,
+        width: 180,
+        cellRendererFramework: params => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="ml-2">
+                <span>{params.data.comments}</span>
+              </div>
             </div>
-          </div>
-        );
+          );
+        },
       },
-    },
+      {
+        headerName: "Reason",
+        field: "renewal_date",
+        filter: true,
+        resizable: true,
+        width: 180,
+        cellRendererFramework: params => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="ml-2">
+                <span>{params.data.comments}</span>
+              </div>
+            </div>
+          );
+        },
+      },
 
-    {
-      headerName: "Actions",
-      field: "transactions",
-      width: 150,
-      cellRendererFramework: (params) => {
-        return (
-          <div className="actions cursor-pointer">
-            {/* <Edit className="mr-50" size={20} /> */}
-            <Trash2
-              size={20}
-              onClick={() => {
-                let selectedData = this.gridApi.getSelectedRows();
-                this.runthisfunction(params.data._id);
-                this.gridApi.updateRowData({ remove: selectedData });
-              }}
-            />
-          </div>
-        );
+      {
+        headerName: "Actions",
+        field: "transactions",
+        width: 150,
+        cellRendererFramework: params => {
+          return (
+            <div className="actions cursor-pointer">
+              {/* <Edit className="mr-50" size={20} /> */}
+              <Trash2
+                size={20}
+                onClick={() => {
+                  let selectedData = this.gridApi.getSelectedRows();
+                  this.runthisfunction(params.data._id);
+                  this.gridApi.updateRowData({ remove: selectedData });
+                }}
+              />
+            </div>
+          );
+        },
       },
-    },
-  ],
-};
+    ],
+  };
   async componentDidMount() {
-    await axiosConfig.get("/allcontactus").then((response) => {
+    await axiosConfig.get("/allcontactus").then(response => {
       let rowData = response.data.data;
       this.setState({ rowData });
     });
@@ -192,12 +192,12 @@ class StockTransferRequest extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/delcontactus/${id}`).then((response) => {
+    await axiosConfig.get(`/delcontactus/${id}`).then(response => {
       console.log(response);
     });
   }
 
-  onGridReady = (params) => {
+  onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -207,11 +207,11 @@ class StockTransferRequest extends React.Component {
     });
   };
 
-  updateSearchQuery = (val) => {
+  updateSearchQuery = val => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = (val) => {
+  filterSize = val => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -225,180 +225,23 @@ class StockTransferRequest extends React.Component {
     return (
       <Row className="app-user-list">
         <Col sm="12">
-          {/* <Card
-            className={classnames("card-action card-reload", {
-              "d-none": this.state.isVisible === false,
-              "card-collapsed": this.state.status === "Closed",
-              closing: this.state.status === "Closing...",
-              opening: this.state.status === "Opening...",
-              refreshing: this.state.reload,
-            })}
-          >
-            <CardHeader>
-              <CardTitle>Filters</CardTitle>
-              <div className="actions">
-                <ChevronDown
-                  className="collapse-icon mr-50"
-                  size={15}
-                  onClick={this.toggleCollapse}
-                />
-                <RotateCw
-                  className="mr-50"
-                  size={15}
-                  onClick={() => {
-                    this.refreshCard();
-                    this.gridApi.setFilterModel(null);
-                  }}
-                />
-                <X size={15} onClick={this.removeCard} />
-              </div>
-            </CardHeader>
-            <Collapse
-              isOpen={this.state.collapse}
-              onExited={this.onExited}
-              onEntered={this.onEntered}
-              onExiting={this.onExiting}
-              onEntering={this.onEntering}
-            >
-              <CardBody>
-                {this.state.reload ? (
-                  <Spinner color="primary" className="reload-spinner" />
-                ) : (
-                  ""
-                )}
-                <Row>
-                  <Col lg="3" md="6" sm="12">
-                    <FormGroup className="mb-0">
-                      <Label for="role">Role</Label>
-                      <Input
-                        type="select"
-                        name="role"
-                        id="role"
-                        value={this.state.role}
-                        onChange={(e) => {
-                          this.setState(
-                            {
-                              role: e.target.value,
-                            },
-                            () =>
-                              this.filterData(
-                                "role",
-                                this.state.role.toLowerCase()
-                              )
-                          );
-                        }}
-                      >
-                        <option value="All">All</option>
-                        <option value="User">User</option>
-                        <option value="Staff">Staff</option>
-                        <option value="Admin">Admin</option>
-                      </Input>
-                    </FormGroup>
-                  </Col>
-                  <Col lg="3" md="6" sm="12">
-                    <FormGroup className="mb-0">
-                      <Label for="status">Status</Label>
-                      <Input
-                        type="select"
-                        name="status"
-                        id="status"
-                        value={this.state.selectStatus}
-                        onChange={(e) => {
-                          this.setState(
-                            {
-                              selectStatus: e.target.value,
-                            },
-                            () =>
-                              this.filterData(
-                                "status",
-                                this.state.selectStatus.toLowerCase()
-                              )
-                          );
-                        }}
-                      >
-                        <option value="All">All</option>
-                        <option value="Active">Active</option>
-                        <option value="Blocked">Blocked</option>
-                        <option value="Deactivated">Deactivated</option>
-                      </Input>
-                    </FormGroup>
-                  </Col>
-                  <Col lg="3" md="6" sm="12">
-                    <FormGroup className="mb-0">
-                      <Label for="verified">Verified</Label>
-                      <Input
-                        type="select"
-                        name="verified"
-                        id="verified"
-                        value={this.state.verified}
-                        onChange={(e) => {
-                          this.setState(
-                            {
-                              verified: e.target.value,
-                            },
-                            () =>
-                              this.filterData(
-                                "is_verified",
-                                this.state.verified.toLowerCase()
-                              )
-                          );
-                        }}
-                      >
-                        <option value="All">All</option>
-                        <option value="True">True</option>
-                        <option value="False">False</option>
-                      </Input>
-                    </FormGroup>
-                  </Col>
-                  <Col lg="3" md="6" sm="12">
-                    <FormGroup className="mb-0">
-                      <Label for="department">Department</Label>
-                      <Input
-                        type="select"
-                        name="department"
-                        id="department"
-                        value={this.state.department}
-                        onChange={(e) => {
-                          this.setState(
-                            {
-                              department: e.target.value,
-                            },
-                            () =>
-                              this.filterData(
-                                "department",
-                                this.state.department.toLowerCase()
-                              )
-                          );
-                        }}
-                      >
-                        <option value="All">All</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Development">Development</option>
-                        <option value="Management">Management</option>
-                      </Input>
-                    </FormGroup>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Collapse>
-          </Card> */}
-        </Col>
-        <Col sm="12">
           <Card>
             <Row className="m-2">
               <Col>
                 <h1 col-sm-6 className="float-left">
-                Stock Transfer Request List
+                  Stock Transfer Request
                 </h1>
               </Col>
-              {/* <Col>
+              <Col>
                 <Button
                   className=" btn btn-danger float-right"
-                  onClick={() => history.push("/app/privacyPolicy/addPolicy")}
+                  onClick={() =>
+                    history.push("/app/stockControl/addStockTransfer")
+                  }
                 >
-                  Add New Policy
+                  Add New Stock Transfer
                 </Button>
-              </Col> */}
+              </Col>
             </Row>
             <CardBody>
               {this.state.rowData === null ? null : (
@@ -452,9 +295,7 @@ class StockTransferRequest extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
-                          onChange={(e) =>
-                            this.updateSearchQuery(e.target.value)
-                          }
+                          onChange={e => this.updateSearchQuery(e.target.value)}
                           value={this.state.value}
                         />
                       </div>
@@ -469,7 +310,7 @@ class StockTransferRequest extends React.Component {
                     </div>
                   </div>
                   <ContextLayout.Consumer>
-                    {(context) => (
+                    {context => (
                       <AgGridReact
                         gridOptions={{}}
                         rowSelection="multiple"
@@ -496,6 +337,5 @@ class StockTransferRequest extends React.Component {
     );
   }
 }
-
 
 export default StockTransferRequest;

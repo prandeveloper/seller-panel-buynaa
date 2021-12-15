@@ -10,8 +10,7 @@ import {
   Button,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-//import dlogo from "../assets/img/dlogo.png";
+import glogo from "../../../assets/img/logo/glogo.png";
 import "../../../assets/style/style.css";
 //import SHeader from "./SHeader";
 
@@ -26,10 +25,10 @@ export default function WonderNavbar(props) {
           style={{ marginRight: "10rem", marginLeft: "5rem" }}
           className=""
         >
-          <h1 className="text-primary">Buynaa</h1>
-          {/* <a href="/">
-            <img src={dlogo} alt="" className="st-logo" />
-          </a> */}
+          {/* <h1 className="text-primary">Buynaa</h1> */}
+          <a href="/">
+            <img src={glogo} alt="" className="st-logo" width={150} />
+          </a>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} className="st-tog" />
         <Collapse isOpen={isOpen} navbar>
@@ -40,7 +39,7 @@ export default function WonderNavbar(props) {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="st-nav" href="/">
+              <NavLink className="st-nav" href="/analyticsDashboard">
                 <Button color="primary">SIGN IN</Button>
               </NavLink>
             </NavItem>

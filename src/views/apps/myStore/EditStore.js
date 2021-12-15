@@ -7,6 +7,7 @@ import {
   Row,
   Col,
   Form,
+  FormGroup,
   Label,
   Input,
   CustomInput,
@@ -17,8 +18,19 @@ import swal from "sweetalert";
 import { history } from "../../../history";
 
 export default class EditStore extends Component {
+  fileObj = [];
+  fileArrayLogo = [];
+  fileArrayShop = [];
+  fileArrayGST = [];
+  fileArrayTLIC = [];
+  fileArrayPersonal = [];
+  fileArrayPersonal = [];
+  fileArrayCompany = [];
+  fileArrayProof = [];
+
   constructor(props) {
     super(props);
+
     this.state = {
       store_name: "",
       store_desc: "",
@@ -26,10 +38,8 @@ export default class EditStore extends Component {
       store_email: "",
       phone_no: "",
       altphone_no: "",
-      // altphone_no2: "",
-      day: "",
-      startTym: "",
-      endTym: "",
+      openingTym: "",
+      closingTym: "",
       address_line1: "",
       address_line2: "",
       landmark: "",
@@ -64,98 +74,261 @@ export default class EditStore extends Component {
       selectedFile6: undefined,
       selectedName6: "",
       status: "",
+      days: {
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thrusday: false,
+        friday: false,
+        saturday: false,
+        sunday: false,
+      },
+      day: [],
+      file: [null],
+      imgSrc: [],
     };
+
+    this.submitHandler = this.submitHandler.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onChangeHandler1 = this.onChangeHandler1.bind(this);
+    this.onChangeHandler2 = this.onChangeHandler2.bind(this);
+    this.onChangeHandler3 = this.onChangeHandler3.bind(this);
+    this.onChangeHandler4 = this.onChangeHandler4.bind(this);
   }
 
-  componentDidMount() {
-    let { id } = this.props.match.params;
-    axiosConfig
-      .get(`/getonestore/${id}`)
-      .then((response) => {
-        console.log(response);
+  handleClick = event => {
+    const { name, checked } = event.target;
+    var day = this.state.day;
+    if (day.indexOf(name) != -1) {
+      day.splice(day.indexOf(name), 1);
+    } else {
+      day.push(name);
+    }
+    console.log(day);
+    this.setState({
+      day,
+    });
+
+    this.setState(prevState => {
+      const days = prevState.days;
+      days[name] = checked;
+      return days;
+    });
+  };
+
+  onChangeHandler = event => {
+    var imgSrc = [];
+    for (var i = 0; i < event.target.files.length; i++) {
+      let file = event.target.files[i];
+      let reader = new FileReader();
+      let url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        console.log(i);
+        this.fileArrayShop.push(reader.result);
+        imgSrc.push([reader.result]);
+
         this.setState({
-          store_name: response.data.data.store_name,
-          store_desc: response.data.data.store_desc,
-          websiteUrl: response.data.data.websiteUrl,
-          store_email: response.data.data.store_email,
-          phone_no: response.data.data.phone_no,
-          altphone_no: response.data.data.altphone_no,
-          day: response.data.data.day,
-          startTym: response.data.data.startTym,
-          endTym: response.data.data.endTym,
-          address_line1: response.data.data.address_line1,
-          address_line2: response.data.data.address_line2,
-          landmark: response.data.data.landmark,
-          state: response.data.data.state,
-          city: response.data.data.city,
-          pincode: response.data.data.pincode,
-          gst_no: response.data.data.gst_no,
-          business_type: response.data.data.business_type,
-          pan_no: response.data.data.pan_no,
-          company_panno: response.data.data.company_panno,
-          address_proof: response.data.data.address_proof,
-          sortorder: response.data.data.sortorder,
-          storeImg: response.data.data.storeImg,
-          shoplogo_img: response.data.data.shoplogo_img,
-          gstImg: response.data.data.gstImg,
-          storepan_img: response.data.data.storepan_img,
-          tradelicence_img: response.data.data.tradelicence_img,
-          companypan_img: response.data.data.companypan_img,
-          address_proof_img: response.data.data.address_proof_img,
+          imgSrc: [reader.result],
         });
-      })
-      .catch((error) => {
-        console.log(error);
+      }.bind(this);
+    }
+    console.log(imgSrc);
+    this.setState({
+      selectedFile: event.target.files,
+      imgSrc,
+    });
+    this.setState({
+      selectedName: event.target.files.name,
+    });
+    console.log(event.target.files);
+  };
+
+  onChangeHandler1 = event => {
+    var imgSrc1 = [];
+
+    for (var i = 0; i < event.target.files.length; i++) {
+      let file = event.target.files[i];
+      let reader = new FileReader();
+      console.log(file);
+      let url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        this.fileArrayLogo.push(reader.result);
+        imgSrc1.push([reader.result]);
+        this.setState({
+          imgSrc1: [reader.result],
+        });
+      }.bind(this);
+    }
+
+    console.log(imgSrc1);
+    this.setState({
+      selectedFile1: event.target.files,
+      imgSrc1,
+    });
+    this.setState({
+      selectedName1: event.target.files.name,
+    });
+    console.log(event.target.files);
+  };
+  onChangeHandler2 = event => {
+    var imgSrc2 = [];
+    for (var i = 0; i < event.target.files.length; i++) {
+      let file = event.target.files[i];
+      let reader = new FileReader();
+      let url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        console.log(i);
+        this.fileArrayGST.push(reader.result);
+        imgSrc2.push([reader.result]);
+        this.setState({
+          imgSrc2: [reader.result],
+        });
+      }.bind(this);
+    }
+    console.log(imgSrc2);
+    this.setState({
+      selectedFile2: event.target.files,
+      imgSrc2,
+    });
+    this.setState({
+      selectedName2: event.target.files.name,
+    });
+    console.log(event.target.files);
+  };
+  onChangeHandler3 = event => {
+    var imgSrc3 = [];
+    for (var i = 0; i < event.target.files.length; i++) {
+      let file = event.target.files[i];
+      let reader = new FileReader();
+      let url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        console.log(i);
+        this.fileArrayPersonal.push(reader.result);
+        imgSrc3.push([reader.result]);
+        this.setState({
+          imgSrc3: [reader.result],
+        });
+      }.bind(this);
+    }
+    console.log(imgSrc3);
+    this.setState({
+      selectedFile3: event.target.files,
+      imgSrc3,
+    });
+    this.setState({
+      selectedName3: event.target.files.name,
+    });
+    console.log(event.target.files);
+  };
+  onChangeHandler4 = event => {
+    var imgSrc4 = [];
+    for (var i = 0; i < event.target.files.length; i++) {
+      let file = event.target.files[i];
+      let reader = new FileReader();
+      let url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        console.log(i);
+        this.fileArrayTLIC.push(reader.result);
+        imgSrc4.push([reader.result]);
+        this.setState({
+          imgSrc4: [reader.result],
+        });
+      }.bind(this);
+    }
+    console.log(imgSrc4);
+    this.setState({
+      selectedFile4: event.target.files,
+      imgSrc4,
+    });
+    this.setState({
+      selectedName4: event.target.files.name,
+    });
+    console.log(event.target.files);
+  };
+  onChangeHandler5 = event => {
+    var imgSrc5 = [];
+    for (var i = 0; i < event.target.files.length; i++) {
+      let file = event.target.files[i];
+      let reader = new FileReader();
+      let url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        console.log(i);
+        this.fileArrayCompany.push(reader.result);
+        imgSrc5.push([reader.result]);
+        this.setState({
+          imgSrc5: [reader.result],
+        });
+      }.bind(this);
+    }
+    console.log(imgSrc5);
+    this.setState({
+      selectedFile5: event.target.files,
+      imgSrc5,
+    });
+    this.setState({
+      selectedName5: event.target.files.name,
+    });
+    console.log(event.target.files);
+  };
+  onChangeHandler6 = event => {
+    var imgSrc6 = [];
+    for (var i = 0; i < event.target.files.length; i++) {
+      let file = event.target.files[i];
+      let reader = new FileReader();
+      let url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        console.log(i);
+        this.fileArrayProof.push(reader.result);
+        imgSrc6.push([reader.result]);
+        this.setState({
+          imgSrc6: [reader.result],
+        });
+      }.bind(this);
+    }
+    console.log(imgSrc6);
+    this.setState({
+      selectedFile6: event.target.files,
+      imgSrc6,
+    });
+    this.setState({
+      selectedName6: event.target.files.name,
+    });
+    console.log(event.target.files);
+  };
+
+  changeHandler1 = e => {
+    this.setState({
+      status: e.target.value,
+    });
+  };
+  changeHandler = e => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+  changeHandler2 = e => {
+    if (e.target.value.length < 7)
+      this.setState({
+        [e.target.name]: e.target.value,
       });
-  }
-  // onChangeHandler = (event) => {
-  //   this.setState({ selectedFile: event.target.files[0] });
-  //   this.setState({ selectedName: event.target.files[0].name });
-  //   console.log(event.target.files[0]);
-  // };
-  onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files });
-    this.setState({ selectedName: event.target.files.name });
-    console.log(event.target.files);
   };
-  onChangeHandler1 = (event) => {
-    this.setState({ selectedFile1: event.target.files });
-    this.setState({ selectedName1: event.target.files.name });
-    console.log(event.target.files);
+  changeHandler3 = e => {
+    if (e.target.value.length < 11)
+      this.setState({
+        [e.target.name]: e.target.value,
+      });
   };
-  onChangeHandler2 = (event) => {
-    this.setState({ selectedFile2: event.target.files });
-    this.setState({ selectedName2: event.target.files.name });
-    console.log(event.target.files);
+  changeHandler4 = e => {
+    if (e.target.value.length < 11)
+      this.setState({
+        [e.target.name]: e.target.value,
+      });
   };
-  onChangeHandler3 = (event) => {
-    this.setState({ selectedFile3: event.target.files });
-    this.setState({ selectedName3: event.target.files.name });
-    console.log(event.target.files);
-  };
-  onChangeHandler4 = (event) => {
-    this.setState({ selectedFile4: event.target.files });
-    this.setState({ selectedName4: event.target.files.name });
-    console.log(event.target.files);
-  };
-  onChangeHandler5 = (event) => {
-    this.setState({ selectedFile5: event.target.files });
-    this.setState({ selectedName5: event.target.files.name });
-    console.log(event.target.files);
-  };
-  onChangeHandler6 = (event) => {
-    this.setState({ selectedFile6: event.target.files });
-    this.setState({ selectedName6: event.target.files.name });
-    console.log(event.target.files);
-  };
-  changeHandler1 = (e) => {
-    this.setState({ status: e.target.value });
-  };
-  changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  submitHandler = (e) => {
-    e.preventDefault();
+
+  submitHandler = () => {
+    // e.preventDefault();
+    //console.log(this.state);
+
     const data = new FormData();
     data.append("store_name", this.state.store_name);
     data.append("store_desc", this.state.store_desc);
@@ -163,9 +336,9 @@ export default class EditStore extends Component {
     data.append("store_email", this.state.store_email);
     data.append("phone_no", this.state.phone_no);
     data.append("altphone_no", this.state.altphone_no);
-    data.append("day", this.state.day);
-    data.append("startTym", this.state.startTym);
-    data.append("endTym", this.state.endTym);
+    data.append("day", this.state.day.toString());
+    data.append("openingTym", this.state.openingTym);
+    data.append("closingTym", this.state.closingTym);
     data.append("address_line1", this.state.address_line1);
     data.append("address_line2", this.state.address_line2);
     data.append("landmark", this.state.landmark);
@@ -223,19 +396,65 @@ export default class EditStore extends Component {
     }
 
     axiosConfig
-      .post("/addstore", data)
-      .then((response) => {
+      .post(`/editstore/${id}`, data)
+      .then(response => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/myStore/storeList");
       })
-      .catch((error) => {
+      .catch(error => {
         swal("Error!", "Error Received", "error");
         console.log(error);
       });
   };
 
+  componentDidMount() {
+    let { id } = this.props.match.params;
+    axiosConfig
+      .get(`/getonestore/${id}`)
+      .then(response => {
+        console.log(response);
+        this.setState({
+          store_name: response.data.data.store_name,
+          store_desc: response.data.data.store_desc,
+          websiteUrl: response.data.data.websiteUrl,
+          store_email: response.data.data.store_email,
+          phone_no: response.data.data.phone_no,
+          altphone_no: response.data.data.altphone_no,
+          day: response.data.data.day.split(","),
+          startTym: response.data.data.startTym,
+          endTym: response.data.data.endTym,
+          address_line1: response.data.data.address_line1,
+          address_line2: response.data.data.address_line2,
+          landmark: response.data.data.landmark,
+          state: response.data.data.state,
+          city: response.data.data.city,
+          pincode: response.data.data.pincode,
+          gst_no: response.data.data.gst_no,
+          business_type: response.data.data.business_type,
+          pan_no: response.data.data.pan_no,
+          company_panno: response.data.data.company_panno,
+          address_proof: response.data.data.address_proof,
+          sortorder: response.data.data.sortorder,
+          storeImg: response.data.data.storeImg,
+          shoplogo_img: response.data.data.shoplogo_img,
+          gstImg: response.data.data.gstImg,
+          storepan_img: response.data.data.storepan_img,
+          tradelicence_img: response.data.data.tradelicence_img,
+          companypan_img: response.data.data.companypan_img,
+          address_proof_img: response.data.data.address_proof_img,
+        });
+        console.log(this.state);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   render() {
+    const favColors = Object.keys(this.state.days)
+      .filter(key => this.state.days[key])
+      .join(", ");
     return (
       <div>
         <Card>
@@ -257,317 +476,549 @@ export default class EditStore extends Component {
           <CardBody>
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Store Name</Label>
-                  <Input
-                    type="text"
-                    name="store_name"
-                    placeholder="Enter Store Name"
-                    value={this.state.store_name}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Store Name </Label>
+                    <Input
+                      type="text"
+                      name="store_name"
+                      placeholder="Enter Store Name"
+                      value={this.state.store_name}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Store Description </Label>
-                  <Input
-                    type="text"
-                    name="store_desc"
-                    placeholder="Store description"
-                    value={this.state.store_desc}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Store image </Label>
+                    <CustomInput
+                      type="file"
+                      multiple
+                      onChange={this.onChangeHandler}
+                    />
+
+                    <div>
+                      {this.fileArrayShop?.map(value => (
+                        <img
+                          src={value}
+                          style={{
+                            padding: "3px",
+                            width: "100px",
+                            height: "100px",
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </FormGroup>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Website Url</Label>
-                  <Input
-                    type="text"
-                    name="websiteUrl"
-                    placeholder="Enter Website Url"
-                    value={this.state.websiteUrl}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Store Description </Label>
+                    <Input
+                      type="text"
+                      name="store_desc"
+                      placeholder="Store description"
+                      value={this.state.store_desc}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Store Email</Label>
-                  <Input
-                    type="email"
-                    name="store_email"
-                    placeholder="Email"
-                    value={this.state.store_email}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Website Url </Label>
+                    <Input
+                      type="text"
+                      name="websiteUrl"
+                      placeholder="Enter Website Url"
+                      value={this.state.websiteUrl}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Phone No.</Label>
-                  <Input
-                    type="number"
-                    name="phone_no"
-                    placeholder="Phone No."
-                    value={this.state.phone_no}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Store Email </Label>
+                    <Input
+                      type="email"
+                      name="store_email"
+                      placeholder="Email"
+                      value={this.state.store_email}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Alt Phone No.</Label>
-                  <Input
-                    type="number"
-                    name="altphone_no"
-                    placeholder="Alt Phone No."
-                    value={this.state.altphone_no}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Phone No. </Label>
+                    <Input
+                      type="number"
+                      name="phone_no"
+                      placeholder="Phone No."
+                      value={this.state.phone_no}
+                      onChange={this.changeHandler3}
+                    />
+                  </FormGroup>
                 </Col>
-                {/* <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Alt Phone No2.</Label>
-                  <Input
-                    type="number"
-                    name="altphone_no2"
-                    placeholder="Alt Phone No2."
-                    value={this.state.altphone_no2}
-                    onChange={this.changeHandler}
-                  />
-                </Col> */}
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Day</Label>
-                  <CustomInput
-                    type="select"
-                    name="day"
-                    placeholder="Day"
-                    value={this.state.day}
-                    onChange={this.changeHandler}
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Alt Phone No. </Label>
+                    <Input
+                      type="number"
+                      name="altphone_no"
+                      placeholder="Alt Phone No."
+                      value={this.state.altphone_no}
+                      onChange={this.changeHandler4}
+                    />
+                  </FormGroup>
+                </Col>
+
+                <Col md="6" sm="12">
+                  <div>
+                    <Label> Store Working Days </Label>
+                    <div>
+                      <Input
+                        checked={this.state.days.monday}
+                        onChange={this.handleClick}
+                        type="checkbox"
+                        name="monday"
+                      />
+                      Monday
+                    </div>
+                    <div>
+                      <Input
+                        checked={this.state.days.tuesday}
+                        onChange={this.handleClick}
+                        type="checkbox"
+                        name="tuesday"
+                      />
+                      Tuesday
+                    </div>
+                    <div>
+                      <Input
+                        checked={this.state.days.wednesday}
+                        onChange={this.handleClick}
+                        type="checkbox"
+                        name="wednesday"
+                      />
+                      Green
+                    </div>
+                    <div>
+                      <Input
+                        checked={this.state.days.thrusday}
+                        onChange={this.handleClick}
+                        type="checkbox"
+                        name="thrusday"
+                      />
+                      Thrusday
+                    </div>
+                    <div>
+                      <Input
+                        checked={this.state.days.friday}
+                        onChange={this.handleClick}
+                        type="checkbox"
+                        name="friday"
+                      />
+                      Friday
+                    </div>
+                    <div>
+                      <Input
+                        checked={this.state.days.saturday}
+                        onChange={this.handleClick}
+                        type="checkbox"
+                        name="saturday"
+                      />
+                      Saturday
+                    </div>
+                    <div>
+                      <Input
+                        checked={this.state.days.sunday}
+                        onChange={this.handleClick}
+                        type="checkbox"
+                        name="sunday"
+                      />
+                      Sunday
+                    </div>
+                  </div>
+                  <p
+                    className="text-primary"
+                    style={{ fontWeight: 800, textTransform: "capitalize" }}
                   >
-                    <option value="Monday - Friday">Monday - Friday</option>
-                    <option value="Monday - Saturday">Monday - Saturday</option>
-                    <option value="Monday - Sunday">Monday - Sunday</option>
-                    <option value="Monday - Thrusday">Monday - Thrusday</option>
-                  </CustomInput>
+                    {favColors}
+                  </p>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Opening Time</Label>
-                  <Input
-                    type="time"
-                    name="startTym"
-                    placeholder="Start Time"
-                    value={this.state.startTym}
-                    onChange={this.changeHandler}
-                  />
+                <Col>
+                  <FormGroup>
+                    <Label> Opening Time </Label>
+                    <Input
+                      type="time"
+                      name="openingTym"
+                      placeholder="Opening Time"
+                      value={this.state.openingTym}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Closing Time</Label>
-                  <Input
-                    type="time"
-                    name="endTym"
-                    placeholder="End Time"
-                    value={this.state.endTym}
-                    onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Address Line1 </Label>
-                  <Input
-                    type="textarea"
-                    name="address_line1"
-                    placeholder="Adderss Line1"
-                    value={this.state.address_line1}
-                    onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Address Line2 </Label>
-                  <Input
-                    type="textarea"
-                    name="address_line2"
-                    placeholder="Adderss Line2"
-                    value={this.state.address_line2}
-                    onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Landmark </Label>
-                  <Input
-                    type="text"
-                    name="landmark"
-                    placeholder="Landmark"
-                    value={this.state.landmark}
-                    onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>State</Label>
-                  <Input
-                    type="text"
-                    name="state"
-                    placeholder="State"
-                    value={this.state.state}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Closing Time </Label>
+                    <Input
+                      type="time"
+                      name="closingTym"
+                      min="12:00"
+                      placeholder="Closing Time"
+                      value={this.state.closingTym}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
                 </Col>
               </Row>
+
               <Row>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>City</Label>
-                  <Input
-                    type="text"
-                    name="city"
-                    placeholder="City"
-                    value={this.state.city}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Address Line1 </Label>
+                    <Input
+                      type="textarea"
+                      name="address_line1"
+                      placeholder="Adderss Line1"
+                      value={this.state.address_line1}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>GSTIN No.</Label>
-                  <Input
-                    type="text"
-                    name="gst_no"
-                    value={this.state.gst_no}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Address Line2 </Label>
+                    <Input
+                      type="textarea"
+                      name="address_line2"
+                      placeholder="Adderss Line2"
+                      value={this.state.address_line2}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Pin Code</Label>
-                  <Input
-                    type="number"
-                    name="pincode"
-                    value={this.state.pincode}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Landmark </Label>
+                    <Input
+                      type="text"
+                      name="landmark"
+                      placeholder="Landmark"
+                      value={this.state.landmark}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> State </Label>
+                    <Input
+                      type="text"
+                      name="state"
+                      placeholder="State"
+                      value={this.state.state}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> City </Label>
+                    <Input
+                      type="text"
+                      name="city"
+                      placeholder="City"
+                      value={this.state.city}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Pin Code </Label>
+                    <Input
+                      type="number"
+                      name="pincode"
+                      value={this.state.pincode}
+                      onChange={this.changeHandler2}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Store GST No. </Label>
+                    <Input
+                      type="text"
+                      name="gst_no"
+                      maxLength="15"
+                      value={this.state.gst_no}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Business Type </Label>
+                    <CustomInput
+                      type="select"
+                      name="business_type"
+                      placeholder="Business Type"
+                      value={this.state.business_type}
+                      onChange={this.changeHandler}
+                    >
+                      <option> Select </option>
+                      <option value="Personal"> Personal </option>
+                      <option value="Proprietorship"> Proprietorship </option>
+                    </CustomInput>
+                  </FormGroup>
+                </Col>
+                {this.state.business_type !== "Proprietorship" ? (
+                  <Col md="6" sm="12">
+                    <FormGroup>
+                      <Label> Personal Pan No. </Label>
+                      <Input
+                        type="text"
+                        name="pan_no"
+                        value={this.state.pan_no}
+                        onChange={this.changeHandler}
+                      />
+                    </FormGroup>
+                  </Col>
+                ) : (
+                  <>
+                    <Col md="6" sm="12">
+                      <FormGroup>
+                        <Label> Personal Pan No. </Label>
+                        <Input
+                          type="text"
+                          name="pan_no"
+                          value={this.state.pan_no}
+                          onChange={this.changeHandler}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md="6" sm="12">
+                      <FormGroup>
+                        <Label> Company Pan No. </Label>
+                        <Input
+                          type="text"
+                          name="company_panno"
+                          value={this.state.company_panno}
+                          onChange={this.changeHandler}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </>
+                )}
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Address Proof ID </Label>
+                    <CustomInput
+                      type="select"
+                      name="address_proof"
+                      placeholder="Adderss Proof"
+                      value={this.state.address_proof}
+                      onChange={this.changeHandler}
+                    >
+                      <option> Select </option>
+                      <option value="Address Proof ID">
+                        {" "}
+                        Address Proof ID{" "}
+                      </option>
+                      <option value="Electricity Bill">
+                        {" "}
+                        Electricity Bill{" "}
+                      </option>
+                      <option value="Telephone Bill"> Telephone Bill </option>
+                      <option value="Rental Agreementy">
+                        {" "}
+                        Rental Agreement{" "}
+                      </option>
+                    </CustomInput>
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Shop Logo Image </Label>
+                    <CustomInput
+                      type="file"
+                      multiple
+                      onChange={this.onChangeHandler1}
+                    />
+                    <div>
+                      {this.fileArrayLogo?.map(value => (
+                        <img
+                          src={value}
+                          height="80vh"
+                          width="100px"
+                          style={{ margin: "3px" }}
+                        />
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> GST Image </Label>
+                    <CustomInput
+                      type="file"
+                      multiple
+                      onChange={this.onChangeHandler2}
+                    />
+                    <div>
+                      {this.fileArrayGST?.map(value => (
+                        <img
+                          src={value}
+                          height="80vh"
+                          width="100px"
+                          style={{ margin: "3px" }}
+                        />
+                      ))}
+                    </div>
+                  </FormGroup>
                 </Col>
 
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Business Type</Label>
-                  <Input
-                    type="text"
-                    name="business_type"
-                    placeholder="Business Type"
-                    value={this.state.business_type}
-                    onChange={this.changeHandler}
-                  />
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Trade Licence Image </Label>
+                    <CustomInput
+                      type="file"
+                      multiple
+                      onChange={this.onChangeHandler4}
+                    />
+                    <div>
+                      {this.fileArrayTLIC?.map(value => (
+                        <img
+                          src={value}
+                          height="80vh"
+                          width="100px"
+                          style={{ margin: "3px" }}
+                        />
+                      ))}
+                    </div>
+                  </FormGroup>
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Pan No.</Label>
-                  <Input
-                    type="text"
-                    name="pan_no"
-                    value={this.state.pan_no}
-                    onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Company Pan No.</Label>
-                  <Input
-                    type="text"
-                    name="company_panno"
-                    value={this.state.company_panno}
-                    onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Address Proof ID </Label>
-                  <CustomInput
-                    type="select"
-                    name="address_proof"
-                    placeholder="Adderss Proof"
-                    value={this.state.address_proof}
-                    onChange={this.changeHandler}
-                  >
-                    <option value="Address Proof ID">Address Proof ID</option>
-                    <option value="Electricity Bill">Electricity Bill</option>
-                    <option value="Telephone Bill">Telephone Bill</option>
-                    <option value="Rental Agreementy">Rental Agreement</option>
-                  </CustomInput>
-                </Col>
-
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Sort Oder</Label>
-                  <Input
-                    type="number"
-                    name="sortorder"
-                    placeholder="Sort Order"
-                    value={this.state.sortorder}
-                    onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Store image</Label>
-                  <CustomInput
-                    type="file"
-                    multiple
-                    onChange={this.onChangeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Shop Logo Image</Label>
-                  <CustomInput
-                    type="file"
-                    multiple
-                    onChange={this.onChangeHandler1}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>GST Image</Label>
-                  <CustomInput
-                    type="file"
-                    multiple
-                    onChange={this.onChangeHandler2}
-                  />
-                </Col>
-
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Tradelicence Image</Label>
-                  <CustomInput
-                    type="file"
-                    multiple
-                    onChange={this.onChangeHandler4}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Personal Image</Label>
+                  <Label> Personal Image </Label>
                   <CustomInput
                     type="file"
                     multiple
                     onChange={this.onChangeHandler3}
                   />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Company Pan Image</Label>
-                  <CustomInput
-                    type="file"
-                    multiple
-                    onChange={this.onChangeHandler5}
-                  />
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Address Proof Image</Label>
-                  <CustomInput
-                    type="file"
-                    multiple
-                    onChange={this.onChangeHandler6}
-                  />
-                </Col>
-
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label className="mb-1">Status</Label>
-                  <div
-                    className="form-label-group"
-                    onChange={(e) => this.changeHandler1(e)}
-                  >
-                    <input
-                      style={{ marginRight: "3px" }}
-                      type="radio"
-                      name="status"
-                      value="Active"
-                    />
-                    <span style={{ marginRight: "20px" }}>Active</span>
-                    <input
-                      style={{ marginRight: "3px" }}
-                      type="radio"
-                      name="status"
-                      value="Inactive"
-                    />
-                    <span style={{ marginRight: "3px" }}>Inactive</span>
+                  <div>
+                    {this.fileArrayPersonal?.map(value => (
+                      <img
+                        src={value}
+                        height="80vh"
+                        width="100px"
+                        style={{ margin: "3px" }}
+                      />
+                    ))}
                   </div>
                 </Col>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Company Pan Image </Label>
+                    <CustomInput
+                      type="file"
+                      multiple
+                      onChange={this.onChangeHandler5}
+                    />
+                    <div>
+                      {this.fileArrayCompany?.map(value => (
+                        <img
+                          src={value}
+                          height="80vh"
+                          width="100px"
+                          style={{ margin: "3px" }}
+                        />
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Address Proof Image </Label>
+                    <CustomInput
+                      type="file"
+                      multiple
+                      onChange={this.onChangeHandler6}
+                    />
+                    <div>
+                      {this.fileArrayProof?.map(value => (
+                        <img
+                          src={value}
+                          height="80vh"
+                          width="100px"
+                          style={{ margin: "3px" }}
+                        />
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label> Sort Oder </Label>
+                    <Input
+                      type="number"
+                      name="sortorder"
+                      placeholder="Sort Order"
+                      value={this.state.sortorder}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" sm="12">
+                  <FormGroup>
+                    <Label className="mb-1"> Status </Label>
+                    <div
+                      className="form-label-group"
+                      onChange={e => this.changeHandler1(e)}
+                    >
+                      <Input
+                        style={{
+                          marginRight: "3px",
+                        }}
+                        type="radio"
+                        name="status"
+                        value="Active"
+                      />
+                      <span
+                        style={{
+                          marginRight: "20px",
+                          fontWeight: 800,
+                        }}
+                      >
+                        Active
+                      </span>
+                      <Input
+                        style={{
+                          marginRight: "3px",
+                        }}
+                        type="radio"
+                        name="status"
+                        value="Inactive"
+                      />
+                      <span
+                        style={{
+                          marginRight: "3px",
+                          fontWeight: 800,
+                        }}
+                      >
+                        Inactive
+                      </span>
+                    </div>
+                  </FormGroup>
+                </Col>
               </Row>
+
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Button.Ripple

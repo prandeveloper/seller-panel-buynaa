@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import {
   Card,
   CardBody,
@@ -15,7 +14,7 @@ import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
 import swal from "sweetalert";
 
-export class AddSpecialOffer extends Component {
+export class EditOffers extends Component {
   constructor(props) {
     super(props);
 
@@ -27,17 +26,34 @@ export class AddSpecialOffer extends Component {
       status: "",
     };
     this.state = {
-      productS: [],
+      productL: [],
     };
   }
 
   async componentDidMount() {
-    //Product Category
+    //Product List
     axiosConfig
       .get("/getproduct")
       .then(response => {
+        console.log(response.data.data);
+        this.setState({ productL: response.data.data });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    let { id } = this.props.match.params;
+    axiosConfig
+      .get(`/viewoneoffer/${id}`)
+      .then(response => {
         console.log(response);
-        this.setState({ productS: response.data.data });
+        this.setState({
+          offerTitle: response.data.data.offerTitle,
+          product: response.data.data.product,
+          percentageOff: response.data.data.percentageOff,
+          sortorder: response.data.data.sortorder,
+          status: response.data.data.status,
+        });
       })
       .catch(error => {
         console.log(error);
@@ -74,7 +90,7 @@ export class AddSpecialOffer extends Component {
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                Add special Offer
+                Edit Offer
               </h1>
             </Col>
             <Col>
@@ -112,9 +128,9 @@ export class AddSpecialOffer extends Component {
                     onChange={this.changeHandler}
                   >
                     <option>Select Product.......</option>
-                    {this.state.productS.map(productList => (
-                      <option key={productList._id} value={productList._id}>
-                        {productList.product_name}
+                    {this.state.productL.map(productName => (
+                      <option key={productName._id} value={productName._id}>
+                        {productName.product_name}
                       </option>
                     ))}
                   </CustomInput>
@@ -180,4 +196,4 @@ export class AddSpecialOffer extends Component {
     );
   }
 }
-export default AddSpecialOffer;
+export default EditOffers;

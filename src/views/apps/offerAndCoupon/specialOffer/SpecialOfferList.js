@@ -50,7 +50,7 @@ class SpecialOfferList extends React.Component {
         field: "offerTitle",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className=" mr-4">
               <span>{params.data.offerTitle}</span>
@@ -63,7 +63,7 @@ class SpecialOfferList extends React.Component {
         field: "product?.product_name",
         filter: true,
         width: 200,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className=" mr-4">
               <span>{params.data.product?.product_name}</span>
@@ -76,7 +76,7 @@ class SpecialOfferList extends React.Component {
         field: "percentageOff",
         filter: true,
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className=" mr-4">
               <span>{params.data.percentageOff}</span>
@@ -90,7 +90,7 @@ class SpecialOfferList extends React.Component {
         field: "status",
         filter: true,
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return params.value === "Active" ? (
             <div className="badge badge-pill badge-success ">
               {params.data.status}
@@ -106,18 +106,18 @@ class SpecialOfferList extends React.Component {
         headerName: "Actions",
         field: "transactions",
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Edit
+              <Edit
                 className="mr-50"
                 size={15}
-                // onClick={() =>
-                //   history.push(
-                //     `/app/products/brand/editBrand/${params.data._id}`
-                //   )
-                // }
-              /> */}
+                onClick={() =>
+                  history.push(
+                    `/app/offerAndCoupon/specialOffer/editOffers/${params.data._id}`
+                  )
+                }
+              />
               <Trash2
                 style={{ color: "red" }}
                 size={20}
@@ -135,7 +135,7 @@ class SpecialOfferList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/Getoffer").then((response) => {
+    await axiosConfig.get("/Getoffer").then(response => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
@@ -144,12 +144,12 @@ class SpecialOfferList extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/deloffer/${id}`).then((response) => {
+    await axiosConfig.get(`/deloffer/${id}`).then(response => {
       console.log(response);
     });
   }
 
-  onGridReady = (params) => {
+  onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -159,11 +159,11 @@ class SpecialOfferList extends React.Component {
     });
   };
 
-  updateSearchQuery = (val) => {
+  updateSearchQuery = val => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = (val) => {
+  filterSize = val => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -183,7 +183,7 @@ class SpecialOfferList extends React.Component {
             <Row className="m-2">
               <Col>
                 <h1 col-sm-6 className="float-left">
-                  Special Offer List
+                  Offer List
                 </h1>
               </Col>
               <Col>
@@ -251,9 +251,7 @@ class SpecialOfferList extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
-                          onChange={(e) =>
-                            this.updateSearchQuery(e.target.value)
-                          }
+                          onChange={e => this.updateSearchQuery(e.target.value)}
                           value={this.state.value}
                         />
                       </div>
@@ -268,7 +266,7 @@ class SpecialOfferList extends React.Component {
                     </div>
                   </div>
                   <ContextLayout.Consumer>
-                    {(context) => (
+                    {context => (
                       <AgGridReact
                         gridOptions={{}}
                         rowSelection="multiple"

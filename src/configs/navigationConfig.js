@@ -363,12 +363,12 @@ const navigationConfig = [
   //   ],
   // },
   {
-    id: "notification",
+    id: "notificationList",
     title: "Notifications",
     type: "item",
     icon: <Icon.Circle size={12} />,
     permissions: ["admin", "editor"],
-    navLink: "/app/notification/Notification",
+    navLink: "/app/notification/notificationList",
   },
 
   {
