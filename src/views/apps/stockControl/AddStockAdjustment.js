@@ -104,30 +104,8 @@ export class AddStockAdjustment extends Component {
                     // onChange={this.changeHandler}
                   />
                 </Col>
-              </Row>
-
-              <Row>
                 <Col lg="6" md="6" className="mb-1">
-                  <Label>Select From Warehouse</Label>
-                  <CustomInput
-                    type="select"
-                    name="percentageOff"
-                    // value={this.state.percentageOff}
-                    // onChange={this.changeHandler}
-                  ></CustomInput>
-                </Col>
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Select To Warehouse</Label>
-                  <CustomInput
-                    type="select"
-                    name="percentageOff"
-                    // value={this.state.percentageOff}
-                    // onChange={this.changeHandler}
-                  ></CustomInput>
-                </Col>
-
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Transfer Date</Label>
+                  <Label>Stock Adjustment Date</Label>
                   <Input
                     type="date"
                     name="sortorder"
@@ -136,16 +114,7 @@ export class AddStockAdjustment extends Component {
                   />
                 </Col>
                 <Col lg="6" md="6" className="mb-1">
-                  <Label>Delivery Due Date</Label>
-                  <Input
-                    type="date"
-                    name="sortorder"
-                    // value={this.state.sortorder}
-                    // onChange={this.changeHandler}
-                  />
-                </Col>
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Transfer Type</Label>
+                  <Label>Warehouse</Label>
                   <CustomInput
                     type="select"
                     name="percentageOff"
@@ -153,6 +122,7 @@ export class AddStockAdjustment extends Component {
                     // onChange={this.changeHandler}
                   ></CustomInput>
                 </Col>
+
                 <Col lg="6" md="6" className="mb-1">
                   <Label>Reason</Label>
                   <CustomInput

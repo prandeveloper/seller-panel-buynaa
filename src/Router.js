@@ -90,6 +90,9 @@ const pendingOrder = lazy(() => import("./views/apps/order/PendingOrder"));
 const orderDelivered = lazy(() => import("./views/apps/order/OrderDelivered"));
 const cancelledOrder = lazy(() => import("./views/apps/order/CancelledOrder"));
 const returnedOrder = lazy(() => import("./views/apps/order/ReturnedOrder"));
+
+const createInvoice = lazy(() => import("./views/apps/billing/CreateInvoice"));
+const invoiceList = lazy(() => import("./views/apps/billing/InvoiceList"));
 // const invoiceSetting = lazy(() => import("./views/apps/order/InvoiceSetting"));
 // const invoiceDesign = lazy(() => import("./views/apps/order/InvoiceDesign"));
 
@@ -139,12 +142,9 @@ const addCoupons = lazy(() =>
 
 const churnRate = lazy(() => import("./views/apps/churnRate/ChurnRate"));
 // const pendingPayment = lazy(() => import("./views/apps/pendingPayment/PendingPayment"));
-// const subscription = lazy(() => import("./views/apps/website/Subscription"));
-const Subscription = lazy(() =>
-  import("./views/apps/subscription/Subscription")
-);
-const adSubscription = lazy(() =>
-  import("./views/apps/adSubscription/AdSubscription")
+
+const addSubscription = lazy(() =>
+  import("./views/apps/subscription/AddSubscription")
 );
 
 const pageLayout = lazy(() => import("./views/apps/pageLayout/PageLayout"));
@@ -251,11 +251,6 @@ const mostViewProductReport = lazy(() =>
   import("./views/apps/report/MostViewProductReport")
 );
 
-const billingList = lazy(() => import("./views/apps/billing/BillingList"));
-const editBilling = lazy(() => import("./views/apps/billing/EditBilling"));
-const viewBilling = lazy(() => import("./views/apps/billing/ViewBilling"));
-const addBilling = lazy(() => import("./views/apps/billing/AddBilling"));
-
 const storesList = lazy(() => import("./views/apps/store/stores/StoresList"));
 const addstores = lazy(() => import("./views/apps/store/stores/AddStores"));
 const storesRequestList = lazy(() =>
@@ -302,9 +297,7 @@ const importDemo = lazy(() =>
 );
 
 const Login = lazy(() => import("./views/pages/authentication/login/Login"));
-const Subs = lazy(() =>
-  import("./views/pages/authentication/subscription/Subs")
-);
+
 const forgotPassword = lazy(() =>
   import("./views/pages/authentication/ForgotPassword")
 );
@@ -327,7 +320,6 @@ const sliderList = lazy(() => import("./views/apps/slider/SliderList"));
 const addSlider = lazy(() => import("./views/apps/slider/AddSlider"));
 
 const editProfile = lazy(() => import("./views/apps/profile/EditProfile"));
-const mySubscription = lazy(() => import("./views/apps/mySubs/MySubscription"));
 
 //Theme Component starts from here
 const userList = lazy(() => import("./views/apps/user/list/List"));
@@ -554,13 +546,6 @@ class AppRouter extends React.Component {
           {/* <AppRoute path="/pages/home" component={home} fullLayout /> */}
           {/* <AppRoute exact path="/seller-dashboard" component={sellerDashboard} /> */}
           {/* My components starts all my app components*/}
-          <AppRoute path="/app/billing/billingList" component={billingList} />
-          <AppRoute path="/app/billing/editBilling" component={editBilling} />
-          <AppRoute
-            path="/app/billing/viewBilling/:id"
-            component={viewBilling}
-          />
-          <AppRoute path="/app/billing/addBilling" component={addBilling} />
           <AppRoute path="/app/seller/sellerList" component={sellerList} />
           <AppRoute path="/app/seller/editSeller" component={editSeller} />
           <AppRoute path="/app/seller/viewSeller/:id" component={viewSeller} />
@@ -685,6 +670,11 @@ class AppRouter extends React.Component {
             component={cancelledOrder}
           />
           <AppRoute path="/app/order/returnedOrder" component={returnedOrder} />
+          <AppRoute
+            path="/app/billing/createInvoice"
+            component={createInvoice}
+          />
+          <AppRoute path="/app/billing/invoiceList" component={invoiceList} />
           {/*<AppRoute path="/app/order/invoiceDesign" component={invoiceDesign} />
           <AppRoute
             path="/app/order/invoiceSetting"
@@ -746,14 +736,9 @@ class AppRouter extends React.Component {
           <AppRoute path="/app/churnRate/churnRate" component={churnRate} />
           {/* <AppRoute path="/app/pendingPayment/pendingPayment" component={pendingPayment} /> */}
           <AppRoute
-            path="/app/subscription/subscription"
-            component={Subscription}
+            path="/app/subscription/addSubscription"
+            component={addSubscription}
           />
-          <AppRoute
-            path="/app/adSubscription/adSubscription"
-            component={adSubscription}
-          />
-          {/* <AppRoute path="/app/website/subscription" component={subscription} /> */}
           <AppRoute path="/app/report/stockReport" component={stockReport} />
           <AppRoute path="/app/report/salesReport" component={salesReport} />
           <AppRoute
@@ -956,7 +941,6 @@ class AppRouter extends React.Component {
           <AppRoute path="/app/user/list" component={userList} />
           <AppRoute path="/app/user/edit" component={userEdit} />
           <AppRoute path="/app/user/view" component={userView} />
-          <AppRoute path="/pages/subs" component={Subs} fullLayout />
           <AppRoute path="/pages/login" component={Login} fullLayout />
           <AppRoute
             path="/pages/forgot-password"
@@ -975,10 +959,6 @@ class AppRouter extends React.Component {
           <AppRoute path="/app/myStore/storeList" component={storeList} />
           <AppRoute path="/app/myStore/addStorePage" component={addStorePage} />
           <AppRoute path="/app/profile/editProfile" component={editProfile} />
-          <AppRoute
-            path="/app/mysubs/mySubscription"
-            component={mySubscription}
-          />
           {/* Theme Components Starts from here all the demo components*/}
           <AppRoute
             path="/email"

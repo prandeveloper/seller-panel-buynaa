@@ -197,13 +197,37 @@ const navigationConfig = [
       },
     ],
   },
-
   {
-    id: "billingList",
-    title: "Billing",
+    id: "addSubscription",
+    title: "Subscriptions",
     type: "item",
-    icon: <Icon.File size={20} />,
-    navLink: "/app/billing/billingList",
+    icon: <Icon.Youtube size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/subscription/addSubscription",
+  },
+  {
+    id: "billing",
+    title: "Billing",
+    type: "collapse",
+    icon: <Icon.Flag size={20} />,
+    children: [
+      {
+        id: "createInvoice",
+        title: "Create Invoice",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/billing/createInvoice",
+      },
+      {
+        id: "invoiceList",
+        title: "Invoice List",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/billing/invoiceList",
+      },
+    ],
   },
 
   {
@@ -501,15 +525,6 @@ const navigationConfig = [
   // },
 
   // {
-  //   id: "mySubscription",
-  //   title: "My Subscrition",
-  //   type: "item",
-  //   icon: <Icon.CreditCard size={20} />,
-  //   permissions: ["admin", "editor"],
-  //   navLink: "/app/mySubs/mySubscription",
-  //   collapsed: true,
-  // },
-  // {
   //   id: "accountManagement",
   //   title: "Account Management",
   //   type: "collapse",
@@ -522,13 +537,6 @@ const navigationConfig = [
   //       icon: <Icon.Circle size={12} />,
   //       permissions: ["admin", "editor"],
   //       navLink: "/app/accountManagement/payouts",
-  //     },
-  //     {
-  //       id: "billingList",
-  //       title: "Billing",
-  //       type: "item",
-  //       icon: <Icon.File size={20} />,
-  //       navLink: "/app/billing/billingList",
   //     },
 
   //     {
@@ -713,14 +721,7 @@ const navigationConfig = [
 
 //     ]
 //   },
-//   {
-//     id: "subscription",
-//     title: "Subscriptions",
-//     type: "item",
-//     icon: <Icon.Youtube size={20} />,
-//     permissions: ["admin", "editor"],
-//     navLink: "/app/marketing/subscription/subscriptionList",
-//   },
+
 //     {
 //     id: "sliderList",
 //     title: "Slider",
@@ -988,14 +989,6 @@ export default navigationConfig;
 //       navLink: "/app/byProduct/HistoryByProductTyp",
 //     },
 //   ]
-// },
-
-// {
-//   id: "billingList",
-//   title: "Billing",
-//   type: "item",
-//   icon: <Icon.File size={20} />,
-//   navLink: "/app/billing/billingList",
 // },
 
 // {
@@ -1404,14 +1397,7 @@ export default navigationConfig;
 //     },
 //   ],
 // },
-// {
-//   id: "subscription",
-//   title: "Subscriptions",
-//   type: "item",
-//   icon: <Icon.Youtube size={20} />,
-//   permissions: ["admin", "editor"],
-//   navLink: "/app/subscription/Subscription",
-// },
+
 // {
 //   id: "colors",
 //   title: "Colors",
