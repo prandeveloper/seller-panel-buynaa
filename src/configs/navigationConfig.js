@@ -442,6 +442,14 @@ const navigationConfig = [
           },
         ],
       },
+      {
+        id: "warehouseList",
+        title: "Warehouse",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/warehouse/warehouseList",
+      },
     ],
   },
   // {

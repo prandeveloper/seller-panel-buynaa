@@ -260,9 +260,16 @@ const addStoresRequest = lazy(() =>
   import("./views/apps/store/storesRequest/AddStoresRequest")
 );
 
-const walletList = lazy(() => import("./views/apps/wallet/WalletList"));
-const addWallet = lazy(() => import("./views/apps/wallet/AddWallet"));
-const viewWallet = lazy(() => import("./views/apps/wallet/ViewWallet"));
+const warehouseList = lazy(() =>
+  import("./views/apps/warehouse/WarehouseList")
+);
+const addWarehouse = lazy(() => import("./views/apps/warehouse/AddWarehouse"));
+const viewWarehouse = lazy(() =>
+  import("./views/apps/warehouse/ViewWarehouse")
+);
+const editWarehouse = lazy(() =>
+  import("./views/apps/warehouse/EditWarehouse")
+);
 
 const employeeList = lazy(() =>
   import("./views/apps/contactUs/employee/EmployeeList")
@@ -933,9 +940,22 @@ class AppRouter extends React.Component {
             path="/app/helpAndSupport/importDemo/ImportDemo"
             component={importDemo}
           />
-          <AppRoute path="/app/wallet/walletList" component={walletList} />
-          <AppRoute path="/app/wallet/addWallet" component={addWallet} />
-          <AppRoute path="/app/wallet/viewWallet" component={viewWallet} />
+          <AppRoute
+            path="/app/warehouse/warehouseList"
+            component={warehouseList}
+          />
+          <AppRoute
+            path="/app/warehouse/addWarehouse"
+            component={addWarehouse}
+          />
+          <AppRoute
+            path="/app/warehouse/viewWarehouse/:id"
+            component={viewWarehouse}
+          />
+          <AppRoute
+            path="/app/warehouse/editWarehouse/:id"
+            component={editWarehouse}
+          />
           <AppRoute path="/app/slider/sliderList" component={sliderList} />
           <AppRoute path="/app/slider/addSlider" component={addSlider} />
           <AppRoute path="/app/user/list" component={userList} />

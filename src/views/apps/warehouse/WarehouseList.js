@@ -10,6 +10,8 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
+  Breadcrumb,
+  BreadcrumbItem,
 } from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
 import { ContextLayout } from "../../../utility/context/Layout";
@@ -20,7 +22,7 @@ import { history } from "../../../history";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 
-class Wallet extends React.Component {
+class WarehouseList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -34,123 +36,146 @@ class Wallet extends React.Component {
     },
 
     columnDefs: [
-      
       {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 150,
+        width: 100,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-     
-      
-     
-      {
-        headerName: "First Name",
-        field: "first_name",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.first_name}</span>
-            </div>
-          );
-        },
-      },
-    
-      {
-        headerName: "Last Name",
-        field: "last_name",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.last_name}</span>
-            </div>
-          );
-        },
-      },
-      
-      {
-        headerName: "Wallet Balance",
-        field: "wallet_balance",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.wallet_balance}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Wallet Id",
-        field: "walletId",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.walletId}</span>
-            </div>
-          );
-        },
-      },
-  
 
-      // {
-      //   headerName: "Status",
-      //   field: "status",
-      //   filter: true,
-      //   width: 150,
-      //   cellRendererFramework: (params) => {
-      //     return params.value === "Active" ? (
-      //       <div className="badge badge-pill badge-success">
-      //         {params.data.status}
-      //       </div>
-      //     ) : params.value === "Inactive" ? (
-      //       <div className="badge badge-pill badge-warning">
-      //         {params.data.status}
-      //       </div>
-      //     ) : null;
-      //   },
-      // },
+      {
+        headerName: "WareHouse Name",
+        field: "warehousename",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div>
+              <span>{params.data.warehousename}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Email",
+        field: "email	",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div>
+              <span>{params.data.email}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Phone No.",
+        field: "phone_no",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div>
+              <span>{params.data.phone_no}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Address 1",
+        field: "address1",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div>
+              <span>{params.data.address1}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Address 2",
+        field: "address2",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div>
+              <span>{params.data.address2}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "City",
+        field: "city",
+        filter: true,
+        width: 120,
+        cellRendererFramework: params => {
+          return (
+            <div>
+              <span>{params.data.city}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Pin Code",
+        field: "pin",
+        filter: true,
+        width: 150,
+        cellRendererFramework: params => {
+          return (
+            <div>
+              <span>{params.data.pin}</span>
+            </div>
+          );
+        },
+      },
 
       {
         headerName: "Actions",
         field: "sortorder",
-     
+
         // field: "transactions",
         width: 150,
-        cellRendererFramework: (params) => {
+        cellRendererFramework: params => {
           return (
             <div className="actions cursor-pointer">
               <Eye
                 className="mr-50"
                 size={20}
                 onClick={() =>
-                  history.push(`/app/wallet/viewWallet/${params.data._id}`)
+                  history.push(
+                    `/app/warehouse/viewWarehouse/${params.data._id}`
+                  )
                 }
               />
-              {/* <Edit
+              <Edit
                 className="mr-50"
                 size={20}
-                onClick={() => history.push("/app/seller/editSeller")}
-              /> */}
-              {/* <Trash2
+                onClick={() =>
+                  history.push(
+                    `/app/warehouse/editWarehouse/${params.data._id}`
+                  )
+                }
+              />
+              <Trash2
                 size={20}
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
                   this.gridApi.updateRowData({ remove: selectedData });
                 }}
-              /> */}
+              />
             </div>
           );
         },
@@ -159,14 +184,21 @@ class Wallet extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getwallet").then((response) => {
+    await axiosConfig.get("/getwarehouse").then(response => {
       const rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
     });
   }
 
-  onGridReady = (params) => {
+  async runthisfunction(id) {
+    console.log(id);
+    await axiosConfig.get(`/del_warehouse/${id}`).then(response => {
+      console.log(response);
+    });
+  }
+
+  onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -176,11 +208,11 @@ class Wallet extends React.Component {
     });
   };
 
-  updateSearchQuery = (val) => {
+  updateSearchQuery = val => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = (val) => {
+  filterSize = val => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -197,25 +229,31 @@ class Wallet extends React.Component {
       (
         <Row className="app-user-list">
           <Col sm="12">
-            
-            
+            <div>
+              <Breadcrumb listTag="div">
+                <BreadcrumbItem href="/analyticsDashboard" tag="a">
+                  Home
+                </BreadcrumbItem>
+                <BreadcrumbItem active>Warehouse List</BreadcrumbItem>
+              </Breadcrumb>
+            </div>
           </Col>
           <Col sm="12">
             <Card>
               <Row className="m-2">
                 <Col>
                   <h1 sm="6" className="float-left">
-                    Wallet List
+                    Warehouse List
                   </h1>
                 </Col>
-                {/* <Col>
+                <Col>
                   <Button
                     className=" btn btn-danger float-right"
-                    onClick={() => history.push("/app/wallet/addWallet")}
+                    onClick={() => history.push("/app/warehouse/addWarehouse")}
                   >
-                    Add Wallet
+                    Add Warehouse
                   </Button>
-                </Col> */}
+                </Col>
               </Row>
               <CardBody>
                 {this.state.rowData === null ? null : (
@@ -271,7 +309,7 @@ class Wallet extends React.Component {
                         <div className="table-input mr-1">
                           <Input
                             placeholder="search..."
-                            onChange={(e) =>
+                            onChange={e =>
                               this.updateSearchQuery(e.target.value)
                             }
                             value={this.state.value}
@@ -288,7 +326,7 @@ class Wallet extends React.Component {
                       </div>
                     </div>
                     <ContextLayout.Consumer>
-                      {(context) => (
+                      {context => (
                         <AgGridReact
                           gridOptions={{}}
                           rowSelection="multiple"
@@ -317,4 +355,4 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+export default WarehouseList;

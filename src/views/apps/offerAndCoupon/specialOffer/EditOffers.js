@@ -17,7 +17,6 @@ import swal from "sweetalert";
 export class EditOffers extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       offerTitle: "",
       product: "",
@@ -68,18 +67,18 @@ export class EditOffers extends Component {
   };
   submitHandler = e => {
     e.preventDefault();
-
+    let { id } = this.props.match.params;
     axiosConfig
-      .post("/addOffer", this.state)
+      .post(`/edit_offer/$(id)`, this.state)
       .then(response => {
         console.log(response);
+        console.log(this.state);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push(
           "/app/offerAndCoupon/specialOffer/specialOfferList"
         );
       })
       .catch(error => {
-        swal("Error!", "Error Received", "error");
         console.log(error);
       });
   };
@@ -155,7 +154,6 @@ export class EditOffers extends Component {
                     onChange={this.changeHandler}
                   />
                 </Col>
-
                 <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
                   <Label className="mb-1">Status</Label>
                   <div
@@ -186,7 +184,7 @@ export class EditOffers extends Component {
                   type="submit"
                   className="mr-1 mb-1"
                 >
-                  Add Special Offer
+                  Submit
                 </Button.Ripple>
               </Row>
             </Form>
