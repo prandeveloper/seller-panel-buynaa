@@ -29,7 +29,7 @@ export class EditBrand extends Component {
     };
   }
 
-  onChangeHandler = (event) => {
+  onChangeHandler = event => {
     this.setState({ selectedFile: event.target.files[0] });
     this.setState({ selectedName: event.target.files[0].name });
     console.log(event.target.files[0]);
@@ -40,7 +40,7 @@ export class EditBrand extends Component {
     let { id } = this.props.match.params;
     axiosConfig
       .get(`/viewonebrand/${id}`)
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.setState({
           brand_img: response.data.data.brand_img,
@@ -50,19 +50,19 @@ export class EditBrand extends Component {
           status: response.data.data.status,
         });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }
 
-  changeHandler1 = (e) => {
+  changeHandler1 = e => {
     this.setState({ status: e.target.value });
   };
-  changeHandler = (e) => {
+  changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  submitHandler = (e) => {
+  submitHandler = e => {
     e.preventDefault();
     //console.log(this.props.match.params, this.state);
     const data = new FormData();
@@ -79,20 +79,14 @@ export class EditBrand extends Component {
       );
     }
 
-    // for (var value of data.values()) {
-    //    console.log(value);
-    // }
-    // for (var key of data.keys()) {
-    //    console.log(key);
-    // }
     let { id } = this.props.match.params;
     axiosConfig
       .post(`/editbrand/${id}`, data)
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.props.history.push("/app/products/brand/brandList");
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -169,7 +163,7 @@ export class EditBrand extends Component {
                     <Label className="mb-1">Status</Label>
                     <div
                       className="form-label-group"
-                      onChange={(e) => this.changeHandler1(e)}
+                      onChange={e => this.changeHandler1(e)}
                     >
                       <input
                         style={{ marginRight: "3px" }}
