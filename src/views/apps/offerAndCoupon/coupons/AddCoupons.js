@@ -15,7 +15,7 @@ import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
 import swal from "sweetalert";
 
-export class AddBundleOffer extends Component {
+export class AddCoupon extends Component {
   constructor(props) {
     super(props);
 
@@ -38,32 +38,32 @@ export class AddBundleOffer extends Component {
     //Product List
     axiosConfig
       .get("/getproduct")
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.setState({ productS: response.data.data });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }
 
-  changeHandler1 = (e) => {
+  changeHandler1 = e => {
     this.setState({ status: e.target.value });
   };
-  changeHandler = (e) => {
+  changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = (e) => {
+  submitHandler = e => {
     e.preventDefault();
 
     axiosConfig
       .post("/addcoupon", this.state)
-      .then((response) => {
+      .then(response => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/offerAndCoupon/coupons/couponsList");
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -109,7 +109,7 @@ export class AddBundleOffer extends Component {
                     onChange={this.changeHandler}
                   >
                     <option>Select Product</option>
-                    {this.state.productS.map((productH) => (
+                    {this.state.productS.map(productH => (
                       <option key={productH._id} value={productH._id}>
                         {productH.product_name}
                       </option>
@@ -169,7 +169,7 @@ export class AddBundleOffer extends Component {
                   <Label className="mb-1">Status</Label>
                   <div
                     className="form-label-group"
-                    onChange={(e) => this.changeHandler1(e)}
+                    onChange={e => this.changeHandler1(e)}
                   >
                     <input
                       style={{ marginRight: "3px" }}
@@ -216,4 +216,4 @@ export class AddBundleOffer extends Component {
   }
 }
 
-export default AddBundleOffer;
+export default AddCoupon;

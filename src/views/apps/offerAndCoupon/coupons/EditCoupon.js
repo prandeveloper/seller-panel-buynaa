@@ -9,25 +9,28 @@ import {
   CustomInput,
   Label,
   Button,
-  Breadcrumb,
-  BreadcrumbItem,
+  FormGroup,
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
 import swal from "sweetalert";
 
-export class EditOffers extends Component {
+export class EditCoupon extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      offerTitle: "",
+      CouponTitle: "",
       product: "",
-      percentageOff: "",
-      sortorder: "",
+      description: "",
+      startDate: "",
+      expireOn: "",
+      usage_limit: "",
+      amount: "",
       status: "",
     };
     this.state = {
-      productL: [],
+      productS: [],
     };
   }
 
@@ -36,8 +39,8 @@ export class EditOffers extends Component {
     axiosConfig
       .get("/getproduct")
       .then(response => {
-        console.log(response.data.data);
-        this.setState({ productL: response.data.data });
+        console.log(response);
+        this.setState({ productS: response.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -45,14 +48,17 @@ export class EditOffers extends Component {
 
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewoneoffer/${id}`)
+      .get(`/viewonecoupon/${id}`)
       .then(response => {
         console.log(response);
         this.setState({
-          offerTitle: response.data.data.offerTitle,
+          CouponTitle: response.data.data.CouponTitle,
           product: response.data.data.product,
-          percentageOff: response.data.data.percentageOff,
-          sortorder: response.data.data.sortorder,
+          description: response.data.data.description,
+          startDate: response.data.data.startDate,
+          expireOn: response.data.data.expireOn,
+          usage_limit: response.data.data.usage_limit,
+          amount: response.data.data.amount,
           status: response.data.data.status,
         });
       })
@@ -67,19 +73,15 @@ export class EditOffers extends Component {
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
   submitHandler = e => {
     e.preventDefault();
-    let { id } = this.props.match.params;
+
     axiosConfig
-      .post(`/edit_offer/${id}`, this.state)
+      .post("/addcoupon", this.state)
       .then(response => {
         console.log(response);
-        console.log(this.state);
         swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push(
-          "/app/offerAndCoupon/specialOffer/specialOfferList"
-        );
+        this.props.history.push("/app/offerAndCoupon/coupons/couponsList");
       })
       .catch(error => {
         console.log(error);
@@ -88,38 +90,18 @@ export class EditOffers extends Component {
   render() {
     return (
       <div>
-        <Row>
-          <Col sm="12">
-            <div>
-              <Breadcrumb listTag="div">
-                <BreadcrumbItem href="/analyticsDashboard" tag="a">
-                  Home
-                </BreadcrumbItem>
-                <BreadcrumbItem
-                  href="/app/offerAndCoupon/specialOffer/specialOfferList"
-                  tag="a"
-                >
-                  Offers List
-                </BreadcrumbItem>
-                <BreadcrumbItem active>Edit Offer</BreadcrumbItem>
-              </Breadcrumb>
-            </div>
-          </Col>
-        </Row>
         <Card>
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                Edit Offer
+                Edit Coupons
               </h1>
             </Col>
             <Col>
               <Button
                 className=" btn btn-danger float-right"
                 onClick={() =>
-                  history.push(
-                    "/app/offerAndCoupon/specialOffer/specialOfferList"
-                  )
+                  history.push("/app/offerAndCoupon/coupons/couponsList")
                 }
               >
                 Back
@@ -129,53 +111,81 @@ export class EditOffers extends Component {
           <CardBody>
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row className="mb-2">
-                <Col lg="6" md="6">
-                  <Label>Offer Title</Label>
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Coupon Title </Label>
                   <Input
                     type="text"
-                    name="offerTitle"
-                    value={this.state.offerTitle}
+                    name="CouponTitle"
+                    value={this.state.CouponTitle}
                     onChange={this.changeHandler}
                   />
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Offer On Product</Label>
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Product </Label>
                   <CustomInput
                     type="select"
-                    placeholder="Link By..."
                     name="product"
                     value={this.state.product}
                     onChange={this.changeHandler}
                   >
-                    <option>Select Product.......</option>
-                    {this.state.productL.map(productName => (
-                      <option key={productName._id} value={productName._id}>
-                        {productName.product_name}
+                    <option>Select Product</option>
+                    {this.state.productS.map(productH => (
+                      <option key={productH._id} value={productH._id}>
+                        {productH.product_name}
                       </option>
                     ))}
                   </CustomInput>
                 </Col>
-
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Percentage Off</Label>
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Description </Label>
                   <Input
                     type="text"
-                    name="percentageOff"
-                    value={this.state.percentageOff}
+                    name="description"
+                    value={this.state.description}
                     onChange={this.changeHandler}
                   />
                 </Col>
 
-                <Col lg="6" md="6" className="mb-1">
-                  <Label>Sort Order</Label>
+                <Col lg="6" md="6" className="mb-2">
+                  <Label> Coupon Start Date</Label>
                   <Input
-                    type="number"
-                    name="sortorder"
-                    value={this.state.sortorder}
+                    type="date"
+                    name="startDate"
+                    value={this.state.startDate}
                     onChange={this.changeHandler}
                   />
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
+
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Coupon Expire date </Label>
+                  <Input
+                    type="date"
+                    name="expireOn"
+                    value={this.state.expireOn}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Usage Limit</Label>
+                  <Input
+                    type="text"
+                    name="usage_limit"
+                    value={this.state.usage_limit}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                <Col lg="6" md="6" className="mb-1">
+                  <Label>Amount </Label>
+                  <Input
+                    type="text"
+                    name="amount"
+                    value={this.state.amount}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+
+                <Col lg="6" md="6" sm="6" className="mb-2 ">
                   <Label className="mb-1">Status</Label>
                   <div
                     className="form-label-group"
@@ -187,7 +197,12 @@ export class EditOffers extends Component {
                       name="status"
                       value="Active"
                     />
-                    <span className="mr-2 font-weight-bold">Active</span>
+                    <span
+                      className="font-weight-bolder"
+                      style={{ marginRight: "20px" }}
+                    >
+                      Active
+                    </span>
 
                     <input
                       style={{ marginRight: "3px" }}
@@ -195,17 +210,22 @@ export class EditOffers extends Component {
                       name="status"
                       value="Inactive"
                     />
-                    <span className="mr-2 font-weight-bold">Inactive</span>
+                    <span
+                      className="font-weight-bolder"
+                      style={{ marginRight: "3px" }}
+                    >
+                      Inactive
+                    </span>
                   </div>
                 </Col>
               </Row>
               <Row>
                 <Button.Ripple
-                  color="primary"
-                  type="submit"
                   className="mr-1 mb-1"
+                  type="submit"
+                  color="primary"
                 >
-                  Submit
+                  Add Coupon
                 </Button.Ripple>
               </Row>
             </Form>
@@ -215,4 +235,5 @@ export class EditOffers extends Component {
     );
   }
 }
-export default EditOffers;
+
+export default EditCoupon;

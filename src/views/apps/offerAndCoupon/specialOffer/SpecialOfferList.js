@@ -10,6 +10,8 @@ import {
   DropdownItem,
   DropdownToggle,
   Button,
+  Breadcrumb,
+  BreadcrumbItem,
 } from "reactstrap";
 import axiosConfig from "../../../../axiosConfig";
 import { ContextLayout } from "../../../../utility/context/Layout";
@@ -177,6 +179,16 @@ class SpecialOfferList extends React.Component {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       <Row className="app-user-list">
+        <Col sm="12">
+          <div>
+            <Breadcrumb listTag="div">
+              <BreadcrumbItem href="/analyticsDashboard" tag="a">
+                Home
+              </BreadcrumbItem>
+              <BreadcrumbItem active>Offer List</BreadcrumbItem>
+            </Breadcrumb>
+          </div>
+        </Col>
         <Col sm="12"></Col>
         <Col sm="12">
           <Card>

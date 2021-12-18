@@ -139,6 +139,9 @@ const couponsList = lazy(() =>
 const addCoupons = lazy(() =>
   import("./views/apps/offerAndCoupon/coupons/AddCoupons")
 );
+const editCoupon = lazy(() =>
+  import("./views/apps/offerAndCoupon/coupons/EditCoupon")
+);
 
 const churnRate = lazy(() => import("./views/apps/churnRate/ChurnRate"));
 // const pendingPayment = lazy(() => import("./views/apps/pendingPayment/PendingPayment"));
@@ -739,6 +742,10 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/offerAndCoupon/coupons/addCoupons"
             component={addCoupons}
+          />
+          <AppRoute
+            path="/app/offerAndCoupon/coupons/editCoupon/:id"
+            component={editCoupon}
           />
           <AppRoute path="/app/churnRate/churnRate" component={churnRate} />
           {/* <AppRoute path="/app/pendingPayment/pendingPayment" component={pendingPayment} /> */}

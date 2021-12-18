@@ -22,9 +22,24 @@ export class AddStockTransfer extends Component {
       this.state = {
         addTextbox: [{}],
       };
+      this.state = {
+        warehouseL: [],
+      };
     }
   }
 
+  async componentDidMount() {
+    //Warehouse List
+    axiosConfig
+      .get("/getwarehouse")
+      .then(response => {
+        console.log(response);
+        this.setState({ warehouseL: response.data.data });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
   addControls() {
     this.setState({
       addTextbox: [...this.state.addTextbox, {}],
@@ -114,7 +129,13 @@ export class AddStockTransfer extends Component {
                     name="percentageOff"
                     // value={this.state.percentageOff}
                     // onChange={this.changeHandler}
-                  ></CustomInput>
+                  >
+                    {this.state.warehouseL?.map(warehouseList => (
+                      <option key={warehouseList._id} value={warehouseList._id}>
+                        {warehouseList.warehousename}
+                      </option>
+                    ))}
+                  </CustomInput>
                 </Col>
                 <Col lg="6" md="6" className="mb-1">
                   <Label>Select To Warehouse</Label>

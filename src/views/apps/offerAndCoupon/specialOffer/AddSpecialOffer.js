@@ -10,6 +10,8 @@ import {
   CustomInput,
   Label,
   Button,
+  Breadcrumb,
+  BreadcrumbItem,
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
@@ -70,11 +72,29 @@ export class AddSpecialOffer extends Component {
   render() {
     return (
       <div>
+        <Row>
+          <Col sm="12">
+            <div>
+              <Breadcrumb listTag="div">
+                <BreadcrumbItem href="/analyticsDashboard" tag="a">
+                  Home
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  href="/app/offerAndCoupon/specialOffer/specialOfferList"
+                  tag="a"
+                >
+                  Offers List
+                </BreadcrumbItem>
+                <BreadcrumbItem active>Add Offer</BreadcrumbItem>
+              </Breadcrumb>
+            </div>
+          </Col>
+        </Row>
         <Card>
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                Add special Offer
+                Add Offer
               </h1>
             </Col>
             <Col>
