@@ -52,6 +52,7 @@ class AddMyProduct extends React.Component {
       productC: [],
       productSC: [],
       units: [],
+      pMaterial: [],
     };
     this.submitHandler = this.submitHandler.bind(this);
   }
@@ -60,60 +61,70 @@ class AddMyProduct extends React.Component {
     //Product Category
     axiosConfig
       .get("/getproductCategory")
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.setState({ productC: response.data.data });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
 
     //Product Sub Category
     axiosConfig
       .get("/getproductsubcategory")
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.setState({ productSC: response.data.data });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
 
     //Units
     axiosConfig
       .get("/viewallunits")
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.setState({ units: response.data.data });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
     //Brand
     axiosConfig
       .get("/allbrand")
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.setState({ pBrand: response.data.data });
       })
-      .catch((error) => {
+      .catch(error => {
+        console.log(error);
+      });
+    //Material
+    axiosConfig
+      .get("/getallmaterial")
+      .then(response => {
+        console.log(response);
+        this.setState({ pMaterial: response.data.data });
+      })
+      .catch(error => {
         console.log(error);
       });
   }
 
   //Image Submit Handler
-  onChangeHandler = (event) => {
+  onChangeHandler = event => {
     this.setState({ selectedFile: event.target.files });
     this.setState({ selectedName: event.target.files.name });
     console.log(event.target.files);
   };
-  changeHandler1 = (e) => {
+  changeHandler1 = e => {
     this.setState({ status: e.target.value });
   };
-  changeHandler2 = (e) => {
+  changeHandler2 = e => {
     this.setState({ stock: e.target.value });
   };
-  changeHandler = (e) => {
+  changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
   submitHandler = () => {
@@ -156,10 +167,10 @@ class AddMyProduct extends React.Component {
 
     axiosConfig
       .post("/addproduct", data)
-      .then((response) => {
+      .then(response => {
         console.log(response.data);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -237,7 +248,7 @@ class AddMyProduct extends React.Component {
                   value={this.state.brand}
                   onChange={this.changeHandler}
                 >
-                  {this.state.pBrand?.map((brandp) => (
+                  {this.state.pBrand?.map(brandp => (
                     <option value={brandp._id} key={brandp._id}>
                       {brandp.name}
                     </option>
@@ -272,13 +283,17 @@ class AddMyProduct extends React.Component {
             <Col md="6" sm="12">
               <FormGroup>
                 <Label>Material</Label>
-                <Input
-                  type="text"
+                <CustomInput
+                  type="select"
                   placeholder="Material"
                   name="material"
                   value={this.state.material}
                   onChange={this.changeHandler}
-                />
+                >
+                  {this.state.pMaterial.map(materialList => (
+                    <option>{materialList.materialname}</option>
+                  ))}
+                </CustomInput>
               </FormGroup>
             </Col>
             <Col md="6" sm="12">
@@ -286,7 +301,7 @@ class AddMyProduct extends React.Component {
                 <Label className="mb-1">Stock Available</Label>
                 <div
                   className="form-label-group"
-                  onChange={(e) => this.changeHandler2(e)}
+                  onChange={e => this.changeHandler2(e)}
                 >
                   <input
                     style={{ marginRight: "3px" }}
@@ -326,7 +341,7 @@ class AddMyProduct extends React.Component {
                   value={this.state.productcategory}
                   onChange={this.changeHandler}
                 >
-                  {this.state.productC.map((productCategory) => (
+                  {this.state.productC.map(productCategory => (
                     <option
                       value={productCategory._id}
                       key={productCategory._id}
@@ -346,7 +361,7 @@ class AddMyProduct extends React.Component {
                   value={this.state.productsubcategory}
                   onChange={this.changeHandler}
                 >
-                  {this.state.productSC.map((productSCategory) => (
+                  {this.state.productSC.map(productSCategory => (
                     <option
                       value={productSCategory._id}
                       key={productSCategory._id}
@@ -391,7 +406,7 @@ class AddMyProduct extends React.Component {
                   value={this.state.unit}
                   onChange={this.changeHandler}
                 >
-                  {this.state.units.map((dUnits) => (
+                  {this.state.units.map(dUnits => (
                     <option value={dUnits._id} key={dUnits._id}>
                       {dUnits.units_title}
                     </option>
@@ -476,7 +491,7 @@ class AddMyProduct extends React.Component {
                 <Label className="mb-1">Status</Label>
                 <div
                   className="form-label-group"
-                  onChange={(e) => this.changeHandler1(e)}
+                  onChange={e => this.changeHandler1(e)}
                 >
                   <input
                     style={{ marginRight: "3px" }}

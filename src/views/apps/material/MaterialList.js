@@ -40,7 +40,7 @@ class MaterialList extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 100,
+        width: 150,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
@@ -48,94 +48,14 @@ class MaterialList extends React.Component {
       },
 
       {
-        headerName: "WareHouse Name",
-        field: "warehousename",
+        headerName: "Material Name",
+        field: "materialname",
         filter: true,
-        width: 200,
+        width: 400,
         cellRendererFramework: params => {
           return (
             <div>
-              <span>{params.data.warehousename}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Email",
-        field: "email	",
-        filter: true,
-        width: 200,
-        cellRendererFramework: params => {
-          return (
-            <div>
-              <span>{params.data.email}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Phone No.",
-        field: "phone_no",
-        filter: true,
-        width: 200,
-        cellRendererFramework: params => {
-          return (
-            <div>
-              <span>{params.data.phone_no}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Address 1",
-        field: "address1",
-        filter: true,
-        width: 200,
-        cellRendererFramework: params => {
-          return (
-            <div>
-              <span>{params.data.address1}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Address 2",
-        field: "address2",
-        filter: true,
-        width: 200,
-        cellRendererFramework: params => {
-          return (
-            <div>
-              <span>{params.data.address2}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "City",
-        field: "city",
-        filter: true,
-        width: 120,
-        cellRendererFramework: params => {
-          return (
-            <div>
-              <span>{params.data.city}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Pin Code",
-        field: "pin",
-        filter: true,
-        width: 150,
-        cellRendererFramework: params => {
-          return (
-            <div>
-              <span>{params.data.pin}</span>
+              <span>{params.data.materialname}</span>
             </div>
           );
         },
@@ -150,7 +70,7 @@ class MaterialList extends React.Component {
         cellRendererFramework: params => {
           return (
             <div className="actions cursor-pointer">
-              <Eye
+              {/* <Eye
                 className="mr-50"
                 size={20}
                 onClick={() =>
@@ -158,14 +78,12 @@ class MaterialList extends React.Component {
                     `/app/warehouse/viewWarehouse/${params.data._id}`
                   )
                 }
-              />
+              /> */}
               <Edit
                 className="mr-50"
                 size={20}
                 onClick={() =>
-                  history.push(
-                    `/app/warehouse/editWarehouse/${params.data._id}`
-                  )
+                  history.push(`/app/material/editMaterial/${params.data._id}`)
                 }
               />
               <Trash2
@@ -184,7 +102,7 @@ class MaterialList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getwarehouse").then(response => {
+    await axiosConfig.get("/getallmaterial").then(response => {
       const rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
@@ -234,7 +152,7 @@ class MaterialList extends React.Component {
                 <BreadcrumbItem href="/analyticsDashboard" tag="a">
                   Home
                 </BreadcrumbItem>
-                <BreadcrumbItem active>Warehouse List</BreadcrumbItem>
+                <BreadcrumbItem active>Material List</BreadcrumbItem>
               </Breadcrumb>
             </div>
           </Col>
@@ -243,15 +161,15 @@ class MaterialList extends React.Component {
               <Row className="m-2">
                 <Col>
                   <h1 sm="6" className="float-left">
-                    Warehouse List
+                    Material List
                   </h1>
                 </Col>
                 <Col>
                   <Button
                     className=" btn btn-danger float-right"
-                    onClick={() => history.push("/app/warehouse/addWarehouse")}
+                    onClick={() => history.push("/app/material/addMaterial")}
                   >
-                    Add Warehouse
+                    Add Material
                   </Button>
                 </Col>
               </Row>

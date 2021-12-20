@@ -72,6 +72,9 @@ const viewSubCategory = lazy(() =>
 const editSubCategory = lazy(() =>
   import("./views/apps/category/EditSubCategory")
 );
+const materialList = lazy(() => import("./views/apps/material/MaterialList"));
+const addMaterial = lazy(() => import("./views/apps/material/AddMaterial"));
+const editMaterial = lazy(() => import("./views/apps/material/EditMaterial"));
 const notificationList = lazy(() =>
   import("./views/apps/notification/NotificationList")
 );
@@ -645,6 +648,15 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/category/editSubCategory/:id"
             component={editSubCategory}
+          />
+          <AppRoute
+            path="/app/material/materialList"
+            component={materialList}
+          />
+          <AppRoute path="/app/material/addMaterial" component={addMaterial} />
+          <AppRoute
+            path="/app/material/editMaterial/:id"
+            component={editMaterial}
           />
           <AppRoute
             path="/app/notification/notificationList"

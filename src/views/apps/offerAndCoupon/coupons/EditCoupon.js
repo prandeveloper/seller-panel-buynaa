@@ -48,7 +48,7 @@ export class EditCoupon extends Component {
 
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonecoupon/${id}`)
+      .get(`/getonecoupon/${id}`)
       .then(response => {
         console.log(response);
         this.setState({
@@ -75,9 +75,9 @@ export class EditCoupon extends Component {
   };
   submitHandler = e => {
     e.preventDefault();
-
+    let { id } = this.props.match.params;
     axiosConfig
-      .post("/addcoupon", this.state)
+      .post(`/editcoupon/${id}`, this.state)
       .then(response => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");

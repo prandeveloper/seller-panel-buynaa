@@ -443,6 +443,14 @@ const navigationConfig = [
         ],
       },
       {
+        id: "material",
+        title: "MaterialList",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/material/materialList",
+      },
+      {
         id: "warehouseList",
         title: "Warehouse",
         type: "item",
