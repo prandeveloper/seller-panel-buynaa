@@ -67,6 +67,14 @@ const navigationConfig = [
     icon: <Icon.PhoneCall size={20} />,
     children: [
       {
+        id: "employeeList",
+        title: "Employee List",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/contactUs/employee/employeeList",
+      },
+      {
         id: "addEmployee",
         title: "Add Employee",
         type: "item",
@@ -74,13 +82,14 @@ const navigationConfig = [
         permissions: ["admin", "editor"],
         navLink: "/app/contactUs/employee/addEmployee",
       },
+
       {
-        id: "employeeList",
-        title: "Employee List",
+        id: "customerList",
+        title: "Customer List",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/contactUs/employee/employeeList",
+        navLink: "/app/contactUs/customer/customerList",
       },
       {
         id: "addCustomer",
@@ -91,12 +100,12 @@ const navigationConfig = [
         navLink: "/app/contactUs/customer/addCustomer",
       },
       {
-        id: "customerList",
-        title: "Customer List",
+        id: "supplierList",
+        title: "Supplier List",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/contactUs/customer/customerList",
+        navLink: "/app/contactUs/supplier/supplierList",
       },
       {
         id: "Add supplier",
@@ -105,14 +114,6 @@ const navigationConfig = [
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
         navLink: "/app/contactUs/supplier/addSupplier",
-      },
-      {
-        id: "supplierList",
-        title: "Supplier List",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/contactUs/supplier/supplierList",
       },
     ],
   },
