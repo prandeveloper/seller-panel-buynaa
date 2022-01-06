@@ -220,9 +220,6 @@ export class PurchaseInvoice extends Component {
                    />
                  </FormGroup>
                </Col>
-            
-             
-
                <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
                  <FormGroup>
                    <Label className="mb-1">Status</Label>
@@ -237,7 +234,6 @@ export class PurchaseInvoice extends Component {
                        value="Active"
                      />
                      <span style={{ marginRight: "20px" }}>Active</span>
-
                      <input
                        style={{ marginRight: "3px" }}
                        type="radio"

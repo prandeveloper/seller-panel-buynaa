@@ -49,7 +49,7 @@ class StockTransferRequest extends React.Component {
 
       {
         headerName: "Referance Number",
-        field: "name",
+        field: "reference_no",
         filter: true,
         resizable: true,
         width: 180,
@@ -57,7 +57,7 @@ class StockTransferRequest extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.mobile_no}</span>
+                <span>{params.data.reference_no}</span>
               </div>
             </div>
           );
@@ -65,7 +65,7 @@ class StockTransferRequest extends React.Component {
       },
       {
         headerName: "Transfer Date",
-        field: "state",
+        field: "transfer_date",
         filter: true,
         resizable: true,
         width: 180,
@@ -73,7 +73,7 @@ class StockTransferRequest extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.state}</span>
+                <span>{params.data.transfer_date}</span>
               </div>
             </div>
           );
@@ -81,7 +81,7 @@ class StockTransferRequest extends React.Component {
       },
       {
         headerName: "From Warehouse",
-        field: "district",
+        field: "from_warehouse",
         filter: true,
         resizable: true,
         width: 180,
@@ -89,7 +89,7 @@ class StockTransferRequest extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.district}</span>
+                <span>{params.data.from_warehouse}</span>
               </div>
             </div>
           );
@@ -97,7 +97,7 @@ class StockTransferRequest extends React.Component {
       },
       {
         headerName: "To Warehouse",
-        field: "address",
+        field: "to_warehouse",
         filter: true,
         resizable: true,
         width: 180,
@@ -105,7 +105,7 @@ class StockTransferRequest extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.address}</span>
+                <span>{params.data.to_warehouse}</span>
               </div>
             </div>
           );
@@ -113,7 +113,7 @@ class StockTransferRequest extends React.Component {
       },
       {
         headerName: "Delivery Due Date",
-        field: "comments",
+        field: "delivery_duedate",
         filter: true,
         resizable: true,
         width: 180,
@@ -121,7 +121,7 @@ class StockTransferRequest extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.comments}</span>
+                <span>{params.data.delivery_duedate}</span>
               </div>
             </div>
           );
@@ -129,7 +129,7 @@ class StockTransferRequest extends React.Component {
       },
       {
         headerName: "Transfer Type",
-        field: "merchant_type",
+        field: "transfer_type",
         filter: true,
 
         resizable: true,
@@ -138,7 +138,7 @@ class StockTransferRequest extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.comments}</span>
+                <span>{params.data.transfer_type}</span>
               </div>
             </div>
           );
@@ -146,7 +146,7 @@ class StockTransferRequest extends React.Component {
       },
       {
         headerName: "Reason",
-        field: "renewal_date",
+        field: "reason",
         filter: true,
         resizable: true,
         width: 180,
@@ -154,7 +154,7 @@ class StockTransferRequest extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.comments}</span>
+                <span>{params.data.reason}</span>
               </div>
             </div>
           );
@@ -184,7 +184,7 @@ class StockTransferRequest extends React.Component {
     ],
   };
   async componentDidMount() {
-    await axiosConfig.get("/allcontactus").then(response => {
+    await axiosConfig.get("/getstocktransfer").then(response => {
       let rowData = response.data.data;
       this.setState({ rowData });
     });
@@ -192,11 +192,11 @@ class StockTransferRequest extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/delcontactus/${id}`).then(response => {
+    await axiosConfig.get(`/delstocktransfer/${id}`).then(response => {
       console.log(response);
     });
   }
-
+  
   onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;

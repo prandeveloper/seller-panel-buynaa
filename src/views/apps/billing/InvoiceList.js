@@ -220,10 +220,10 @@ class InvoiceList extends React.Component {
                 <Button
                   className=" btn btn-danger float-right"
                   onClick={() =>
-                    history.push("/app/contactUs/customer/addCustomer")
+                    history.push("/app/billing/createInvoice")
                   }
                 >
-                  Add New Customer
+                  Create  New Invoice
                 </Button>
               </Col>
             </Row>

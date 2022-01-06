@@ -131,6 +131,7 @@ class SubCategory extends React.Component {
               <Eye
                 className="mr-50"
                 size={20}
+                color="green"
                 onClick={() =>
                   history.push(
                     `/app/category/viewSubCategory/${params.data._id}`
@@ -140,6 +141,7 @@ class SubCategory extends React.Component {
               <Edit
                 className="mr-50"
                 size={20}
+                color="blue"
                 onClick={() =>
                   history.push(
                     `/app/category/editSubCategory/${params.data._id}`
@@ -148,6 +150,7 @@ class SubCategory extends React.Component {
               />
               <Trash2
                 size={20}
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);

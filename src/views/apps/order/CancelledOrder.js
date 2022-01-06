@@ -219,7 +219,6 @@ class CancelledOrder extends React.Component {
   async componentDidMount() {
     await axiosConfig.get("/cancel_order").then(response => {
       let rowData = response.data.data;
-
       this.setState({ rowData });
     });
   }

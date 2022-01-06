@@ -554,7 +554,7 @@ class AddMyStore extends React.Component {
                     type="checkbox"
                     name="wednesday"
                   />
-                  Green
+                  Wednesday
                 </div>
                 <div>
                   <Input

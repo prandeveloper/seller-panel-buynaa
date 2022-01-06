@@ -259,17 +259,20 @@ class ActivityLogs extends React.Component {
               <Eye
                 className="mr-50"
                 size={20}
+                color="green"
                 onClick={() =>
                   history.push(`/app/activity/viewActivityLogs/${params.data._id}`)
                 }
               />
               <Edit
                 className="mr-50"
+                color="blue"
                 size={20}
                 onClick={() => history.push("/app/user/edit")}
               />
               <Trash2
                 size={20}
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);

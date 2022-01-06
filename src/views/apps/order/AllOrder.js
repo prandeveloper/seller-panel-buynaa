@@ -96,13 +96,13 @@ class AllOrder extends React.Component {
 
       {
         headerName: "Product Name",
-        field: "product.product_name",
+        field: "product?.product_name",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data?.product?.product_name}</span>
+              <span>{params.data.product?.product_name}</span>
             </div>
           );
         },

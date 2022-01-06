@@ -13,11 +13,9 @@ import {
 } from "reactstrap";
 import { history } from "../../../history";
 import axiosConfig from "../../../axiosConfig";
-
 export class AddCategory extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       name: "",
       sortorder: "",

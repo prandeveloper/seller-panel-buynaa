@@ -56,7 +56,8 @@ const editBrand = lazy(() => import("./views/apps/products/brand/EditBrand"));
 const unitList = lazy(() => import("./views/apps/products/unit/UnitList"));
 const addUnit = lazy(() => import("./views/apps/products/unit/AddUnit"));
 const editUnit = lazy(() => import("./views/apps/products/unit/EditUnit"));
-
+const coupon = lazy(() => import("./views/apps/products/coupon/Coupon"));
+const addCoupon = lazy(() => import("./views/apps/products/coupon/AddCoupon"));
 const categoryList = lazy(() => import("./views/apps/category/CategoryList"));
 const addCategory = lazy(() => import("./views/apps/category/AddCategory"));
 const editCategory = lazy(() => import("./views/apps/category/EditCategory"));
@@ -95,8 +96,7 @@ const returnedOrder = lazy(() => import("./views/apps/order/ReturnedOrder"));
 
 const createInvoice = lazy(() => import("./views/apps/billing/CreateInvoice"));
 const invoiceList = lazy(() => import("./views/apps/billing/InvoiceList"));
-// const invoiceSetting = lazy(() => import("./views/apps/order/InvoiceSetting"));
-// const invoiceDesign = lazy(() => import("./views/apps/order/InvoiceDesign"));
+
 
 const status = lazy(() => import("./views/apps/order/Status"));
 const newPurchaseOrder = lazy(() =>
@@ -111,6 +111,8 @@ const purchaseInvoiceList = lazy(() =>
 const purchaseInvoice = lazy(() =>
   import("./views/apps/purchase/PurchaseInvoice")
 );
+const invoiceSetting = lazy(() => import("./views/apps/purchase/InvoiceSetting"));
+const invoiceDesign = lazy(() => import("./views/apps/purchase/InvoiceDesign"));
 
 const advertiesementList = lazy(() =>
   import("./views/apps/marketing/advertiesement/AdvertiesementList")
@@ -150,6 +152,9 @@ const churnRate = lazy(() => import("./views/apps/churnRate/ChurnRate"));
 
 const addSubscription = lazy(() =>
   import("./views/apps/subscription/AddSubscription")
+);
+const choosePaymentOption = lazy(() =>
+  import("./views/apps/subscription/ChoosePaymentOption")
 );
 
 const pageLayout = lazy(() => import("./views/apps/pageLayout/PageLayout"));
@@ -327,6 +332,21 @@ const addMyStore = lazy(() => import("./views/apps/myStore/AddMyStore"));
 const viewStore = lazy(() => import("./views/apps/myStore/ViewStore"));
 const storeList = lazy(() => import("./views/apps/myStore/StoreList"));
 const addStorePage = lazy(() => import("./views/apps/myStore/AddStorePage"));
+
+const taxList = lazy(() => import("./views/apps/tax/TaxList"));
+const addTax = lazy(() => import("./views/apps/tax/AddTax"));
+const editTax = lazy(() => import("./views/apps/tax/EditTax"));
+const viewTax = lazy(() => import("./views/apps/tax/ViewTax"));
+
+const sizeList = lazy(() => import("./views/apps/size/SizeList"));
+const addSize = lazy(() => import("./views/apps/size/AddSize"));
+const editSize = lazy(() => import("./views/apps/size/EditSize"));
+const viewSize = lazy(() => import("./views/apps/size/ViewSize"));
+
+const colourList = lazy(() => import("./views/apps/colour/ColourList"));
+const addColour = lazy(() => import("./views/apps/colour/AddColour"));
+const editColour = lazy(() => import("./views/apps/colour/EditColour"));
+const viewColour = lazy(() => import("./views/apps/colour/ViewColour"));
 
 const sliderList = lazy(() => import("./views/apps/slider/SliderList"));
 const addSlider = lazy(() => import("./views/apps/slider/AddSlider"));
@@ -617,6 +637,11 @@ class AppRouter extends React.Component {
             path="/app/products/unit/editUnit/:id"
             component={editUnit}
           />
+          <AppRoute path="/app/products/coupon/coupon" component={coupon} />
+          <AppRoute
+            path="/app/products/coupon/addCoupon"
+            component={addCoupon}
+          />
           <AppRoute
             path="/app/category/categoryList"
             component={categoryList}
@@ -674,6 +699,7 @@ class AppRouter extends React.Component {
             path="/app/products/unit/editUnit/:id"
             component={editUnit}
           />
+          <AppRoute path="/app/products/coupon" component={coupon} />
           <AppRoute path="/app/order/allorder" component={allOrder} />
           <AppRoute path="/app/order/pendingOrder" component={pendingOrder} />
           <AppRoute
@@ -690,11 +716,7 @@ class AppRouter extends React.Component {
             component={createInvoice}
           />
           <AppRoute path="/app/billing/invoiceList" component={invoiceList} />
-          {/*<AppRoute path="/app/order/invoiceDesign" component={invoiceDesign} />
-          <AppRoute
-            path="/app/order/invoiceSetting"
-            component={invoiceSetting}
-          /> */}
+        
           <AppRoute path="/app/order/status" component={status} />
           <AppRoute
             path="/app/purchase/newPurchaseOrder"
@@ -711,6 +733,11 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/purchase/purchaseInvoice"
             component={purchaseInvoice}
+          />
+            <AppRoute path="/app/purchase/invoiceDesign" component={invoiceDesign} />
+          <AppRoute
+            path="/app/purchase/invoiceSetting"
+            component={invoiceSetting}
           />
           <AppRoute
             path="/app/marketing/advertiesement/advertiesementList"
@@ -757,6 +784,10 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/subscription/addSubscription"
             component={addSubscription}
+          />
+          <AppRoute
+            path="/app/subscription/choosePaymentOption"
+            component={choosePaymentOption}
           />
           <AppRoute path="/app/report/stockReport" component={stockReport} />
           <AppRoute path="/app/report/salesReport" component={salesReport} />
@@ -968,6 +999,24 @@ class AppRouter extends React.Component {
             path="/app/warehouse/editWarehouse/:id"
             component={editWarehouse}
           />
+
+          <AppRoute path="/app/tax/taxList" component={taxList} />
+          <AppRoute path="/app/tax/addTax" component={addTax} />
+          <AppRoute path="/app/tax/editTax/:id" component={editTax} />
+          <AppRoute path="/app/tax/viewTax/:id" component={viewTax} />
+
+          <AppRoute path="/app/size/sizeList" component={sizeList} />
+          <AppRoute path="/app/size/addSize" component={addSize} />
+          <AppRoute path="/app/size/editSize/:id" component={editSize} />
+          <AppRoute path="/app/size/viewSize/:id" component={viewSize} />
+
+          <AppRoute path="/app/colour/colourList" component={colourList} />
+          <AppRoute path="/app/colour/addColour" component={addColour} />
+          <AppRoute path="/app/colour/editColour/:id" component={editColour} />
+          <AppRoute path="/app/colour/viewColour/:id" component={viewColour} />
+
+
+
           <AppRoute path="/app/slider/sliderList" component={sliderList} />
           <AppRoute path="/app/slider/addSlider" component={addSlider} />
           <AppRoute path="/app/user/list" component={userList} />

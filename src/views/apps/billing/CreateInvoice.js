@@ -36,14 +36,27 @@ class CreateInvoice extends React.Component {
     },
     columnDefs: [
       {
-        headerName: "Id",
+        headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
-        field: "node.rowIndex + 1",
+        field: "sortorder",
         width: 100,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
+      },
+      {
+        headerName: "Order Id",
+        field: "customerId",
+        filter: true,
+        width: 150,
+        cellRendererFramework: params => {
+          return (
+            <div className="ml-2 mr-4">
+              <span>{params.data.customerId}</span>
+            </div>
+          );
+        },
       },
       {
         headerName: "Phone",
@@ -58,7 +71,6 @@ class CreateInvoice extends React.Component {
           );
         },
       },
-
       {
         headerName: "Customer Name",
         field: "first_name",
@@ -98,7 +110,6 @@ class CreateInvoice extends React.Component {
           );
         },
       },
-
       {
         headerName: "Actions",
         field: "transactions",
@@ -106,6 +117,12 @@ class CreateInvoice extends React.Component {
         cellRendererFramework: params => {
           return (
             <div className="actions cursor-pointer">
+                <Button color="primary" outline className="mr-2">
+                Create Invoice
+              </Button>
+              <Button color="primary" outline className="mr-2">
+              Show Order Details
+              </Button>
               <Button color="primary" className="mr-1">
                 {" "}
                 Create Invoice
@@ -120,7 +137,7 @@ class CreateInvoice extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("http://35.154.86.59/api/user/allcustomer")
+      .get("/allcustomer")
       .then(response => {
         let rowData = response.data.data;
         console.log(rowData);
@@ -131,7 +148,7 @@ class CreateInvoice extends React.Component {
   async runthisfunction(id) {
     console.log(id);
     await axiosConfig
-      .get(`http://35.154.86.59/api/user/delcustomer/${id}`)
+      .get(`/delcustomer/${id}`)
       .then(response => {
         console.log(response);
       });
@@ -159,7 +176,6 @@ class CreateInvoice extends React.Component {
       });
     }
   };
-
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (

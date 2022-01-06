@@ -1,7 +1,6 @@
 import React from "react";
 import Wizard from "./ProFormComponent";
 import {
-  // Form,
   FormGroup,
   Input,
   Label,
@@ -21,11 +20,11 @@ import { Check } from "react-feather";
 import axiosConfig from "../../../../axiosConfig";
 import { history } from "../../../../history";
 import { RichUtils } from "draft-js";
+import Select from 'react-select';
 
 class AddMyProduct extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       product_name: "",
       sku_no: "",
@@ -40,23 +39,27 @@ class AddMyProduct extends React.Component {
       stock_qty: "",
       size: "",
       colour: "",
+      // colorName:[],
+      // sizeName:[],
       brand: "",
       product_img: "",
       status: "",
       sortorder: "",
       selectedFile: undefined,
       selectedName: "",
-    };
-    this.state = {
+      pColour:[],
       pBrand: [],
       productC: [],
       productSC: [],
       units: [],
       pMaterial: [],
+      gsts:[],
+      pSize:[],
+      file: [null],
+      imgSrc: [],
     };
     this.submitHandler = this.submitHandler.bind(this);
   }
-
   async componentDidMount() {
     //Product Category
     axiosConfig
@@ -80,6 +83,28 @@ class AddMyProduct extends React.Component {
         console.log(error);
       });
 
+    //GST
+    axiosConfig
+    .get("/viewallgst")
+    .then((response) => {
+      console.log(response);
+      this.setState({ gsts: response.data.data });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    // Size
+    // axiosConfig
+    //   .get("/getsize")
+    //   .then((response) => {
+    //     console.log(response);
+    //     this.setState({ sizes: response.data.data });
+    //   })
+    //     .catch((error) => {
+    //     console.log(error);
+    //   });
+
     //Units
     axiosConfig
       .get("/viewallunits")
@@ -100,7 +125,54 @@ class AddMyProduct extends React.Component {
       .catch(error => {
         console.log(error);
       });
-    //Material
+
+    //colour
+      axiosConfig
+    .get("/getcolor")
+    .then(response => {
+      console.log(response);
+      let resultarray = []
+        for (let i = 0; i < response.data.data.length; i++) {
+        const element = response.data.data[i];
+        delete Object.assign(element,
+            {
+              ["value"]: element["_id"],
+              ["label"]: element["colorName"],
+            }
+          )["colorName"];
+            resultarray.push(element)
+        //console.log(element)
+      }
+      this.setState({ pColour: response.data.data });
+      //console.log(this.state.pColour);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+      //size
+      axiosConfig
+    .get("/getsize")
+    .then(response => {
+      console.log(response);
+      let resultarray = []
+      for (let i = 0; i < response.data.data.length; i++) {
+        const element = response.data.data[i];
+        delete Object.assign(element,
+            {
+              ["value"]: element["_id"],
+              ["label"]: element["sizeName"],
+            }
+          )["sizeName"];
+            resultarray.push(element)
+          }
+      this.setState({ pSize: resultarray });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+    //Material 
     axiosConfig
       .get("/getallmaterial")
       .then(response => {
@@ -118,15 +190,41 @@ class AddMyProduct extends React.Component {
     this.setState({ selectedName: event.target.files.name });
     console.log(event.target.files);
   };
-  changeHandler1 = e => {
-    this.setState({ status: e.target.value });
+
+    changeHandler1 = e => {
+      this.setState({ status: e.target.value });
+    
   };
   changeHandler2 = e => {
     this.setState({ stock: e.target.value });
   };
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+    changeHandlercolor = e => {
+      console.log(e)
+      let emptyarray = [];
+      for (let i = 0; i < e.length; i++) {
+        const element = e[i].value;
+        emptyarray.push(element)
+      }
+    this.setState({ sizeName: emptyarray });
+    console.log(this.state.sizeName)
+  };
+
+
+  changeHandlersize = e => {
+    console.log(e)
+    let emptyarray = [];
+    for (let i = 0; i < e.length; i++) {
+      const element = e[i].value;
+      emptyarray.push(element)
+    }
+  this.setState({ colorName: emptyarray });
+  console.log(this.state.colorName)
+}; 
+
   submitHandler = () => {
     // e.preventDefault();
     //console.log(this.state);
@@ -145,7 +243,8 @@ class AddMyProduct extends React.Component {
     data.append("cost_price", this.state.cost_price);
     data.append("sell_price", this.state.sell_price);
     data.append("colour", this.state.colour);
-    data.append("size", this.state.size);
+     data.append("size", this.state.size);
+    //data.append("size", this.state.size.toString());
     data.append("material", this.state.material);
     data.append("stock", this.state.stock);
     data.append("qty", this.state.qty);
@@ -157,13 +256,24 @@ class AddMyProduct extends React.Component {
         data.append("product_img", file, file.name);
       }
     }
+    for (const file of this.state.selectedFile) {
+      if (this.state.selectedFile !== null) {
+        data.append("colour", file, file.name);
+      }
+    }
+    for (const file of this.state.selectedFile) {
+      if (this.state.selectedFile !== null) {
+        data.append("size", file, file.name);
+      }
+    }
+   
 
-    // for (var key of data.keys()) {
-    //   console.log(key);
-    // }
-    // for (var value of data.values()) {
-    //   console.log(value);
-    // }
+    for (var key of data.keys()) {
+      console.log(key);
+    }
+    for (var value of data.values()) {
+      console.log(value);
+    }
 
     axiosConfig
       .post("/addproduct", data)
@@ -173,9 +283,28 @@ class AddMyProduct extends React.Component {
       .catch(error => {
         console.log(error);
       });
+      // value = orderOptions(value)
+      // this.setState({ value: value })
+      // value = orderOptions1(value)
+      // this.setState({ value: value })
   };
-
+  onChange(event){
+    this.setState(
+      {
+        _id: event.value, 
+        colorName: event.label
+       }
+     )
+   }
+  componentDidMount1(){
+    this.componentDidMount()
+}
+ 
   render() {
+    // const favColors = Object.keys(this.state.sizes)
+    // .filter(key => this.state.sizes[key])
+    // .join(", ");
+
     const steps = [
       {
         title: "1",
@@ -186,7 +315,7 @@ class AddMyProduct extends React.Component {
                 <Label>Product Name</Label>
                 <Input
                   type="text"
-                  placeholder="Name"
+                  placeholder="productname"
                   name="product_name"
                   value={this.state.product_name}
                   onChange={this.changeHandler}
@@ -223,6 +352,7 @@ class AddMyProduct extends React.Component {
                 <Input
                   type="textarea"
                   name="short_desc"
+                  placeholder="Short Description"
                   value={this.state.short_desc}
                   onChange={this.changeHandler}
                 />
@@ -234,6 +364,7 @@ class AddMyProduct extends React.Component {
                 <Input
                   type="textarea"
                   name="long_desc"
+                  placeholder="Long Description"
                   value={this.state.long_desc}
                   onChange={this.changeHandler}
                 />
@@ -245,6 +376,7 @@ class AddMyProduct extends React.Component {
                 <CustomInput
                   type="select"
                   name="brand"
+                  placeholder="Brandname"
                   value={this.state.brand}
                   onChange={this.changeHandler}
                 >
@@ -257,48 +389,54 @@ class AddMyProduct extends React.Component {
               </FormGroup>
             </Col>
             <Col md="6" sm="12">
-              <FormGroup>
-                <Label>Colour</Label>
-                <Input
-                  type="text"
-                  placeholder="Colour"
-                  name="colour"
-                  value={this.state.colour}
-                  onChange={this.changeHandler}
-                />
-              </FormGroup>
-            </Col>
-            <Col md="6" sm="12">
-              <FormGroup>
-                <Label>Size</Label>
-                <Input
-                  type="text"
-                  placeholder="Size"
+            <FormGroup>
+              <Label>Colour</Label>
+              <Select
+                    isMulti
+                    name="colour"
+                    className="React"
+                    classNamePrefix="colour"
+                    // value={this.state.colour}
+                    options={this.state.pColour}
+                    onChange={this.changeHandlercolor}>
+                      
+              </Select>
+            </FormGroup>
+          </Col>
+          <Col md="6" sm="12">
+          <FormGroup>
+            <Label>Size</Label>
+            <Select
+                  isMulti
+                  className="React"
+                  classNamePrefix="size"
                   name="size"
-                  value={this.state.size}
-                  onChange={this.changeHandler}
-                />
-              </FormGroup>
-            </Col>
-            <Col md="6" sm="12">
-              <FormGroup>
-                <Label>Material</Label>
-                <CustomInput
+                  options={this.state.pSize}
+                  onChange={this.changeHandlersize}>
+            </Select>
+          </FormGroup>
+        </Col>
+        
+        <Col md="6" sm="12">
+        <FormGroup>
+            <Label>Material</Label>
+            <CustomInput
                   type="select"
                   placeholder="Material"
                   name="material"
                   value={this.state.material}
                   onChange={this.changeHandler}
                 >
-                  {this.state.pMaterial.map(materialList => (
-                    <option>{materialList.materialname}</option>
+                  {this.state.pMaterial?.map(materialp => (
+                    <option value={materialp._id} key={materialp._id} >{materialp.materialname}</option>
                   ))}
-                </CustomInput>
-              </FormGroup>
-            </Col>
-            <Col md="6" sm="12">
-              <FormGroup>
-                <Label className="mb-1">Stock Available</Label>
+                       
+            </CustomInput>
+          </FormGroup>
+        </Col>
+        <Col md="6" sm="12">
+            <FormGroup>
+            <Label className="mb-1">Stock Available</Label>
                 <div
                   className="form-label-group"
                   onChange={e => this.changeHandler2(e)}
@@ -338,6 +476,7 @@ class AddMyProduct extends React.Component {
                 <CustomInput
                   type="select"
                   name="productcategory"
+                  placeholder="category"
                   value={this.state.productcategory}
                   onChange={this.changeHandler}
                 >
@@ -358,6 +497,7 @@ class AddMyProduct extends React.Component {
                 <CustomInput
                   type="select"
                   name="productsubcategory"
+                  placeholder="Subcategory"
                   value={this.state.productsubcategory}
                   onChange={this.changeHandler}
                 >
@@ -401,12 +541,12 @@ class AddMyProduct extends React.Component {
                 <Label>Units</Label>
                 <CustomInput
                   type="select"
-                  placeholder="Select"
+                  placeholder="Unit"
                   name="unit"
                   value={this.state.unit}
                   onChange={this.changeHandler}
                 >
-                  {this.state.units.map(dUnits => (
+                  {this.state.units?.map(dUnits => (
                     <option value={dUnits._id} key={dUnits._id}>
                       {dUnits.units_title}
                     </option>
@@ -414,6 +554,7 @@ class AddMyProduct extends React.Component {
                 </CustomInput>
               </FormGroup>
             </Col>
+            
 
             <Col md="6" sm="12">
               <FormGroup>
@@ -423,6 +564,7 @@ class AddMyProduct extends React.Component {
                   <Input
                     type="number"
                     name="cost_price"
+                    placeholder="Cost Price"
                     value={this.state.cost_price}
                     onChange={this.changeHandler}
                   />
@@ -437,26 +579,31 @@ class AddMyProduct extends React.Component {
                   <Input
                     type="number"
                     name="sell_price"
+                    placeholder="Selling Price"
                     value={this.state.sell_price}
                     onChange={this.changeHandler}
                   />
                 </InputGroup>
               </FormGroup>
             </Col>
-            <Col md="6" sm="12">
-              <FormGroup>
-                <Label>GST Rate</Label>
-                <InputGroup>
-                  <InputGroupText>₹</InputGroupText>
-                  <Input
-                    type="text"
+    
+            <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>GST Rate</Label>
+                  <CustomInput
+                    type="select"
+                    placeholder="GST Rate"
                     name="gst"
                     value={this.state.gst}
                     onChange={this.changeHandler}
-                  />
-                </InputGroup>
-              </FormGroup>
-            </Col>
+                  >
+                       {this.state.gsts.map((dGsts) => (
+                      <option key={dGsts._id} value={dGsts._id} >
+                        {dGsts.gst_title}
+                      </option>
+                      
+                   ))}
+                  </CustomInput>
+                </Col>
           </Row>
         ),
       },
@@ -486,35 +633,31 @@ class AddMyProduct extends React.Component {
                 />
               </FormGroup>
             </Col>
-            <Col md="6" sm="12">
-              <FormGroup>
-                <Label className="mb-1">Status</Label>
-                <div
-                  className="form-label-group"
-                  onChange={e => this.changeHandler1(e)}
-                >
-                  <input
-                    style={{ marginRight: "3px" }}
-                    type="radio"
-                    name="status"
-                    value="Active"
-                  />
-                  <span style={{ marginRight: "20px", fontWeight: 800 }}>
-                    Active
-                  </span>
+           
+                  <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label className="mb-1">Status</Label>
+                  <div
+                    className="form-label-group"
+                    onChange={(e) => this.changeHandler1(e)}
+                  >
+                    <input
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="status"
+                      value="Active"
+                    />
+                    <span style={{ marginRight: "20px" }}>Active</span>
 
-                  <input
-                    style={{ marginRight: "3px" }}
-                    type="radio"
-                    name="status"
-                    value="Inactive"
-                  />
-                  <span style={{ marginRight: "3px", fontWeight: 800 }}>
-                    Inactive
-                  </span>
-                </div>
-              </FormGroup>
-            </Col>
+                    <input
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="status"
+                      value="Inactive"
+                    />
+                    <span style={{ marginRight: "3px" }}>Inactive</span>
+                  </div>
+                </Col>  
+   
           </Row>
         ),
       },

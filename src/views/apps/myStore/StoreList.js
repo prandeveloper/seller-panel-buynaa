@@ -85,7 +85,6 @@ class StoreList extends React.Component {
           );
         },
       },
-
       {
         headerName: "Store Name ",
         field: "store_name	",

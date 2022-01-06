@@ -23,7 +23,6 @@ import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import Moment from "react-moment";
 import "moment-timezone";
-
 class PurchaceInvoiceList extends React.Component {
   state = {
     rowData: [],
@@ -37,19 +36,68 @@ class PurchaceInvoiceList extends React.Component {
       suppressMenu: true,
     },
     columnDefs: [
+        {
+          headerName: "S.no",
+          valueGetter: "node.rowIndex + 1",
+          field: "sortorder",
+          width: 100,
+          filter: true,
+          // checkboxSelection: true,
+          // headerCheckboxSelectionFilteredOnly: true,
+          // headerCheckboxSelection: true,
+        },
+        {
+          headerName: "Invoice Number",
+          field: "invoiceNo",
+          //filter: true,
+          filter: "agSetColumnFilter",
+          width: 180,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div className="">
+                  <span>{params.data.invoiceNo}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Invoice date",
+          field: "invoice_date",
+          filter: "agSetColumnFilter",
+          width: 180,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div className="">
+                  <span>{params.data.invoice_date}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          // headerName: "Cost price ₹",
+          headerName: "Stock Due",
+          field: "stock_due",
+          filter: "agSetColumnFilter",
+          width: 200,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                 <div className="">
+                 <span>{params.data.stock_due}</span>
+                 </div>
+               
+              </div>
+            );
+          },
+        },
       {
-        headerName: "S.no",
-        valueGetter: "node.rowIndex + 1",
-        field: "sortorder",
-        width: 100,
-        filter: true,
-        // checkboxSelection: true,
-        // headerCheckboxSelectionFilteredOnly: true,
-        // headerCheckboxSelection: true,
-      },
-      {
-        headerName: "Invoice Number",
-        field: "createdAt",
+        // headerName: "Gst ₹",
+        headerName: "gstIn ",
+        field: "gstIn",
         //filter: true,
         filter: "agSetColumnFilter",
         width: 180,
@@ -57,35 +105,30 @@ class PurchaceInvoiceList extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
-                <span>
-                  {/* <Moment format="lll">{params.data.createdAt}</Moment> */}
-                </span>
+                <span>{params.data.gstIn}</span>
               </div>
             </div>
           );
         },
       },
       {
-        headerName: "Invoice date",
-        field: "createdAt",
-        //filter: true,
+        headerName: "Transportation Cost",
+        field: "transportation_cost",
         filter: "agSetColumnFilter",
         width: 180,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
-                <span>
-                  {/* <Moment format="lll">{params.data.createdAt}</Moment> */}
-                </span>
+                <span>{params.data.transportation_cost}</span>
               </div>
             </div>
           );
         },
       },
       {
-        headerName: "Cost price ₹",
-        field: "createdAt",
+        headerName: "Instructions",
+        field: "instructions",
         //filter: true,
         filter: "agSetColumnFilter",
         width: 180,
@@ -93,63 +136,7 @@ class PurchaceInvoiceList extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
-                <span>
-                  {/* <Moment format="lll">{params.data.createdAt}</Moment> */}
-                </span>
-              </div>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Gst ₹",
-        field: "createdAt",
-        //filter: true,
-        filter: "agSetColumnFilter",
-        width: 180,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <div className="">
-                <span>
-                  {/* <Moment format="lll">{params.data.createdAt}</Moment> */}
-                </span>
-              </div>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Sku",
-        field: "createdAt",
-        //filter: true,
-        filter: "agSetColumnFilter",
-        width: 180,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <div className="">
-                <span>
-                  {/* <Moment format="lll">{params.data.createdAt}</Moment> */}
-                </span>
-              </div>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Hsn",
-        field: "createdAt",
-        //filter: true,
-        filter: "agSetColumnFilter",
-        width: 180,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <div className="">
-                <span>
-                  {/* <Moment format="lll">{params.data.createdAt}</Moment> */}
-                </span>
+                <span>{params.data.instructions}</span>
               </div>
             </div>
           );
@@ -157,7 +144,7 @@ class PurchaceInvoiceList extends React.Component {
       },
       {
         headerName: "Grand total ₹",
-        field: "createdAt",
+        field: "grand_total",
         //filter: true,
         filter: "agSetColumnFilter",
         width: 180,
@@ -165,17 +152,48 @@ class PurchaceInvoiceList extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
-                <span>
-                  {/* <Moment format="lll">{params.data.createdAt}</Moment> */}
-                </span>
+                <span>{params.data.grand_total}</span>
+              </div>
+            </div>
+          );
+        },
+      },
+      // {
+      //   headerName: "Material",
+      //   field: "material",
+      //   filter: true,
+      //   width: 180,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div className="d-flex justify-content-center">
+      //         {params.data.material.map((i) => (
+      //           <span>{i.materialname}</span>
+      //         ))}
+              
+      //       </div>
+      //     );
+      //   },
+      // },
+ 
+      {
+        headerName: "Supplier",
+        field: "supplier?._id",
+        //filter: true,
+        filter: "agSetColumnFilter",
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="">
+                <span>{params.data.supplier?.first_name} {params.data.supplier?.last_name}</span>
               </div>
             </div>
           );
         },
       },
       {
-        headerName: "Suplier",
-        field: "createdAt",
+        headerName: "Payment Due",
+        field: "payment_due",
         //filter: true,
         filter: "agSetColumnFilter",
         width: 180,
@@ -183,17 +201,15 @@ class PurchaceInvoiceList extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
-                <span>
-                  {/* <Moment format="lll">{params.data.createdAt}</Moment> */}
-                </span>
+                <span>{params.data.payment_due}</span>
               </div>
             </div>
           );
         },
       },
       {
-        headerName: "Payment Mode",
-        field: "createdAt",
+        headerName: "Amount",
+        field: "amount",
         //filter: true,
         filter: "agSetColumnFilter",
         width: 180,
@@ -201,9 +217,7 @@ class PurchaceInvoiceList extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
-                <span>
-                  {/* <Moment format="lll">{params.data.createdAt}</Moment> */}
-                </span>
+                <span>{params.data.amount}</span>
               </div>
             </div>
           );
@@ -265,12 +279,14 @@ class PurchaceInvoiceList extends React.Component {
     ],
   };
 
-  // async componentDidMount() {
-  //   await axiosConfig.get("/allprivacy_policy").then((response) => {
-  //     let rowData = response.data.data;
-  //     this.setState({ rowData });
-  //   });
-  // }
+  async componentDidMount() {
+    await axiosConfig.get("/getpurchaseorder")
+    .then((response) => {
+      let rowData = response.data.data;
+      this.setState({ rowData });
+      console.log(rowData)
+    });
+  }
 
   // async runthisfunction(id) {
   //   console.log(id);
@@ -305,6 +321,7 @@ class PurchaceInvoiceList extends React.Component {
 
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
+  
     return (
       <Row className="app-user-list">
         <Col sm="12"></Col>

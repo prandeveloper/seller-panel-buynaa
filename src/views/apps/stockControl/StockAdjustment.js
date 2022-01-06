@@ -47,9 +47,10 @@ class StockAdjustment extends React.Component {
         // headerCheckboxSelection: true,
       },
 
+
       {
         headerName: "Referance Number",
-        field: "name",
+        field: "reference_no",
         filter: true,
         resizable: true,
         width: 180,
@@ -57,7 +58,7 @@ class StockAdjustment extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.mobile_no}</span>
+                <span>{params.data.reference_no}</span>
               </div>
             </div>
           );
@@ -65,7 +66,7 @@ class StockAdjustment extends React.Component {
       },
       {
         headerName: "Adjustment Date",
-        field: "state",
+        field: "adjustment_date",
         filter: true,
         resizable: true,
         width: 180,
@@ -73,7 +74,7 @@ class StockAdjustment extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.state}</span>
+                <span>{params.data.adjustment_date}</span>
               </div>
             </div>
           );
@@ -81,7 +82,7 @@ class StockAdjustment extends React.Component {
       },
       {
         headerName: "Warehouse",
-        field: "district",
+        field: "warehouse",
         filter: true,
         resizable: true,
         width: 180,
@@ -89,7 +90,7 @@ class StockAdjustment extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.district}</span>
+                <span>{params.data.warehouse}</span>
               </div>
             </div>
           );
@@ -97,7 +98,7 @@ class StockAdjustment extends React.Component {
       },
       {
         headerName: "Reason",
-        field: "address",
+        field: "reason",
         filter: true,
         resizable: true,
         width: 180,
@@ -105,7 +106,7 @@ class StockAdjustment extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.address}</span>
+                <span>{params.data.reason}</span>
               </div>
             </div>
           );
@@ -113,7 +114,7 @@ class StockAdjustment extends React.Component {
       },
       {
         headerName: "Adjusted Quantity",
-        field: "comments",
+        field: "adjusted_qty",
         filter: true,
         resizable: true,
         width: 180,
@@ -121,7 +122,7 @@ class StockAdjustment extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.comments}</span>
+                <span>{params.data.adjusted_qty}</span>
               </div>
             </div>
           );
@@ -129,7 +130,7 @@ class StockAdjustment extends React.Component {
       },
       {
         headerName: "Adjusted Value",
-        field: "merchant_type",
+        field: "adjusted_value",
         filter: true,
 
         resizable: true,
@@ -138,7 +139,7 @@ class StockAdjustment extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.comments}</span>
+                <span>{params.data.adjusted_value}</span>
               </div>
             </div>
           );
@@ -169,7 +170,7 @@ class StockAdjustment extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/allcontactus").then(response => {
+    await axiosConfig.get("/getstockadjustment").then(response => {
       let rowData = response.data.data;
       this.setState({ rowData });
     });
@@ -177,7 +178,7 @@ class StockAdjustment extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/delcontactus/${id}`).then(response => {
+    await axiosConfig.get(`/delstockadjustment/${id}`).then(response => {
       console.log(response);
     });
   }

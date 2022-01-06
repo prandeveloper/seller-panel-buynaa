@@ -16,7 +16,7 @@ import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axiosConfig from "../../../../axiosConfig";
 import { history } from "../../../../history";
-import axios from "axios";
+
 
 export default class AddProducts extends Component {
   constructor(props) {
@@ -48,6 +48,7 @@ export default class AddProducts extends Component {
       productC: [],
       productSC: [],
       units: [],
+      gsts:[],
 
       pBrand: [],
     };
@@ -87,6 +88,17 @@ export default class AddProducts extends Component {
       .catch((error) => {
         console.log(error);
       });
+
+         //GST
+    axiosConfig
+    .get("/viewallgst")
+    .then((response) => {
+      console.log(response);
+      this.setState({ gsts: response.data.data });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
     //Brand
     axiosConfig
@@ -351,12 +363,19 @@ export default class AddProducts extends Component {
 
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>GST Rate</Label>
-                  <Input
-                    type="text"
+                  <CustomInput
+                    type="select"
                     name="gst"
                     value={this.state.gst}
                     onChange={this.changeHandler}
-                  />
+                  >
+                       {this.state.gsts.map((dGsts) => (
+                      <option key={dGsts._id} value={dGsts._id} >
+                        {dGsts.gst_title}
+                      </option>
+                      
+                   ))}
+                  </CustomInput>
                 </Col>
 
                 <Col lg="6" md="6" sm="6" className="mb-2">

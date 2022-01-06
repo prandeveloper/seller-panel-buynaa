@@ -72,7 +72,6 @@ class ProductsList extends React.Component {
           );
         },
       },
-
       {
         headerName: "Product Name",
         field: "product_name",
@@ -99,7 +98,6 @@ class ProductsList extends React.Component {
           );
         },
       },
-
       {
         headerName: "HSN/SAC",
         field: "hsn_sac_no",
@@ -178,7 +176,6 @@ class ProductsList extends React.Component {
           );
         },
       },
-
       {
         headerName: "Units",
         field: "unit?.units_title",
@@ -194,13 +191,13 @@ class ProductsList extends React.Component {
       },
       {
         headerName: "Material",
-        field: "material",
+        field: "material?.materialname",
         filter: true,
         width: 180,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex justify-content-center">
-              <span>{params.data.material}</span>
+              <span>{params.data.material?.materialname}</span>
             </div>
           );
         },
@@ -244,7 +241,6 @@ class ProductsList extends React.Component {
           );
         },
       },
-
       {
         headerName: "Size",
         field: "size",
@@ -253,25 +249,31 @@ class ProductsList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex justify-content-center">
-              <span>{params.data.size}</span>
+                {params.data.size.map((i) => (
+             <span>{i.sizeName}</span>
+             
+              ))}
+              
             </div>
           );
         },
       },
       {
-        headerName: "Colour",
-        field: "colour",
+        headerName: "Color",
+        field: "color",
         filter: true,
         width: 180,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex justify-content-center">
-              <span>{params.data.colour}</span>
+                  {params.data.color.map((i) => (
+             <span>{i.colorName}</span>
+             
+             ))}
             </div>
           );
         },
       },
-
       {
         headerName: "Stk Quantity",
         field: "qty",
@@ -341,7 +343,6 @@ class ProductsList extends React.Component {
           ) : null;
         },
       },
-
       {
         headerName: "Actions",
         field: "transactions",
@@ -381,7 +382,6 @@ class ProductsList extends React.Component {
       },
     ],
   };
-
   async componentDidMount() {
     await axiosConfig.get("/getproduct").then((response) => {
       const rowData = response.data.data;
@@ -425,9 +425,9 @@ class ProductsList extends React.Component {
   };
 
   render() {
-    const { rowData, columnDefs, defaultColDef } = this.state;
+    const { rowData, columnDefs, defaultColDef, variation } = this.state;
     return (
-      console.log(rowData),
+      console.log(variation),
       (
         <Row className="app-user-list">
           <Col sm="12"></Col>
@@ -549,5 +549,4 @@ class ProductsList extends React.Component {
     );
   }
 }
-
 export default ProductsList;

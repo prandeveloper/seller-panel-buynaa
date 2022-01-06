@@ -49,7 +49,7 @@ class PurchaseOrderList extends React.Component {
       },
       {
         headerName: "Purchase Order No",
-        field: "createdAt",
+        field: "orderId",
         //filter: true,
         filter: "agSetColumnFilter",
         width: 400,
@@ -58,30 +58,30 @@ class PurchaseOrderList extends React.Component {
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
                 <span>
-                  <Moment format="lll">{params.data.createdAt}</Moment>
+                  <span>{params.data.orderId}</span>
                 </span>
               </div>
             </div>
           );
         },
       },
-      {
-        headerName: "Status",
-        field: "status",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return params.value === "Active" ? (
-            <div className="badge badge-pill badge-success">
-              {params.data.status}
-            </div>
-          ) : params.value === "Inactive" ? (
-            <div className="badge badge-pill badge-warning">
-              {params.data.status}
-            </div>
-          ) : null;
-        },
-      },
+    // {
+    //     headerName: "Status",
+    //     field: "status",
+    //     filter: true,
+    //     width: 150,
+    //     cellRendererFramework: (params) => {
+    //       return params.value === "Active" ? (
+    //         <div className="badge badge-pill badge-success">
+    //           {params.data.status}
+    //         </div>
+    //       ) : params.value === "Inactive" ? (
+    //         <div className="badge badge-pill badge-warning">
+    //           {params.data.status}
+    //         </div>
+    //       ) : null;
+    //     },
+    //   },
 
       {
         headerName: "Actions",
@@ -90,14 +90,7 @@ class PurchaseOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Eye
-                size="25px"
-                color="green"
-                className="mr-50"
-                onClick={() =>
-                  history.push(`/app/myStore/viewStore/${params.data._id}`)
-                }
-              /> */}
+         
               <Button color="primary" outline className="mr-2">
                 PDF
               </Button>
@@ -130,20 +123,20 @@ class PurchaseOrderList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/allprivacy_policy").then((response) => {
+    await axiosConfig.get("/getpurchaseorder").then((response) => {
       let rowData = response.data.data;
       this.setState({ rowData });
     });
   }
 
-  async runthisfunction(id) {
-    console.log(id);
-    await axiosConfig.get(`/delprivacypolicy/${id}`).then((response) => {
-      console.log(response);
-    });
-  }
+  // async runthisfunction(id) {
+  //   console.log(id);
+  //   await axiosConfig.get(`/delprivacypolicy/${id}`).then((response) => {
+  //     console.log(response);
+  //   });
+  // }
 
-  onGridReady = (params) => {
+  onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({

@@ -164,13 +164,13 @@ class ViewProducts extends React.Component {
                 <h6>{this.state.data.productsubcategory?.name}</h6>
                 <hr />
                 <h4>Size</h4>
-                <h6>{this.state.data.size}</h6>
+                <h6>{this.state.data?.size?.sizeName}</h6>
                 <hr />
                 <h4>Colour </h4>
-                <h6>{this.state.data.colour}</h6>
+                <h6>{this.state.data.colour?.colorName}</h6>
                 <hr />
                 <h4>Material </h4>
-                <h6>{this.state.data.material}</h6>
+                <h6>{this.state.data.material?.materialname}</h6>
                 <hr />
                 <h4>Stock Quantity </h4>
                 <h6>{this.state.data.qty}</h6>

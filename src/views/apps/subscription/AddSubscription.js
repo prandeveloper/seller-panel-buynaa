@@ -17,7 +17,7 @@ export class AddSubscription extends Component {
             <Button
               color="danger"
               className="mr-1 mb-1"
-              onClick={() => history.push("/app/myStore/addMyStore")}
+              onClick={() => history.push("/app/subscription/choosePaymentOption")}
             >
               SUBSCRIBE NOW
             </Button>

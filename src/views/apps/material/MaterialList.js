@@ -81,6 +81,7 @@ class MaterialList extends React.Component {
               /> */}
               <Edit
                 className="mr-50"
+                color="blue"
                 size={20}
                 onClick={() =>
                   history.push(`/app/material/editMaterial/${params.data._id}`)
@@ -88,6 +89,7 @@ class MaterialList extends React.Component {
               />
               <Trash2
                 size={20}
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
