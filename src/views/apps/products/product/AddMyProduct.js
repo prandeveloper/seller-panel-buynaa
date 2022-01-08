@@ -29,6 +29,7 @@ class AddMyProduct extends React.Component {
       product_name: "",
       sku_no: "",
       hsn_sac_no: "",
+      discount_perc: 12,
       short_desc: "",
       long_desc: "",
       productcategory: "",
@@ -36,11 +37,9 @@ class AddMyProduct extends React.Component {
       unit: "",
       gst: "",
       material: "",
-      stock_qty: "",
+      stock: "",
       size: "",
-      colour: "",
-      // colorName:[],
-      // sizeName:[],
+      color: "",
       brand: "",
       product_img: "",
       status: "",
@@ -202,32 +201,33 @@ class AddMyProduct extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-    changeHandlercolor = e => {
+  changeHandlersize = e => {
       console.log(e)
       let emptyarray = [];
       for (let i = 0; i < e.length; i++) {
         const element = e[i].value;
         emptyarray.push(element)
       }
-    this.setState({ sizeName: emptyarray });
-    console.log(this.state.sizeName)
+    this.setState({ size: emptyarray });
+    console.log(this.state.size)
   };
 
 
-  changeHandlersize = e => {
+  changeHandlercolor = e => {
     console.log(e)
     let emptyarray = [];
     for (let i = 0; i < e.length; i++) {
       const element = e[i].value;
       emptyarray.push(element)
     }
-  this.setState({ colorName: emptyarray });
-  console.log(this.state.colorName)
+  this.setState({ color: emptyarray });
+  console.log(this.state.color)
 }; 
 
   submitHandler = () => {
-    // e.preventDefault();
-    //console.log(this.state);
+    //e.preventDefault();
+    console.log("submit req")
+    console.log(this.state);
 
     const data = new FormData();
     data.append("product_name", this.state.product_name);
@@ -242,9 +242,14 @@ class AddMyProduct extends React.Component {
     data.append("gst", this.state.gst);
     data.append("cost_price", this.state.cost_price);
     data.append("sell_price", this.state.sell_price);
-    data.append("colour", this.state.colour);
-     data.append("size", this.state.size);
-    //data.append("size", this.state.size.toString());
+    for (var i = 0; i < this.state.color.length; i++) {
+      data.append('color', this.state.color[i]);
+    }
+    for (var i = 0; i < this.state.size.length; i++) {
+      data.append('size', this.state.size[i]);
+    }
+    //data.append("color", JSON.stringify(this.state.color));
+    //data.append("size", JSON.stringify(this.state.size));
     data.append("material", this.state.material);
     data.append("stock", this.state.stock);
     data.append("qty", this.state.qty);
@@ -254,16 +259,6 @@ class AddMyProduct extends React.Component {
     for (const file of this.state.selectedFile) {
       if (this.state.selectedFile !== null) {
         data.append("product_img", file, file.name);
-      }
-    }
-    for (const file of this.state.selectedFile) {
-      if (this.state.selectedFile !== null) {
-        data.append("colour", file, file.name);
-      }
-    }
-    for (const file of this.state.selectedFile) {
-      if (this.state.selectedFile !== null) {
-        data.append("size", file, file.name);
       }
     }
    
@@ -278,7 +273,7 @@ class AddMyProduct extends React.Component {
     axiosConfig
       .post("/addproduct", data)
       .then(response => {
-        console.log(response.data);
+        console.log(response);
       })
       .catch(error => {
         console.log(error);
@@ -296,9 +291,9 @@ class AddMyProduct extends React.Component {
        }
      )
    }
-  componentDidMount1(){
-    this.componentDidMount()
-}
+//   componentDidMount1(){
+//     this.componentDidMount()
+// }
  
   render() {
     // const favColors = Object.keys(this.state.sizes)
@@ -318,7 +313,7 @@ class AddMyProduct extends React.Component {
                   placeholder="productname"
                   name="product_name"
                   value={this.state.product_name}
-                  onChange={this.changeHandler}
+                  onChange={this.changeHandler} required
                 />
               </FormGroup>
             </Col>
@@ -378,11 +373,11 @@ class AddMyProduct extends React.Component {
                   name="brand"
                   placeholder="Brandname"
                   value={this.state.brand}
-                  onChange={this.changeHandler}
+                  onChange={this.changeHandler} required
                 >
                   {this.state.pBrand?.map(brandp => (
-                    <option value={brandp._id} key={brandp._id}>
-                      {brandp.name}
+                    <option value={brandp?._id} key={brandp?._id}>
+                      {brandp?.name}
                     </option>
                   ))}
                 </CustomInput>
@@ -393,9 +388,9 @@ class AddMyProduct extends React.Component {
               <Label>Colour</Label>
               <Select
                     isMulti
-                    name="colour"
+                    name="color"
                     className="React"
-                    classNamePrefix="colour"
+                    classNamePrefix="color"
                     // value={this.state.colour}
                     options={this.state.pColour}
                     onChange={this.changeHandlercolor}>
@@ -428,7 +423,7 @@ class AddMyProduct extends React.Component {
                   onChange={this.changeHandler}
                 >
                   {this.state.pMaterial?.map(materialp => (
-                    <option value={materialp._id} key={materialp._id} >{materialp.materialname}</option>
+                    <option value={materialp.materialname} key={materialp._id} >{materialp.materialname}</option>
                   ))}
                        
             </CustomInput>
@@ -667,7 +662,7 @@ class AddMyProduct extends React.Component {
       <Card>
         <Row className="m-2">
           <Col>
-            <h1 col-sm-6 className="float-left">
+            <h1 className="float-left">
               Add My Product
             </h1>
           </Col>

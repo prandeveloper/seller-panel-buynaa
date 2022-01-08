@@ -191,13 +191,13 @@ class ProductsList extends React.Component {
       },
       {
         headerName: "Material",
-        field: "material?.materialname",
+        field: "material",
         filter: true,
         width: 180,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex justify-content-center">
-              <span>{params.data.material?.materialname}</span>
+              <span>{params.data.material}</span>
             </div>
           );
         },
@@ -364,7 +364,7 @@ class ProductsList extends React.Component {
                 className="mr-50"
                  size="25px"
                  color="blue"
-                onClick={() => history.push("/app/user/edit")}
+                onClick={() => history.push(`/app/products/product/editProducts/${params.data._id}`)}
               />
               <Trash2
                  className="mr-50"

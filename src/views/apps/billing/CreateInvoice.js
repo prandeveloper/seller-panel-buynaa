@@ -47,65 +47,65 @@ class CreateInvoice extends React.Component {
       },
       {
         headerName: "Order Id",
-        field: "customerId",
+        field: "orderId",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.customerId}</span>
+              <span>{params.data.orderId}</span>
             </div>
           );
         },
       },
       {
         headerName: "Phone",
-        field: "customerId",
+        field: "customer_phone",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.customerId}</span>
+              <span>{params.data.customer_phone}</span>
             </div>
           );
         },
       },
       {
         headerName: "Customer Name",
-        field: "first_name",
+        field: "customer_name",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.first_name}</span>
+              <span>{params.data.customer_name}</span>
             </div>
           );
         },
       },
       {
         headerName: "Quantity",
-        field: "last_name",
+        field: "total_qty",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.last_name}</span>
+              <span>{params.data.total_qty}</span>
             </div>
           );
         },
       },
       {
         headerName: "Total Amount",
-        field: "customer_email",
+        field: "total_amount",
         filter: true,
         width: 200,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.customer_email}</span>
+              <span>{params.data.total_amount}</span>
             </div>
           );
         },
@@ -117,8 +117,10 @@ class CreateInvoice extends React.Component {
         cellRendererFramework: params => {
           return (
             <div className="actions cursor-pointer">
-                <Button color="primary" outline className="mr-2">
+                <Button color="primary" outline className="mr-2"  
+                onClick={() => history.push("/pages/invoice/invoice")}>
                 Create Invoice
+            
               </Button>
               <Button color="primary" outline className="mr-2">
               Show Order Details
@@ -137,7 +139,8 @@ class CreateInvoice extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("/allcustomer")
+   
+      .get("/getbillinglist")
       .then(response => {
         let rowData = response.data.data;
         console.log(rowData);
@@ -145,14 +148,14 @@ class CreateInvoice extends React.Component {
       });
   }
 
-  async runthisfunction(id) {
-    console.log(id);
-    await axiosConfig
-      .get(`/delcustomer/${id}`)
-      .then(response => {
-        console.log(response);
-      });
-  }
+  // async runthisfunction(id) {
+  //   console.log(id);
+  //   await axiosConfig
+  //     .get(`/delcustomer/${id}`)
+  //     .then(response => {
+  //       console.log(response);
+  //     });
+  // }
   onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;

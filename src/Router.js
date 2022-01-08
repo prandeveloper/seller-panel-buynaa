@@ -159,15 +159,10 @@ const choosePaymentOption = lazy(() =>
 
 const pageLayout = lazy(() => import("./views/apps/pageLayout/PageLayout"));
 const stockReport = lazy(() => import("./views/apps/report/StockReport"));
-const salesReport = lazy(() => import("./views/apps/report/SalesReport"));
-const salesByCustomer = lazy(() =>
-  import("./views/apps/sales/SalesByCustomer")
-);
-const addSalesByCust = lazy(() => import("./views/apps/sales/AddSalesByCust"));
-// const editSalesByCust  = lazy(() => import("./views/apps/sales/EditSalesByCust"));
-const viewSalesByCust = lazy(() =>
-  import("./views/apps/sales/ViewSalesByCust")
-);
+// const salesReports = lazy(() => import("./views/apps/reports/bysales/InvoicedIncome"));
+// const byProducts = lazy(() => import("./views/apps/reports/product/ByProducts"));
+
+
 
 const stockAdjustment = lazy(() =>
   import("./views/apps/stockControl/StockAdjustment")
@@ -181,34 +176,21 @@ const stockTransferRequest = lazy(() =>
 const addStockTransfer = lazy(() =>
   import("./views/apps/stockControl/AddStockTransfer")
 );
+const salesByItem =lazy(()=> import ("./views/apps/reports/bysales/SalesByItem"));
+const salesByCustomer =lazy(()=> import ("./views/apps/reports/bysales/SalesByCustomer"));
+const invoicedIncome =lazy(()=> import ("./views/apps/reports/bysales/InvoicedIncome"));
 
-const salesByitem = lazy(() => import("./views/apps/sales/SalesByItem"));
-const addSalesByitem = lazy(() => import("./views/apps/sales/AddSalesByItem"));
-const editSalesByitem = lazy(() =>
-  import("./views/apps/sales/EditSalesByItem")
-);
-const viewSalesByitem = lazy(() =>
-  import("./views/apps/sales/ViewSalesByItem")
-);
+const systemMails =lazy(()=> import ("./views/apps/reports/byactivity/SystemMails"));
 
-const salesReturnHistory = lazy(() =>
-  import("./views/apps/sales/SalesReturnHistory")
-);
-const addSalesReturnHis = lazy(() =>
-  import("./views/apps/sales/AddSalesReturnHis")
-);
-// const editSalesReturnHis = lazy(()=> import("./views/apps/sales/EditSalesReturnHis"));
-const viewSalesReturnHis = lazy(() =>
-  import("./views/apps/sales/ViewSalesReturnHis")
-);
+ const purchaseHistoryReportByItem =lazy(()=> import ("./views/apps/reports/bypurchases&epenses/PurchaseHistoryReportByItem"));
 
-const invoicedIncome = lazy(() => import("./views/apps/sales/InvoicedIncome"));
-const addInvoicedIncome = lazy(() =>
-  import("./views/apps/sales/AddInvoicedIncome")
-);
-const viewInvoicedIncome = lazy(() =>
-  import("./views/apps/sales/ViewInvoicedIncome")
-);
+const paymentsReceived  =lazy(()=> import ("./views/apps/reports/bypaymentsreceived/PaymentsReceived"));
+
+
+
+
+
+
 
 const activityLogs = lazy(() => import("./views/apps/activity/ActivityLogs"));
 const addActivityLogs = lazy(() =>
@@ -221,16 +203,7 @@ const viewActivityLogs = lazy(() =>
   import("./views/apps/activity/ViewActivityLogs")
 );
 
-const systemMails = lazy(() => import("./views/apps/activity/SystemMails"));
-const addSystemMails = lazy(() =>
-  import("./views/apps/activity/AddSystemMails")
-);
-const editSystemMails = lazy(() =>
-  import("./views/apps/activity/EditSystemMails")
-);
-const viewSystemMails = lazy(() =>
-  import("./views/apps/activity/ViewSystemMails")
-);
+
 
 const historyByProductCat = lazy(() =>
   import("./views/apps/byProduct/HistoryByProductCat")
@@ -603,7 +576,7 @@ class AppRouter extends React.Component {
             component={productsList}
           />
           <AppRoute
-            path="/app/products/product/editProducts"
+            path="/app/products/product/editProducts/:id"
             component={editProducts}
           />
           <AppRoute
@@ -790,24 +763,23 @@ class AppRouter extends React.Component {
             component={choosePaymentOption}
           />
           <AppRoute path="/app/report/stockReport" component={stockReport} />
-          <AppRoute path="/app/report/salesReport" component={salesReport} />
+          <AppRoute path="/app/reports/bysales/salesByItem" component={salesByItem} />
+          <AppRoute path="/app/reports/bysales/invoicedIncome" component={invoicedIncome} />
+          <AppRoute path="/app/reports/bysales/salesByCustomer" component={salesByCustomer} />
+          {/* <AppRoute path="/app/reports/byactivity/systemMails" component={systemMails} /> */}
+          <AppRoute path="/app/reports/bypaymentsreceived/paymentsReceived" component={paymentsReceived} />
+          <AppRoute path="/app/reports/bypurchases&epenses/purchaseHistoryReportByItem" component={purchaseHistoryReportByItem} />
+            <AppRoute path="/app/reports/byactivity/systemMails" component={systemMails} />
+          
+          
           <AppRoute
             path="/app/report/mostViewProductReport"
             component={mostViewProductReport}
           />
-          <AppRoute
-            path="/app/sales/salesByCustomer"
-            component={salesByCustomer}
-          />
-          <AppRoute
-            path="/app/sales/addSalesByCust"
-            component={addSalesByCust}
-          />
-          {/* <AppRoute path="/app/sales/editSalesByCust" component={editSalesByCust}/> */}
-          <AppRoute
-            path="/app/sales/viewSalesByCust"
-            component={viewSalesByCust}
-          />
+       
+        
+        
+     
           <AppRoute
             path="/app/stockControl/stockTransferRequest"
             component={stockTransferRequest}
@@ -824,44 +796,10 @@ class AppRouter extends React.Component {
             path="/app/stockControl/addStockAdjustment"
             component={addStockAdjustment}
           />
-          <AppRoute path="/app/sales/salesByitem" component={salesByitem} />
-          <AppRoute
-            path="/app/sales/addSalesByitem"
-            component={addSalesByitem}
-          />
-          <AppRoute
-            path="/app/sales/editSalesByitem"
-            component={editSalesByitem}
-          />
-          <AppRoute
-            path="/app/sales/viewSalesByitem"
-            component={viewSalesByitem}
-          />
-          <AppRoute
-            path="/app/sales/salesReturnHistory"
-            component={salesReturnHistory}
-          />
-          <AppRoute
-            path="/app/sales/addSalesReturnHis"
-            component={addSalesReturnHis}
-          />
-          {/* <AppRoute path="/app/sales/editSalesReturnHis" component={editSalesReturnHis}/> */}
-          <AppRoute
-            path="/app/sales/viewSalesReturnHis"
-            component={viewSalesReturnHis}
-          />
-          <AppRoute
-            path="/app/sales/invoicedIncome"
-            component={invoicedIncome}
-          />
-          <AppRoute
-            path="/app/sales/addInvoicedIncome"
-            component={addInvoicedIncome}
-          />
-          <AppRoute
-            path="/app/sales/viewInvoicedIncome"
-            component={viewInvoicedIncome}
-          />
+    
+        
+        
+         
           <AppRoute
             path="/app/activity/activityLogs"
             component={activityLogs}
@@ -878,19 +816,8 @@ class AppRouter extends React.Component {
             path="/app/activity/viewActivityLogs"
             component={viewActivityLogs}
           />
-          <AppRoute path="/app/activity/systemMails" component={systemMails} />
-          <AppRoute
-            path="/app/activity/addSystemMails"
-            component={addSystemMails}
-          />
-          <AppRoute
-            path="/app/activity/editSystemMails"
-            component={editSystemMails}
-          />
-          <AppRoute
-            path="/app/activity/viewSystemMails"
-            component={viewSystemMails}
-          />
+       
+        
           <AppRoute
             path="/app/ByProduct/historyByProductCat"
             component={historyByProductCat}
@@ -1153,7 +1080,7 @@ class AppRouter extends React.Component {
             path="/pages/account-settings"
             component={accountSettings}
           />
-          <AppRoute path="/pages/invoice" component={invoice} />
+          <AppRoute path="/pages/invoice/invoice" component={invoice} />
           <AppRoute
             path="/misc/coming-soon"
             component={comingSoon}

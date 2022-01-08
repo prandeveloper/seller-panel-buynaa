@@ -361,11 +361,18 @@ const navigationConfig = [
     children: [
       {
         id: "sales",
-        title: "Sales",
+        title: "By Sales",
+        type: "collapse",
+        icon: <Icon.ArrowRight size={20} />,
+        children: [
+          {
+      
+        id: "salesByItem",
+        title: "SalesByItem",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/report/Sales",
+        navLink: "/app/reports/bysales/salesByItem",
       },
       {
         id: "salesByCustomer",
@@ -373,25 +380,76 @@ const navigationConfig = [
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/report/SalesReport",
+        navLink: "/app/reports/bysales/salesByCustomer",
       },
+      {
+        id: "invoicedIncome",
+        title: "Invoiced Income",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/reports/bysales/invoicedIncome",
+      },
+    ],
+  },
+      {
+        id: "byactivity",
+        title: " By Activity",
+        type: "collapse",
+        icon: <Icon.ArrowRight size={20} />,
+        children: [
+          
+      {
+        id: "systemMails",
+        title: "System Mails",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/reports/byactivity/systemMails",
+      },
+    ],
+  },
+      {
+        id: "bypaymentsreceived",
+        title: "By Payments Received",
+        type: "collapse",
+        icon: <Icon.ArrowRight size={20} />,
+        children: [
+      {
+        id: "paymentsReceived",
+        title: "By Payments Received",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/reports/bypaymentsreceived/paymentsReceived",
+      },
+    ],
+  },
+      {
+        id: "bypurchases&epenses",
+        title: "By Purchases & Epenses",
+        type: "collapse",
+        icon: <Icon.ArrowRight size={20} />,
+        children: [
 
-      {
-        id: "salesReport",
-        title: "Sales Report",
+    {
+        id: "purchaseHistoryReportByItem",
+        title: "Purchases History Report By Item",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/report/SalesReport",
+        navLink: "/app/reports/bypurchases&epenses/purchaseHistoryReportByItem",
       },
-      {
-        id: "stockReport",
-        title: "Stock Report",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/report/StockReport",
-      },
+    ],
+  },
+      // {
+      //   id: "stockReport",
+      //   title: "Stock Report",
+      //   type: "item",
+      //   icon: <Icon.Circle size={12} />,
+      //   permissions: ["admin", "editor"],
+      //   navLink: "/app/report/StockReport",
+      // },
     ],
   },
   // {
@@ -427,7 +485,14 @@ const navigationConfig = [
         permissions: ["admin", "editor"],
         navLink: "/app/products/brand/brandList",
       },
-
+      {
+        id: "taxList",
+        title: "GST Tax",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/tax/taxList",
+      },
       {
         id: "unitList",
         title: "Unit",

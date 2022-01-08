@@ -45,7 +45,7 @@ class InvoiceList extends React.Component {
         // headerCheckboxSelection: true,
       },
       {
-        headerName: "Customer Id",
+        headerName: "Invoice No",
         field: "customerId",
         filter: true,
         width: 150,
@@ -59,7 +59,7 @@ class InvoiceList extends React.Component {
       },
 
       {
-        headerName: "First Name",
+        headerName: "Date",
         field: "first_name",
         filter: true,
         width: 150,
@@ -72,7 +72,7 @@ class InvoiceList extends React.Component {
         },
       },
       {
-        headerName: "Last Name",
+        headerName: "Customer Name",
         field: "last_name",
         filter: true,
         width: 150,
@@ -85,7 +85,43 @@ class InvoiceList extends React.Component {
         },
       },
       {
-        headerName: "Email",
+        headerName: "Phone No",
+        field: "customer_email",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div className="ml-2 mr-4">
+              <span>{params.data.customer_email}</span>
+            </div>
+          );
+        },
+      },  {
+        headerName: "Customer GSTIN",
+        field: "customer_email",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div className="ml-2 mr-4">
+              <span>{params.data.customer_email}</span>
+            </div>
+          );
+        },
+      },  {
+        headerName: "Order No",
+        field: "customer_email",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div className="ml-2 mr-4">
+              <span>{params.data.customer_email}</span>
+            </div>
+          );
+        },
+      },  {
+        headerName: "Quantity",
         field: "customer_email",
         filter: true,
         width: 200,
@@ -98,7 +134,46 @@ class InvoiceList extends React.Component {
         },
       },
       {
-        headerName: "Mobile No.",
+        headerName: "Subtotal",
+        field: "mobile_no",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div className="ml-2 mr-4">
+              <span>{params.data.mobile_no}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Discount",
+        field: "mobile_no",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div className="ml-2 mr-4">
+              <span>{params.data.mobile_no}</span>
+            </div>
+          );
+        },
+      },    {
+        headerName: "Grand Total",
+        field: "mobile_no",
+        filter: true,
+        width: 200,
+        cellRendererFramework: params => {
+          return (
+            <div className="ml-2 mr-4">
+              <span>{params.data.mobile_no}</span>
+            </div>
+          );
+        },
+      },   
+      
+      {
+        headerName: "Payment Mode",
         field: "mobile_no",
         filter: true,
         width: 200,

@@ -12,12 +12,48 @@ import {
   Button
 } from "reactstrap"
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb"
+import axiosConfig from "../../../axiosConfig";
 import logo from "../../../assets/img/logo/logo.png"
 import { Mail, Phone, FileText, Download } from "react-feather"
 
 import "../../../assets/scss/pages/invoice.scss"
-
+const params = {
+  spaceBetween: 10,
+  centeredSlides: true,
+  autoplay: {
+    delay: 2500,
+    disableOnInteraction: false,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+};
 class Invoice extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {},
+    };
+  }
+
+  componentDidMount() {
+    let { id } = this.props.match.params;
+    axiosConfig
+      .get(`/viewonebilling/${id}`)
+      .then(response => {
+        console.log(response.data.data);
+        this.setState({ data: response.data.data });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  // - Product Search Button, Name, Quantity, Sell Price, Discount, GST, Grand Total,  Create Invoice Button, Destroy Button, Previous Button, Next Button
   render() {
     return (
       <React.Fragment>
@@ -67,7 +103,7 @@ class Invoice extends React.Component {
                   <Col md="6" sm="12" className="text-right">
                     <h1>Invoice</h1>
                     <div className="invoice-details mt-2">
-                      <h6>INVOICE NO.</h6>
+                      <h6>{this.state.data.product_name}</h6>
                       <p>001/2020</p>
                       <h6 className="mt-2">INVOICE DATE</h6>
                       <p>10 Dec 2018</p>
@@ -120,23 +156,27 @@ class Invoice extends React.Component {
                         <thead>
                           <tr>
                             <th>TASK DESCRIPTION</th>
-                            <th>HOURS</th>
-                            <th>RATE</th>
-                            <th>AMOUNT</th>
+                            <th>Name</th>
+                           
+                            <th>Quantity</th>
+                         
+                            <th>Sell Price</th>
+                           Select Product(tab) 
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
                             <td>Website Redesign</td>
-                            <td>60</td>
-                            <td>15 USD</td>
-                            <td>90000 USD</td>
+                            <td>{this.state.data.name}</td>
+                            <td>{this.state.data.product?.qty}</td>
+                            <td>{this.state.data.product?. cost}</td>
+                           
                           </tr>
                           <tr>
                             <td>Newsletter template design</td>
-                            <td>20</td>
-                            <td>12 USD</td>
-                            <td>24000 USD</td>
+                            <td>{this.state.data.product?.name}</td>
+                            <td>{this.state.data.product?.qty}</td>
+                            <td>{this.state.data.product?.cost}</td>
                           </tr>
                         </tbody>
                       </Table>
@@ -151,18 +191,23 @@ class Invoice extends React.Component {
                     >
                       <Table responsive borderless>
                         <tbody>
-                          <tr>
-                            <th>SUBTOTAL</th>
+                        {/* <tr>
+                            <th>Sell Price</th>
                             <td>114000 USD</td>
+                          </tr> */}
+                          <tr>
+                            <th>GST</th>
+                            <td></td>
                           </tr>
                           <tr>
-                            <th>DISCOUNT (5%)</th>
-                            <td>5700 USD</td>
+                            <th>Discount (5%)</th>
+                            <td>{this.state.data.product?.discount}</td>
                           </tr>
                           <tr>
-                            <th>TOTAL</th>
-                            <td>108300 USD</td>
+                            <th>Grand Total</th>
+                            <td>{this.state.data.total_amount}</td>
                           </tr>
+                    
                         </tbody>
                       </Table>
                     </Col>

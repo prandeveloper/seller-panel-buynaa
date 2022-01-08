@@ -164,13 +164,20 @@ class ViewProducts extends React.Component {
                 <h6>{this.state.data.productsubcategory?.name}</h6>
                 <hr />
                 <h4>Size</h4>
-                <h6>{this.state.data?.size?.sizeName}</h6>
+                <h6>{this.state.data?.size?.map(item => (
+                  <span>{item?.sizeName}</span>
+                ))}</h6>
                 <hr />
                 <h4>Colour </h4>
-                <h6>{this.state.data.colour?.colorName}</h6>
+                <h6>{this.state.data?.color?.map(item => (
+                  <span style={{color:item?.colorName}}>{item?.colorName}</span>
+                  // <Button style={{background-color:item?.colorName!important;}}>{item?.colorName}</Button>
+                ))}</h6>
+
+
                 <hr />
                 <h4>Material </h4>
-                <h6>{this.state.data.material?.materialname}</h6>
+                <h6>{this.state.data.material}</h6>
                 <hr />
                 <h4>Stock Quantity </h4>
                 <h6>{this.state.data.qty}</h6>
