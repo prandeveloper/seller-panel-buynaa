@@ -177,6 +177,19 @@ class ProductsList extends React.Component {
         },
       },
       {
+        headerName: "Product Tag",
+        field: "tag",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex justify-content-center">
+              <span>{params.data.tag}</span>
+            </div>
+          );
+        },
+      },
+      {
         headerName: "Units",
         field: "unit?.units_title",
         filter: true,

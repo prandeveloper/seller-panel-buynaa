@@ -62,39 +62,39 @@ class SalesByCustomer extends React.Component {
       },
       {
         headerName: "Customer Name",
-        field: "first_name",
+        field: "customer?.first_name, last_name",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.first_name}</span>
+              <span>{params.data.customer?.first_name} {params.data.customer?.last_name}</span>
             </div>
           );
         },
       },
       {
         headerName: "Sales Amount",
-        field: "last_name",
+        field: "purchaseprice",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.last_name}</span>
+              <span>{params.data.purchaseprice}</span>
             </div>
           );
         },
       },
       {
         headerName: "Sales Amount with GST",
-        field: "customer_email",
+        field: "order_date",
         filter: true,
         width: 200,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.customer_email}</span>
+              <span>{params.data.order_date}</span>
             </div>
           );
         },
@@ -163,24 +163,26 @@ class SalesByCustomer extends React.Component {
     ],
   };
 
-  //   async componentDidMount() {
-  //     await axiosConfig
-  //       .get("http://35.154.86.59/api/user/allcustomer")
-  //       .then(response => {
-  //         let rowData = response.data.data;
-  //         console.log(rowData);
-  //         this.setState({ rowData });
-  //       });
-  //   }
 
-//   async runthisfunction(id) {
-//     console.log(id);
-//     await axiosConfig
-//       .get(`http://35.154.86.59/api/user/delcustomer/${id}`)
-//       .then(response => {
-//         console.log(response);
-//       });
-//   }
+  async componentDidMount() {
+    let { id } = this.props.match.params;
+    await axiosConfig.get(`/salesbyseller/${id}`).then((response) => {
+      const rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
+  }
+  // async runthisfunction(id) {
+  //   console.log(id);
+  //   await axiosConfig.get(`/del_product/${id}`).then(
+  //     (response) => {
+  //       console.log(response);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
   onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;

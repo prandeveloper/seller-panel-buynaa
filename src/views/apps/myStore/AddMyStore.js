@@ -342,8 +342,8 @@ class AddMyStore extends React.Component {
     data.append("phone_no", this.state.phone_no);
     data.append("altphone_no", this.state.altphone_no);
     data.append("day", this.state.day.toString());
-    data.append("openingTym", this.state.openingTym);
-    data.append("closingTym", this.state.closingTym);
+    data.append("openingTym", this.state.openingTym.toString());
+    data.append("closingTym", this.state.closingTym.toString());
     data.append("address_line1", this.state.address_line1);
     data.append("address_line2", this.state.address_line2);
     data.append("landmark", this.state.landmark);

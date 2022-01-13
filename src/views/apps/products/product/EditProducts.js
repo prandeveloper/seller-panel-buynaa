@@ -1,5 +1,6 @@
 import React from "react";
 import Wizard from "./ProFormComponent";
+import Multiselect from 'multiselect-react-dropdown';
 import {
   FormGroup,
   Input,
@@ -47,13 +48,16 @@ class EditProduct extends React.Component {
       selectedFile: undefined,
       selectedName: "",
       pColour:[],
+      pColourselected:[],
+      pSize:[],
+      pSizeselected:[],
       pBrand: [],
       productC: [],
       productSC: [],
-      units: [],
+      pUnit: [],
       pMaterial: [],
       gsts:[],
-      pSize:[],
+     
       file: [null],
       imgSrc: [],
       data: {},
@@ -69,6 +73,39 @@ class EditProduct extends React.Component {
       .then(response => {
         console.log(response.data.data);
         this.setState({ data: response.data.data });
+        let resultarray = []
+        for (let i = 0; i < response.data.data.color.length; i++) {
+        const element = response.data.data.color[i];
+        delete Object.assign(element,
+            {
+              ["value"]: element["_id"],
+              ["label"]: element["colorName"]
+            }
+          )["colorName"];
+            resultarray.push(element)
+        //console.log(element)
+      }
+      
+      this.setState({ pColourselected: resultarray });
+      console.log(this.state.pColourselected)
+
+      let newresultarray = []
+        for (let i = 0; i < response.data.data.size.length; i++) {
+        const element = response.data.data.size[i];
+        delete Object.assign(element,
+            {
+              ["value"]: element["_id"],
+              ["label"]: element["sizeName"]
+            }
+          )["colorName"];
+            newresultarray.push(element)
+        //console.log(element)
+      }
+      
+      this.setState({ pSizeselected: newresultarray });
+      console.log(this.state.pSizeselected)
+
+      
       })
       .catch(error => {
         console.log(error);
@@ -122,7 +159,7 @@ class EditProduct extends React.Component {
       .get("/viewallunits")
       .then(response => {
         console.log(response);
-        this.setState({ units: response.data.data });
+        this.setState({ pUnit: response.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -178,7 +215,10 @@ class EditProduct extends React.Component {
           )["sizeName"];
             resultarray.push(element)
           }
-      this.setState({ pSize: resultarray });
+      // this.setState({ pSize: resultarray });
+      this.setState({ pSize: response.data.data });
+
+
     })
     .catch(error => {
       console.log(error);
@@ -234,6 +274,7 @@ class EditProduct extends React.Component {
       emptyarray.push(element)
     }
   this.setState({ color: emptyarray });
+  
   console.log(this.state.color)
 }; 
 
@@ -312,6 +353,8 @@ class EditProduct extends React.Component {
     // const favColors = Object.keys(this.state.sizes)
     // .filter(key => this.state.sizes[key])
     // .join(", ");
+    const selectedColor = this.state.pColourselected;
+    const selectedSize = this.state.pSizeselected;
 
     const steps = [
       {
@@ -346,7 +389,7 @@ class EditProduct extends React.Component {
               <FormGroup>
                 <Label>HSN / SAC Number</Label>
                 <Input
-                  type="number"
+                  type="text"
                   placeholder="HSN/SAC"
                   name="hsn_sac_no"
                   value={this.state.data.hsn_sac_no}
@@ -385,7 +428,7 @@ class EditProduct extends React.Component {
                   type="select"
                   name="brand"
                   placeholder="Brandname"
-                  value={this.state.data.brand}
+                  value={this.state.data.brand?._id}
                   onChange={this.changeHandler} required
                 >
                   {this.state.pBrand?.map(brandp => (
@@ -397,17 +440,21 @@ class EditProduct extends React.Component {
               </FormGroup>
             </Col>
             <Col md="6" sm="12">
+            {/* {this.state.pColourselected?.map(materialp => (
+                    <h4 key={materialp.cat} >{materialp.key}, {materialp.cat}</h4>
+                  ))} */}
             <FormGroup>
               <Label>Colour</Label>
               <Select
+              closeMenuOnSelect={false}
                     isMulti
                     name="color"
                     className="React"
                     classNamePrefix="color"
-                    // value={this.state.colour}
-                    options={this.state.data.pColour}
-                    onChange={this.changeHandlercolor}>
-                      
+                    options={this.state.pColour}
+                    onChange={this.changeHandlercolor}
+                    value={selectedColor}>
+           
               </Select>
             </FormGroup>
           </Col>
@@ -420,7 +467,8 @@ class EditProduct extends React.Component {
                   classNamePrefix="size"
                   name="size"
                   options={this.state.data.pSize}
-                  onChange={this.changeHandlersize}>
+                  onChange={this.changeHandlersize}
+                  value={selectedSize}>
             </Select>
           </FormGroup>
         </Col>
@@ -549,12 +597,12 @@ class EditProduct extends React.Component {
                 <Label>Units</Label>
                 <CustomInput
                   type="select"
-                  placeholder="Unit"
+                  placeholder="Units"
                   name="unit"
                   value={this.state.data.unit}
                   onChange={this.changeHandler}
                 >
-                  {this.state.units?.map(dUnits => (
+                  {this.state.pUnit?.map(dUnits => (
                     <option value={dUnits._id} key={dUnits._id}>
                       {dUnits.units_title}
                     </option>
@@ -670,6 +718,15 @@ class EditProduct extends React.Component {
         ),
       },
     ];
+
+    // const colourOptions = [
+    //   { value: "ocean", label: "Ocean", color: "#00B8D9", isFixed: true },
+    //   { value: "blue", label: "Blue", color: "#0052CC", isFixed: true },
+    //   { value: "purple", label: "Purple", color: "#5243AA", isFixed: true },
+    //   { value: "red", label: "Red", color: "#FF5630", isFixed: false },
+    //   { value: "orange", label: "Orange", color: "#FF8B00", isFixed: false },
+    //   { value: "yellow", label: "Yellow", color: "#FFC400", isFixed: false }
+    // ]
     //
     return (
       <Card>

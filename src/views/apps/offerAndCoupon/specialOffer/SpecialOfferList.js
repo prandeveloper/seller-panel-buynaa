@@ -62,12 +62,12 @@ class SpecialOfferList extends React.Component {
       },
       {
         headerName: "Product Name",
-        field: "product?.product_name",
+        field: "product_name",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: params => {
           return (
-            <div className=" mr-4">
+            <div className="">
               <span>{params.data.product?.product_name}</span>
             </div>
           );
@@ -112,6 +112,7 @@ class SpecialOfferList extends React.Component {
           return (
             <div className="actions cursor-pointer">
               <Edit
+              color="blue"
                 className="mr-50"
                 size={15}
                 onClick={() =>
@@ -121,7 +122,7 @@ class SpecialOfferList extends React.Component {
                 }
               />
               <Trash2
-                style={{ color: "red" }}
+              color="red"
                 size={20}
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();

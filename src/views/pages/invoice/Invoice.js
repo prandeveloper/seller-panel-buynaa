@@ -13,7 +13,7 @@ import {
 } from "reactstrap"
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb"
 import axiosConfig from "../../../axiosConfig";
-import logo from "../../../assets/img/logo/logo.png"
+import logo from "../../../assets/img/logo/ilogo.png"
 import { Mail, Phone, FileText, Download } from "react-feather"
 
 import "../../../assets/scss/pages/invoice.scss"

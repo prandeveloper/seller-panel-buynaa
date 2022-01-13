@@ -131,7 +131,6 @@ class StockTransferRequest extends React.Component {
         headerName: "Transfer Type",
         field: "transfer_type",
         filter: true,
-
         resizable: true,
         width: 180,
         cellRendererFramework: params => {

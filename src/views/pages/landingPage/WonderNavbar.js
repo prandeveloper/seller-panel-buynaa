@@ -34,7 +34,7 @@ export default function WonderNavbar(props) {
         <Collapse isOpen={isOpen} navbar>
           <Nav navbar style={{ marginLeft: "30rem" }}>
             <NavItem>
-              <NavLink className="st-nav" href="/">
+              <NavLink className="st-nav" href="/pages/register/register">
                 <Button color="primary">REGISTER NOW</Button>
               </NavLink>
             </NavItem>

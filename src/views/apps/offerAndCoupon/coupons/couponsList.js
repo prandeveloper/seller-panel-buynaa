@@ -91,7 +91,7 @@ class BundleOffer extends React.Component {
       },
       {
         headerName: "Product Name",
-        field: "product?.product_name",
+        field: "product_name",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
@@ -196,6 +196,7 @@ class BundleOffer extends React.Component {
               <Edit
                 className="mr-50"
                 size={15}
+                color= "blue" 
                 onClick={() =>
                   history.push(
                     `/app/offerAndCoupon/coupons/editCoupon/${params.data._id}`
@@ -204,6 +205,7 @@ class BundleOffer extends React.Component {
               />
               <Trash2
                 size={15}
+                color= "red" 
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);

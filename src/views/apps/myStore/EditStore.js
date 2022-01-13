@@ -600,7 +600,7 @@ export default class EditStore extends Component {
                         type="checkbox"
                         name="wednesday"
                       />
-                      Green
+                      Wednesday
                     </div>
                     <div>
                       <Input
@@ -980,7 +980,7 @@ export default class EditStore extends Component {
                     <Label className="mb-1"> Status </Label>
                     <div
                       className="form-label-group"
-                      onChange={e => this.changeHandler1(e)}
+                      onChange={(e) => this.changeHandler1(e)}
                     >
                       <Input
                         style={{

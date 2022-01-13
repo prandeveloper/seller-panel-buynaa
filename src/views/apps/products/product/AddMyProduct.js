@@ -35,12 +35,13 @@ class AddMyProduct extends React.Component {
       productcategory: "",
       productsubcategory: "",
       unit: "",
-      gst: "",
+      gstrate: "",
       material: "",
       stock: "",
       size: "",
       color: "",
       brand: "",
+      tag:"",
       product_img: "",
       status: "",
       sortorder: "",
@@ -236,10 +237,12 @@ class AddMyProduct extends React.Component {
     data.append("short_desc", this.state.short_desc);
     data.append("long_desc", this.state.long_desc);
     data.append("brand", this.state.brand);
+    data.append("tag", this.state.tag);
+
     data.append("productcategory", this.state.productcategory);
     data.append("productsubcategory", this.state.productsubcategory);
     data.append("unit", this.state.unit);
-    data.append("gst", this.state.gst);
+    data.append("gstrate", this.state.gstrate);
     data.append("cost_price", this.state.cost_price);
     data.append("sell_price", this.state.sell_price);
     for (var i = 0; i < this.state.color.length; i++) {
@@ -381,6 +384,18 @@ class AddMyProduct extends React.Component {
                     </option>
                   ))}
                 </CustomInput>
+              </FormGroup>
+            </Col>
+            <Col md="6" sm="12">
+              <FormGroup>
+                <Label>Product Tag</Label>
+                <Input
+                  type="text"
+                  placeholder="tag"
+                  name="tag"
+                  value={this.state.tag}
+                  onChange={this.changeHandler} required
+                />
               </FormGroup>
             </Col>
             <Col md="6" sm="12">
@@ -587,8 +602,8 @@ class AddMyProduct extends React.Component {
                   <CustomInput
                     type="select"
                     placeholder="GST Rate"
-                    name="gst"
-                    value={this.state.gst}
+                    name="gstrate"
+                    value={this.state.gstrate}
                     onChange={this.changeHandler}
                   >
                        {this.state.gsts.map((dGsts) => (

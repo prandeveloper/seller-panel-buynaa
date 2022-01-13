@@ -368,7 +368,7 @@ const navigationConfig = [
           {
       
         id: "salesByItem",
-        title: "SalesByItem",
+        title: "Sales By Item",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
@@ -442,14 +442,7 @@ const navigationConfig = [
       },
     ],
   },
-      // {
-      //   id: "stockReport",
-      //   title: "Stock Report",
-      //   type: "item",
-      //   icon: <Icon.Circle size={12} />,
-      //   permissions: ["admin", "editor"],
-      //   navLink: "/app/report/StockReport",
-      // },
+   
     ],
   },
   // {

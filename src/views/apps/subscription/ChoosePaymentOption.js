@@ -79,14 +79,26 @@ export default class AddUsers extends Component {
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
-                <div className="radio"> 
+                <div class="form-check">
+                  <Input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                  <Label class="form-check-label" for="flexRadioDefault1">
+                  Cash
+                  </Label>
+                </div>
+                <div class="form-check">
+                  <Input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
+                  <Label class="form-check-label" for="flexRadioDefault2">
+                  Cheque
+                  </Label>
+                </div>
+                                {/* <div className="radio"> 
                     <Input type="radio" name="cash" id="radio-p-1"  />
                     <Label class="">Cash</Label>
                   </div>
                   <div className="radio">
                     <Input type="radio" name="cheque" id="radio-p-2" />
                     <Label  class="cr">Cheque</Label>
-                  </div>
+                  </div> */}
                   <div class="form-group">                
                     <Input 
                         type="text" 

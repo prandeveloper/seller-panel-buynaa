@@ -60,39 +60,39 @@ class InvoiceList extends React.Component {
 
       {
         headerName: "Date",
-        field: "first_name",
+        field: "date",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.first_name}</span>
+              <span>{params.data.date}</span>
             </div>
           );
         },
       },
       {
         headerName: "Customer Name",
-        field: "last_name",
+        field: "customer_name",
         filter: true,
         width: 150,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.last_name}</span>
+              <span>{params.data.customer_name}</span>
             </div>
           );
         },
       },
       {
         headerName: "Phone No",
-        field: "customer_email",
+        field: "customer_phone",
         filter: true,
         width: 200,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.customer_email}</span>
+              <span>{params.data.customer_phone}</span>
             </div>
           );
         },
@@ -120,58 +120,58 @@ class InvoiceList extends React.Component {
             </div>
           );
         },
-      },  {
+      },    
+      {
         headerName: "Quantity",
-        field: "customer_email",
+        field: "total_qty",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.customer_email}</span>
+              <span>{params.data.total_qty}</span>
             </div>
           );
         },
       },
       {
         headerName: "Subtotal",
-        field: "mobile_no",
+        field: "product?.amount",
         filter: true,
         width: 200,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.mobile_no}</span>
+              <span>{params.data.product?.amount}</span>
             </div>
           );
         },
       },
       {
         headerName: "Discount",
-        field: "mobile_no",
+        field: "product?.discount",
         filter: true,
         width: 200,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.mobile_no}</span>
+              <span>{params.data.product?.discount}</span>
             </div>
           );
         },
       },    {
         headerName: "Grand Total",
-        field: "mobile_no",
+        field: "total_amount",
         filter: true,
         width: 200,
         cellRendererFramework: params => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.mobile_no}</span>
+              <span>{params.data.total_amount}</span>
             </div>
           );
         },
       },   
-      
       {
         headerName: "Payment Mode",
         field: "mobile_no",
@@ -185,7 +185,6 @@ class InvoiceList extends React.Component {
           );
         },
       },
-
       {
         headerName: "Status",
         field: "status",
@@ -236,24 +235,24 @@ class InvoiceList extends React.Component {
     ],
   };
 
-  //   async componentDidMount() {
-  //     await axiosConfig
-  //       .get("http://35.154.86.59/api/user/allcustomer")
-  //       .then(response => {
-  //         let rowData = response.data.data;
-  //         console.log(rowData);
-  //         this.setState({ rowData });
-  //       });
-  //   }
+    async componentDidMount() {
+      await axiosConfig
+        .get("/getbillinglist")
+        .then(response => {
+          let rowData = response.data.data;
+          console.log(rowData);
+          this.setState({ rowData });
+        });
+    }
 
-  async runthisfunction(id) {
-    console.log(id);
-    await axiosConfig
-      .get(`http://35.154.86.59/api/user/delcustomer/${id}`)
-      .then(response => {
-        console.log(response);
-      });
-  }
+  // async runthisfunction(id) {
+  //   console.log(id);
+  //   await axiosConfig
+  //     .get(`http://35.154.86.59/api/user/delcustomer/${id}`)
+  //     .then(response => {
+  //       console.log(response);
+  //     });
+  // }
   onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
