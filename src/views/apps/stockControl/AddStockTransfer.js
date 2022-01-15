@@ -14,7 +14,6 @@ import {
 import { history } from "../../../history";
 import axiosConfig from "../../../axiosConfig";
 import swal from "sweetalert";
-
 export class AddStockTransfer extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +29,6 @@ export class AddStockTransfer extends Component {
       };
     }
   }
-
   async componentDidMount() {
     //Warehouse List
     axiosConfig
@@ -42,34 +40,28 @@ export class AddStockTransfer extends Component {
       .catch(error => {
         console.log(error);
       });
+
+    //Reason List
+      axiosConfig
+      .get("/getReason")
+      .then(response => {
+        console.log(response);
+        this.setState({ reasonL: response.data.data });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+         //Transfer Type List
+         axiosConfig
+         .get("/getTransfertype")
+         .then(response => {
+           console.log(response);
+           this.setState({ transfertypeL: response.data.data });
+         })
+         .catch(error => {
+           console.log(error);
+         });
   }
-  // addControls() {
-  //   this.setState({
-  //     addTextbox: [...this.state.addTextbox, {}],
-  //   });
-  // }
-  // delControl(i) {
-  //   this.state.addTextbox.splice(i, 1);
-  //   this.setState({});
-  // }
-
-  //   async componentDidMount() {
-  //     //Product Category
-  //     axiosConfig
-  //       .get("/getproduct")
-  //       .then(response => {
-  //         console.log(response);
-  //         this.setState({ productS: response.data.data });
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   }
-
-
-
-     
-  
   changeHandler1 = e => {
     this.setState({ status: e.target.value });
   };
@@ -79,13 +71,12 @@ export class AddStockTransfer extends Component {
   };
   submitHandler = e => {
     e.preventDefault();
-  
     axiosConfig
       .post("/addstocktransfer", this.state)
       .then(response => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push("/app/stockControl/StockAdjustment");
+        this.props.history.push("/app/stockControl/StockTransferRequest");
       })
       .catch(error => {
         console.log(error);
@@ -105,9 +96,7 @@ export class AddStockTransfer extends Component {
                 <Button
                   className=" btn btn-danger float-right"
                   onClick={() =>
-                    history.push("/app/stockControl/stockTransferRequest")
-                  }
-                >
+                  history.push("/app/stockControl/stockTransferRequest")}>
                   Back
                 </Button>
               </Col>
@@ -121,10 +110,8 @@ export class AddStockTransfer extends Component {
                       type="number"
                       name="reference_no"
                       value={this.state.reference_no}
-                      onChange={this.changeHandler}
-                    />
+                      onChange={this.changeHandler}/>
                   </Col>
-              
                   <Col lg="6" md="6" className="mb-1">
                     <Label>Select From Warehouse</Label>
                     <CustomInput
@@ -134,10 +121,10 @@ export class AddStockTransfer extends Component {
                       onChange={this.changeHandler}
                     >
                       {this.state.warehouseL?.map(warehouseList => (
-                        <option key={warehouseList._id} value={warehouseList._id}>
-                          {warehouseList.warehousename}
-                        </option>
-                      ))}
+                      <option key={warehouseList._id} value={warehouseList._id}>
+                      {warehouseList.warehousename}
+                      </option>
+                    ))}
                     </CustomInput>
                   </Col>
                   <Col lg="6" md="6" className="mb-1">
@@ -147,9 +134,14 @@ export class AddStockTransfer extends Component {
                       name="to_warehouse"
                       value={this.state.to_warehouse}
                       onChange={this.changeHandler}
-                    ></CustomInput>
+                    >
+                    {this.state.warehouseL?.map(warehouseList => (
+                    <option key={warehouseList._id} value={warehouseList._id}>
+                    {warehouseList.warehousename}
+                    </option>
+                  ))}
+                    </CustomInput>
                   </Col>
-  
                   <Col lg="6" md="6" className="mb-1">
                     <Label>Transfer Date</Label>
                     <Input
@@ -175,7 +167,13 @@ export class AddStockTransfer extends Component {
                       name="transfer_type"
                       value={this.state.transfer_type}
                       onChange={this.changeHandler}
-                    ></CustomInput>
+                    >
+                    {this.state.transfertypeL?.map(transfertypeList => (
+                    <option key={transfertypeList._id} value={transfertypeList._id}>
+                    {transfertypeList.transfer_type}
+                    </option>
+                  ))}
+                    </CustomInput>
                   </Col>
                   <Col lg="6" md="6" className="mb-1">
                     <Label>Reason</Label>
@@ -184,115 +182,27 @@ export class AddStockTransfer extends Component {
                       name="reason"
                       value={this.state.reason}
                       onChange={this.changeHandler}
-                    ></CustomInput>
+                    >
+                           {this.state.reasonL?.map(reasonList => (
+                        <option key={reasonList._id} value={reasonList._id}>
+                          {reasonList.reason}
+                        </option>
+                      ))}
+                    </CustomInput>
                   </Col>
                 </Row>
-              {/* <Row className="mt-4">
-                <div>
-                  {this.state.addTextbox.map(index => (
-                    <div>
-                      {index ? (
-                        <div id="btn">
-                          <Row>
-                            <Col lg="12" md="6" sm="6" className="mb-2">
-                              <Row>
-                                <Col lg="6" mf="6">
-                                  <Button
-                                    color="primary"
-                                    onClick={() => this.addControls()}
-                                  >
-                                    Add Product
-                                  </Button>
-                                </Col>
-                                <Col
-                                  lg="6"
-                                  mf="6"
-                                  className="d-flex justify-content-end"
-                                >
-                                  <Button
-                                    color="danger"
-                                    onClick={() => this.delControl(index)}
-                                  >
-                                    Remove
-                                  </Button>
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Row>
-                        </div>
-                      ) : null}
-
-                      <Row>
-                        <Col md="4" sm="12">
-                          <FormGroup>
-                            <Label> Product Name </Label>
-                            <Input type="text" placeholder=" Product Name" />
-                          </FormGroup>
-                        </Col>
-                        <Col md="4" sm="12">
-                          <FormGroup>
-                            <Label> SKU </Label>
-                            <Input type="text" placeholder="SKU" />
-                          </FormGroup>
-                        </Col>
-                        <Col md="4" sm="12">
-                          <FormGroup>
-                            <Label> HSN </Label>
-                            <Input type="text" rows="5" placeholder="HSN" />
-                          </FormGroup>
-                        </Col>
-                        <Col md="4" sm="12">
-                          <FormGroup>
-                            <Label> Quantity </Label>
-                            <Input
-                              type="text"
-                              rows="5"
-                              placeholder="Quantity"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col md="4" sm="12">
-                          <FormGroup>
-                            <Label> Cost price </Label>
-                            <Input
-                              type="text"
-                              rows="5"
-                              placeholder="Cost price"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col md="4" sm="12">
-                          <FormGroup>
-                            <Label> GST </Label>
-                            <Input type="text" rows="5" placeholder="GST" />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </div>
-                  ))}
-                </div>
-              </Row> */}
-              {/* <Row className="mt-4">
-                <Col md="6" sm="12">
-                  <FormGroup>
-                    <Label> Note</Label>
-                    <Input type="textarea" placeholder="" />
-                  </FormGroup>
-                </Col>
-              </Row> */}
-              <Row>
-                <Button.Ripple
-                  color="primary"
-                  type="submit"
-                  className="mr-1 mb-1"
-                >
-                  Add
-                </Button.Ripple>
-              </Row>
-            </Form>
-          </CardBody>
-        </Card>
-      </div>
+                <Row>
+                  <Button.Ripple
+                    color="primary"
+                    type="submit"
+                    className="mr-1 mb-1">
+                    Add
+                  </Button.Ripple>
+                </Row>
+              </Form>
+            </CardBody>
+          </Card>
+        </div>
     );
   }
 }

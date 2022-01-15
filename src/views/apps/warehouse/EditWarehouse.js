@@ -31,10 +31,8 @@ export default class EditWarehouse extends Component {
       pin: "",
     };
   }
-
   componentDidMount() {
     let { id } = this.props.match.params;
-
     axiosConfig
       .get(`/getonewarehouse/${id}`)
       .then(response => {
@@ -52,8 +50,7 @@ export default class EditWarehouse extends Component {
       .catch(error => {
         console.log(error);
       });
-  }
-
+    }
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -70,8 +67,7 @@ export default class EditWarehouse extends Component {
       .catch(error => {
         console.log(error);
       });
-  };
-
+    };
   render() {
     return (
       <div>
@@ -187,7 +183,6 @@ export default class EditWarehouse extends Component {
                   ></Input>
                 </Col>
               </Row>
-
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Button.Ripple

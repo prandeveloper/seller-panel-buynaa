@@ -46,7 +46,6 @@ class StockTransferRequest extends React.Component {
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-
       {
         headerName: "Referance Number",
         field: "reference_no",
@@ -137,7 +136,7 @@ class StockTransferRequest extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.transfer_type}</span>
+                <span>{params.data.transfer_type?.transfer_type}</span>
               </div>
             </div>
           );
@@ -153,13 +152,12 @@ class StockTransferRequest extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.reason}</span>
+                <span>{params.data.reason?.reason}</span>
               </div>
             </div>
           );
         },
       },
-
       {
         headerName: "Actions",
         field: "transactions",
@@ -336,5 +334,4 @@ class StockTransferRequest extends React.Component {
     );
   }
 }
-
 export default StockTransferRequest;

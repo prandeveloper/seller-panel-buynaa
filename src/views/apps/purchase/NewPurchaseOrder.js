@@ -52,25 +52,7 @@ class NewPurchaseOrder extends React.Component {
   };
   submitHandler = e => {
     e.preventDefault();
-    // const data = new FormData();
-    // data.append("seller", this.state.seller);
-    // data.append("supplier", this.state.supplier);
-    // data.append("product", this.state.product);
-    // data.append("stock_due", this.state.stock_due);
-    // data.append("gstIn", this.state.gstIn);
-    // data.append("payment_due", this.state.payment_due);
-    // data.append("amount", this.state.amount);
-    // data.append("transportation_cost", this.state.transportation_cost);
-    // data.append("grand_total", this.state.grand_total);
-    // data.append("instructions", this.state.instructions);
-    // data.append("productname", this.state.productname);
-    // data.append("sku", this.state.sku);
-    // data.append("hsn", this.state.hsn);
-    // data.append("gst", this.state.gst);
-    // data.append("cost_price", this.state.cost_price);
-    // data.append("discount", this.state.discount);
-    // // e.preventDefault();
-    // //console.log(this.state);
+   
     axiosConfig
       .post("/addnewpurchaseorder", this.state)
       .then((response) => {

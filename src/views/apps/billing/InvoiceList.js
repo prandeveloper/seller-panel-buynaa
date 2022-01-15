@@ -214,10 +214,7 @@ class InvoiceList extends React.Component {
                 size="20px"
                 color="blue"
                 onClick={() =>
-                  history.push(
-                    `/app/contactUs/customer/editCustomer/${params.data._id}`
-                  )
-                }
+                history.push(`/app/contactUs/customer/editCustomer/${params.data._id}`)}
               />
               <Trash2
                 size="20px"

@@ -169,7 +169,7 @@ class Invoice extends React.Component {
                             <td>Website Redesign</td>
                             <td>{this.state.data.name}</td>
                             <td>{this.state.data.product?.qty}</td>
-                            <td>{this.state.data.product?. cost}</td>
+                            <td>{this.state.data.product?.cost}</td>
                            
                           </tr>
                           <tr>

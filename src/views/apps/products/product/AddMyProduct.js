@@ -94,16 +94,7 @@ class AddMyProduct extends React.Component {
       console.log(error);
     });
 
-    // Size
-    // axiosConfig
-    //   .get("/getsize")
-    //   .then((response) => {
-    //     console.log(response);
-    //     this.setState({ sizes: response.data.data });
-    //   })
-    //     .catch((error) => {
-    //     console.log(error);
-    //   });
+  
 
     //Units
     axiosConfig

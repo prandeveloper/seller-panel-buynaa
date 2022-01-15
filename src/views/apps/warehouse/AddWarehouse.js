@@ -21,6 +21,7 @@ import swal from "sweetalert";
 export default class AddWarehouse extends Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       warehousename: "",
       email: "",
@@ -31,7 +32,7 @@ export default class AddWarehouse extends Component {
       pin: "",
     };
   }
-
+  
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };

@@ -106,10 +106,10 @@ const purchaseOrderList = lazy(() =>
   import("./views/apps/purchase/PurchaseOrderList")
 );
 const purchaseInvoiceList = lazy(() =>
-  import("./views/apps/purchase/PurchaceInvoiceList")
+  import("./views/apps/purchase/purchaseInvoice/PurchaceInvoiceList")
 );
-const purchaseInvoice = lazy(() =>
-  import("./views/apps/purchase/PurchaseInvoice")
+const addpurchaseInvoice = lazy(() =>
+  import("./views/apps/purchase/purchaseInvoice/AddPurchaseInvoice")
 );
 const invoiceSetting = lazy(() => import("./views/apps/purchase/InvoiceSetting"));
 const invoiceDesign = lazy(() => import("./views/apps/purchase/InvoiceDesign"));
@@ -316,6 +316,17 @@ const addSize = lazy(() => import("./views/apps/size/AddSize"));
 const editSize = lazy(() => import("./views/apps/size/EditSize"));
 const viewSize = lazy(() => import("./views/apps/size/ViewSize"));
 
+
+const reasonList = lazy(() => import("./views/apps/reason/ReasonList"));
+const addReason = lazy(() => import("./views/apps/reason/AddReason"));
+// const editReason = lazy(() => import("./views/apps/reason/EditReason"));
+// const viewReason = lazy(() => import("./views/apps/reason/ViewReason"));
+
+const transferTypeList = lazy(() => import("./views/apps/transferType/TransferTypeList"));
+const addTransferType = lazy(() => import("./views/apps/transferType/AddTransferType"));
+ const editTransferType = lazy(() => import("./views/apps/transferType/EditTransferType"));
+const viewTransferType = lazy(() => import("./views/apps/transferType/ViewTransferType"));
+
 const colourList = lazy(() => import("./views/apps/colour/ColourList"));
 const addColour = lazy(() => import("./views/apps/colour/AddColour"));
 const editColour = lazy(() => import("./views/apps/colour/EditColour"));
@@ -462,6 +473,7 @@ const accountSettings = lazy(() =>
   import("./views/pages/account-settings/AccountSettings")
 );
 const invoice = lazy(() => import("./views/pages/invoice/Invoice"));
+
 const comingSoon = lazy(() => import("./views/pages/misc/ComingSoon"));
 const error404 = lazy(() => import("./views/pages/misc/error/404"));
 const error500 = lazy(() => import("./views/pages/misc/error/500"));
@@ -700,12 +712,12 @@ class AppRouter extends React.Component {
             component={purchaseOrderList}
           />
           <AppRoute
-            path="/app/purchase/purchaseInvoiceList"
+            path="/app/purchase/purchaseInvoice/purchaseInvoiceList"
             component={purchaseInvoiceList}
           />
           <AppRoute
-            path="/app/purchase/purchaseInvoice"
-            component={purchaseInvoice}
+            path="/app/purchase/purchaseInvoice/addpurchaseInvoice"
+            component={addpurchaseInvoice}
           />
             <AppRoute path="/app/purchase/invoiceDesign" component={invoiceDesign} />
           <AppRoute
@@ -769,17 +781,11 @@ class AppRouter extends React.Component {
           {/* <AppRoute path="/app/reports/byactivity/systemMails" component={systemMails} /> */}
           <AppRoute path="/app/reports/bypaymentsreceived/paymentsReceived" component={paymentsReceived} />
           <AppRoute path="/app/reports/bypurchases&epenses/purchaseHistoryReportByItem" component={purchaseHistoryReportByItem} />
-            <AppRoute path="/app/reports/byactivity/systemMails" component={systemMails} />
-          
-          
+          <AppRoute path="/app/reports/byactivity/systemMails" component={systemMails} />
           <AppRoute
             path="/app/report/mostViewProductReport"
             component={mostViewProductReport}
           />
-       
-        
-        
-     
           <AppRoute
             path="/app/stockControl/stockTransferRequest"
             component={stockTransferRequest}
@@ -796,11 +802,7 @@ class AppRouter extends React.Component {
             path="/app/stockControl/addStockAdjustment"
             component={addStockAdjustment}
           />
-    
-        
-        
-         
-          <AppRoute
+         <AppRoute
             path="/app/activity/activityLogs"
             component={activityLogs}
           />
@@ -816,8 +818,6 @@ class AppRouter extends React.Component {
             path="/app/activity/viewActivityLogs"
             component={viewActivityLogs}
           />
-       
-        
           <AppRoute
             path="/app/ByProduct/historyByProductCat"
             component={historyByProductCat}
@@ -936,6 +936,16 @@ class AppRouter extends React.Component {
           <AppRoute path="/app/size/addSize" component={addSize} />
           <AppRoute path="/app/size/editSize/:id" component={editSize} />
           <AppRoute path="/app/size/viewSize/:id" component={viewSize} />
+
+          <AppRoute path="/app/reason/reasonList" component={reasonList} />
+          <AppRoute path="/app/reason/addReason" component={addReason} />
+          {/* <AppRoute path="/app/reason/editReason/:id" component={editReason} />
+          <AppRoute path="/app/reason/viewReason/:id" component={viewReason} />  */}
+
+          <AppRoute path="/app/transferType/transferTypeList" component={transferTypeList} />
+          <AppRoute path="/app/transferType/addTransferType" component={addTransferType} />
+          <AppRoute path="/app/transferType/editTransferType/:id" component={editTransferType} />
+          <AppRoute path="/app/transferType/viewTransferType/:id" component={viewTransferType} />
 
           <AppRoute path="/app/colour/colourList" component={colourList} />
           <AppRoute path="/app/colour/addColour" component={addColour} />
@@ -1080,6 +1090,7 @@ class AppRouter extends React.Component {
             path="/pages/account-settings"
             component={accountSettings}
           />
+          
           <AppRoute path="/pages/invoice/invoice" component={invoice} />
           <AppRoute
             path="/misc/coming-soon"

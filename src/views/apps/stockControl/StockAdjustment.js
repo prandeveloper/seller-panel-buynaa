@@ -106,7 +106,7 @@ class StockAdjustment extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.reason}</span>
+                <span>{params.data.reason?.reason}</span>
               </div>
             </div>
           );

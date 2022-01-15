@@ -11,16 +11,16 @@ import {
   DropdownToggle,
   Button,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
+import axiosConfig from "../../../../axiosConfig";
 import ReactHtmlParser from "react-html-parser";
-import { ContextLayout } from "../../../utility/context/Layout";
+import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
 //import classnames from "classnames";
-import { history } from "../../../history";
-import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../assets/scss/pages/users.scss";
+import { history } from "../../../../history";
+import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../../../assets/scss/pages/users.scss";
 import Moment from "react-moment";
 import "moment-timezone";
 class PurchaceInvoiceList extends React.Component {
@@ -86,10 +86,9 @@ class PurchaceInvoiceList extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
-                 <div className="">
-                 <span>{params.data.stock_due}</span>
-                 </div>
-               
+                <div className="">
+                  <span>{params.data.stock_due}</span>
+                </div>
               </div>
             );
           },
@@ -174,7 +173,7 @@ class PurchaceInvoiceList extends React.Component {
       //     );
       //   },
       // },
- 
+    
       {
         headerName: "Supplier",
         field: "supplier?._id",
@@ -254,14 +253,14 @@ class PurchaceInvoiceList extends React.Component {
                 color="green"
                 className="mr-50"
                 onClick={() =>
-                  history.push(`/app/myStore/view/${params.data._id}`)
+                  history.push(`/app/purchase/purchaseInvoice/view/${params.data._id}`)
                 }
               />
               <Edit
                 className="mr-50"
                 size="25px"
                 color="blue"
-                onClick={() => history.push("/app/myStore/editS")}
+                onClick={() => history.push("/app/purchase/purchaseInvoice/edit")}
               />
               <Trash2
                 size="25px"
@@ -278,6 +277,7 @@ class PurchaceInvoiceList extends React.Component {
       },
     ],
   };
+    // Purchase Order Invoice Number, Supplier, Purchase Order Invoice Date, SKU, HSN, Cost Price, GST, Grand Total, Payment Mode, Action - View, Edit, Destroy. Pagination, Next Button
 
   async componentDidMount() {
     await axiosConfig.get("/getpurchaseorder")

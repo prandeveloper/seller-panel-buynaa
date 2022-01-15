@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 // import { history } from "../../../../history";
 // import axiosConfig from "../../../../axiosConfig";
-export class PurchaseInvoice extends Component {
+export class AddPurchaseInvoice extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -271,4 +271,4 @@ export class PurchaseInvoice extends Component {
     );
   }
 }
-export default PurchaseInvoice;
+export default AddPurchaseInvoice;
