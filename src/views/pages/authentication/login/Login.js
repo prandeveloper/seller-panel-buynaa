@@ -1,5 +1,5 @@
-import React, {useState ,useEffect} from "react";
-import {useHistory} from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Container,
   CardTitle,
@@ -11,124 +11,110 @@ import {
   Card,
   Col,
   Row,
+  Form,
 } from "reactstrap";
-import Checkbox from "../../../../components/@vuexy/checkbox/CheckboxesVuexy"
-import { Check } from "react-feather"
+import Checkbox from "../../../../components/@vuexy/checkbox/CheckboxesVuexy";
+import { Check } from "react-feather";
 import glogo from "../../../../assets/img/pages/glogo.png";
-// class Login extends React.Component {
-    function Login()
-    {
-const [email,setEmail]=useState("");
-const [password,usePassword]=useState("");
-const history=useHistory();
+import { history } from "../../../../history";
+import axios from "axios";
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
 
-useEffect(() => {
-      if(localStorage.getItem('user-info')){
-    history.push("/app/myStore/addStorePage")
-      
-      }
-  }, [])  
+    this.state = {
+      email: "",
+      password: "",
+    };
+  }
+  handlechange = (e) => {
+    e.preventDefault();
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
+  loginHandler = (e) => {
+    e.preventDefault();
 
-return (
-    <Container>
-    <Row className="m-0 justify-content-center">
-      <Col
-        sm="8"
-        xl="7"
-        lg="10"
-        md="8"
-        className="d-flex justify-content-center"
-      >
-        <Col lg="8" md="12" className="p-1">
-        
-          
-      
-        <Card className="rounded-0 mb-0 px-2 login-tabs-container">
-          <CardHeader className="pb-1">
-          <img src={glogo} class="img-fluid" alt="..." />
-              {/* <img src={glogo} alt="glogo" /> */}
-              <br />
-            <CardTitle>
-              <h4 className="mb-0">Login</h4>
-            </CardTitle>
-          </CardHeader>
-          <p className="px-2 auth-title">
-            Welcome back, please login to your account.
-          </p>
-        
-    
-    
-            <FormGroup className="form-label-group position-relative has-icon-left">
-              <Input
-                type="email"
-                placeholder="E-mail"
-                value={email}
-                onChange={(e)=>setEmail( e.target.value )}
-              
-                required
-              />
-              
-              {/* <div className="form-control-position">
-                <Mail size={15} />
-              </div> */}
-              <Label>Email</Label>
-            </FormGroup>
-            <FormGroup className="form-label-group position-relative has-icon-left">
-              <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e)=>setPassword( e.target.value )}
-              
-                required
-              />
-              
-              {/* <div className="form-control-position">
-                <Mail size={15} />
-              </div> */}
-              <Label>Password</Label>
-            </FormGroup>
-      
-            <FormGroup className="d-flex justify-content-between align-items-center">
-              <Checkbox
-                color="primary"
-                icon={<Check className="vx-icon" size={16} />}
-                label="Remember me"
-                defaultChecked={false}
-              
-              />
-              <div className="float-right">
-                {/* <Link to="/pages/forgot-password">Forgot Password?</Link> */}
-              </div>
-            </FormGroup>
-            <div className="d-flex justify-content-between">
-              <Button.Ripple
-                color="primary"
-                outline
-                onClick={() => {
-                  history.push("/pages/register");
-                }}
-              >
-                Register
-              </Button.Ripple>
-              <Button.Ripple color="primary" type="submit">
-                Login
-              </Button.Ripple>
-            </div>
-        
-        
-       
-     
+    axios
+      .post("http://35.154.86.59/api/admin/sellerlogin", this.state)
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem("token", response.data.token);
+        history.push("/analyticsDashboard");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  render() {
+    return (
+      <Container>
+        <Row className="m-0 justify-content-center">
+          <Col
+            sm="8"
+            xl="7"
+            lg="10"
+            md="8"
+            className="d-flex justify-content-center"
+          >
+            <Col lg="8" md="12" className="p-1">
+              <Card className="rounded-0 mb-0 px-2 login-tabs-container">
+                <CardHeader className="pb-1">
+                  <img src={glogo} class="img-fluid" alt="..." />
+                  {/* <img src={glogo} alt="glogo" /> */}
+                  <br />
+                  <CardTitle>
+                    <h4 className="mb-0">Login</h4>
+                  </CardTitle>
+                </CardHeader>
+                <h5 className="px-2 py-2 auth-title fw-bolder text-dark">
+                  Welcome back, please login to your account.
+                </h5>
+                <Form onSubmit={this.loginHandler}>
+                  <Label>Email</Label>
+                  <FormGroup className="form-label-group position-relative has-icon-left">
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="E-mail"
+                      value={this.state.email}
+                      onChange={this.handlechange}
+                      required
+                    />
+                  </FormGroup>
+                  <Label>Password</Label>
+                  <FormGroup className="form-label-group position-relative has-icon-left">
+                    <Input
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChange={this.handlechange}
+                      required
+                    />
+                  </FormGroup>
 
-      </Card>
-       
-         
-         </Col>
-         </Col>
-         </Row>
-</Container>
-    )
-
+                  <div className="d-flex justify-content-between">
+                    <Button.Ripple
+                      color="primary"
+                      outline
+                      onClick={() => {
+                        history.push("/pages/register");
+                      }}
+                    >
+                      Register
+                    </Button.Ripple>
+                    <Button.Ripple color="primary" type="submit">
+                      Login
+                    </Button.Ripple>
+                  </div>
+                </Form>
+              </Card>
+            </Col>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
 }
-export default Login
+export default Login;

@@ -36,63 +36,63 @@ class PurchaceInvoiceList extends React.Component {
       suppressMenu: true,
     },
     columnDefs: [
-        {
-          headerName: "S.no",
-          valueGetter: "node.rowIndex + 1",
-          field: "sortorder",
-          width: 100,
-          filter: true,
-          // checkboxSelection: true,
-          // headerCheckboxSelectionFilteredOnly: true,
-          // headerCheckboxSelection: true,
-        },
-        {
-          headerName: "Invoice Number",
-          field: "invoiceNo",
-          //filter: true,
-          filter: "agSetColumnFilter",
-          width: 180,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="d-flex align-items-center cursor-pointer">
-                <div className="">
-                  <span>{params.data.invoiceNo}</span>
-                </div>
+      {
+        headerName: "S.no",
+        valueGetter: "node.rowIndex + 1",
+        field: "sortorder",
+        width: 100,
+        filter: true,
+        // checkboxSelection: true,
+        // headerCheckboxSelectionFilteredOnly: true,
+        // headerCheckboxSelection: true,
+      },
+      {
+        headerName: "Invoice Number",
+        field: "invoiceNo",
+        //filter: true,
+        filter: "agSetColumnFilter",
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="">
+                <span>{params.data.invoiceNo}</span>
               </div>
-            );
-          },
+            </div>
+          );
         },
-        {
-          headerName: "Invoice date",
-          field: "invoice_date",
-          filter: "agSetColumnFilter",
-          width: 180,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="d-flex align-items-center cursor-pointer">
-                <div className="">
-                  <span>{params.data.invoice_date}</span>
-                </div>
+      },
+      {
+        headerName: "Invoice date",
+        field: "invoice_date",
+        filter: "agSetColumnFilter",
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="">
+                <span>{params.data.invoice_date}</span>
               </div>
-            );
-          },
+            </div>
+          );
         },
-        {
-          // headerName: "Cost price ₹",
-          headerName: "Stock Due",
-          field: "stock_due",
-          filter: "agSetColumnFilter",
-          width: 200,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="d-flex align-items-center cursor-pointer">
-                <div className="">
-                  <span>{params.data.stock_due}</span>
-                </div>
+      },
+      {
+        // headerName: "Cost price ₹",
+        headerName: "Stock Due",
+        field: "stock_due",
+        filter: "agSetColumnFilter",
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="">
+                <span>{params.data.stock_due}</span>
               </div>
-            );
-          },
+            </div>
+          );
         },
+      },
       {
         // headerName: "Gst ₹",
         headerName: "gstIn ",
@@ -168,12 +168,12 @@ class PurchaceInvoiceList extends React.Component {
       //         {params.data.material.map((i) => (
       //           <span>{i.materialname}</span>
       //         ))}
-              
+
       //       </div>
       //     );
       //   },
       // },
-    
+
       {
         headerName: "Supplier",
         field: "supplier?._id",
@@ -184,7 +184,10 @@ class PurchaceInvoiceList extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
-                <span>{params.data.supplier?.first_name} {params.data.supplier?.last_name}</span>
+                <span>
+                  {params.data.supplier?.first_name}{" "}
+                  {params.data.supplier?.last_name}
+                </span>
               </div>
             </div>
           );
@@ -248,20 +251,22 @@ class PurchaceInvoiceList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Eye
+              {/* <Eye
                 size="25px"
                 color="green"
                 className="mr-50"
                 onClick={() =>
-                  history.push(`/app/purchase/purchaseInvoice/view/${params.data._id}`)
+                  history.push(
+                    `/app/purchase/purchaseInvoice/view/${params.data._id}`
+                  )
                 }
-              />
-              <Edit
+              /> */}
+              {/* <Edit
                 className="mr-50"
                 size="25px"
                 color="blue"
                 onClick={() => history.push("/app/purchase/purchaseInvoice/edit")}
-              />
+              /> */}
               <Trash2
                 size="25px"
                 color="red"
@@ -277,14 +282,13 @@ class PurchaceInvoiceList extends React.Component {
       },
     ],
   };
-    // Purchase Order Invoice Number, Supplier, Purchase Order Invoice Date, SKU, HSN, Cost Price, GST, Grand Total, Payment Mode, Action - View, Edit, Destroy. Pagination, Next Button
+  // Purchase Order Invoice Number, Supplier, Purchase Order Invoice Date, SKU, HSN, Cost Price, GST, Grand Total, Payment Mode, Action - View, Edit, Destroy. Pagination, Next Button
 
   async componentDidMount() {
-    await axiosConfig.get("/getpurchaseorder")
-    .then((response) => {
+    await axiosConfig.get("/getpurchaseorder").then((response) => {
       let rowData = response.data.data;
       this.setState({ rowData });
-      console.log(rowData)
+      console.log(rowData);
     });
   }
 
@@ -321,7 +325,7 @@ class PurchaceInvoiceList extends React.Component {
 
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
-  
+
     return (
       <Row className="app-user-list">
         <Col sm="12"></Col>

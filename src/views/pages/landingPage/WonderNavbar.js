@@ -39,7 +39,7 @@ export default function WonderNavbar(props) {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="st-nav" href="/analyticsDashboard">
+              <NavLink className="st-nav" href="/pages/login/login">
                 <Button color="primary">SIGN IN</Button>
               </NavLink>
             </NavItem>
