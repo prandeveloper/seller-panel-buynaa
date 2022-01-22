@@ -56,7 +56,7 @@ class AllOrder extends React.Component {
         field: "orderId",
         filter: true,
         width: 250,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.orderId}</span>
@@ -69,7 +69,7 @@ class AllOrder extends React.Component {
         field: "order_type",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center">
               <span>{params.data.payment_type}</span>
@@ -82,7 +82,7 @@ class AllOrder extends React.Component {
         field: "customername",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div>
               <span>
@@ -99,7 +99,7 @@ class AllOrder extends React.Component {
         field: "product?.product_name",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.product?.product_name}</span>
@@ -112,7 +112,7 @@ class AllOrder extends React.Component {
         field: "qty",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.qty}</span>
@@ -126,7 +126,7 @@ class AllOrder extends React.Component {
         field: "purchaseprice",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.purchaseprice}</span>
@@ -140,7 +140,7 @@ class AllOrder extends React.Component {
         field: "delivery_address",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.delivery_address}</span>
@@ -154,7 +154,7 @@ class AllOrder extends React.Component {
         field: "order_date",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.order_date}</span>
@@ -167,7 +167,7 @@ class AllOrder extends React.Component {
         field: "status",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return params.value === "Delivery" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
@@ -218,14 +218,23 @@ class AllOrder extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getorder").then(response => {
-      let rowData = response.data.data;
+    await axiosConfig
+      .get(`/getorderbyseller`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
 
-      this.setState({ rowData });
-    });
+        this.setState({ rowData });
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
   }
 
-  onGridReady = params => {
+  onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -235,11 +244,11 @@ class AllOrder extends React.Component {
     });
   };
 
-  updateSearchQuery = val => {
+  updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = val => {
+  filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -260,6 +269,14 @@ class AllOrder extends React.Component {
                 <h1 col-sm-6 className="float-left">
                   Order List
                 </h1>
+              </Col>
+              <Col>
+                <Button
+                  className=" btn btn-danger float-right"
+                  onClick={() => history.push("/app/order/addorder")}
+                >
+                  Add New Order
+                </Button>
               </Col>
             </Row>
             <CardBody>
@@ -314,7 +331,9 @@ class AllOrder extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
-                          onChange={e => this.updateSearchQuery(e.target.value)}
+                          onChange={(e) =>
+                            this.updateSearchQuery(e.target.value)
+                          }
                           value={this.state.value}
                         />
                       </div>
@@ -329,7 +348,7 @@ class AllOrder extends React.Component {
                     </div>
                   </div>
                   <ContextLayout.Consumer>
-                    {context => (
+                    {(context) => (
                       <AgGridReact
                         gridOptions={{}}
                         rowSelection="multiple"

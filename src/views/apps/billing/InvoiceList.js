@@ -20,6 +20,7 @@ import { history } from "../../../history";
 // import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
+import moment from "moment";
 
 class InvoiceList extends React.Component {
   state = {
@@ -49,10 +50,10 @@ class InvoiceList extends React.Component {
         field: "customerId",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.customerId}</span>
+            <div className="mr-4">
+              <span>{params.data.orderId}</span>
             </div>
           );
         },
@@ -63,10 +64,10 @@ class InvoiceList extends React.Component {
         field: "date",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.date}</span>
+              <span>{moment(params.data.createdAt).format("ll")}</span>
             </div>
           );
         },
@@ -76,7 +77,7 @@ class InvoiceList extends React.Component {
         field: "customer_name",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.customer_name}</span>
@@ -89,44 +90,46 @@ class InvoiceList extends React.Component {
         field: "customer_phone",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.customer_phone}</span>
             </div>
           );
         },
-      },  {
+      },
+      {
         headerName: "Customer GSTIN",
         field: "customer_email",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.customer_email}</span>
             </div>
           );
         },
-      },  {
+      },
+      {
         headerName: "Order No",
         field: "customer_email",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.customer_email}</span>
             </div>
           );
         },
-      },    
+      },
       {
         headerName: "Quantity",
         field: "total_qty",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.total_qty}</span>
@@ -134,88 +137,73 @@ class InvoiceList extends React.Component {
           );
         },
       },
+      // {
+      //   headerName: "Subtotal",
+      //   field: "product?.amount",
+      //   filter: true,
+      //   width: 200,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div className="ml-2 mr-4">
+      //         <span>{params.data.product?.amount}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
+      // {
+      //   headerName: "Discount",
+      //   field: "product?.discount",
+      //   filter: true,
+      //   width: 200,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div className="ml-2 mr-4">
+      //         <span>{params.data.product?.discount}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
       {
-        headerName: "Subtotal",
-        field: "product?.amount",
-        filter: true,
-        width: 200,
-        cellRendererFramework: params => {
-          return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.product?.amount}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Discount",
-        field: "product?.discount",
-        filter: true,
-        width: 200,
-        cellRendererFramework: params => {
-          return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.product?.discount}</span>
-            </div>
-          );
-        },
-      },    {
         headerName: "Grand Total",
         field: "total_amount",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.total_amount}</span>
             </div>
           );
         },
-      },   
-      {
-        headerName: "Payment Mode",
-        field: "mobile_no",
-        filter: true,
-        width: 200,
-        cellRendererFramework: params => {
-          return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.mobile_no}</span>
-            </div>
-          );
-        },
       },
-      {
-        headerName: "Status",
-        field: "status",
-        filter: true,
-        width: 150,
-        cellRendererFramework: params => {
-          return params.value === "Active" ? (
-            <div className="badge badge-pill badge-success ml-2">
-              {params.data.status}
-            </div>
-          ) : params.value === "Inactive" ? (
-            <div className="badge badge-pill badge-danger">
-              {params.data.status}
-            </div>
-          ) : null;
-        },
-      },
+      // {
+      //   headerName: "Payment Mode",
+      //   field: "mobile_no",
+      //   filter: true,
+      //   width: 200,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div className="ml-2 mr-4">
+      //         <span>{params.data.mobile_no}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
+
       {
         headerName: "Actions",
         field: "transactions",
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Edit
+              {/* <Edit
                 className="mr-50"
                 size="20px"
                 color="blue"
                 onClick={() =>
                 history.push(`/app/contactUs/customer/editCustomer/${params.data._id}`)}
-              />
+              /> */}
               <Trash2
                 size="20px"
                 color="red"
@@ -232,15 +220,13 @@ class InvoiceList extends React.Component {
     ],
   };
 
-    async componentDidMount() {
-      await axiosConfig
-        .get("/getbillinglist")
-        .then(response => {
-          let rowData = response.data.data;
-          console.log(rowData);
-          this.setState({ rowData });
-        });
-    }
+  async componentDidMount() {
+    await axiosConfig.get("/getbillinglist").then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
+  }
 
   // async runthisfunction(id) {
   //   console.log(id);
@@ -250,7 +236,7 @@ class InvoiceList extends React.Component {
   //       console.log(response);
   //     });
   // }
-  onGridReady = params => {
+  onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -260,11 +246,11 @@ class InvoiceList extends React.Component {
     });
   };
 
-  updateSearchQuery = val => {
+  updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = val => {
+  filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -290,11 +276,9 @@ class InvoiceList extends React.Component {
               <Col>
                 <Button
                   className=" btn btn-danger float-right"
-                  onClick={() =>
-                    history.push("/app/billing/createInvoice")
-                  }
+                  onClick={() => history.push("/app/billing/createInvoice")}
                 >
-                  Create  New Invoice
+                  Create New Invoice
                 </Button>
               </Col>
             </Row>
@@ -350,7 +334,9 @@ class InvoiceList extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
-                          onChange={e => this.updateSearchQuery(e.target.value)}
+                          onChange={(e) =>
+                            this.updateSearchQuery(e.target.value)
+                          }
                           value={this.state.value}
                         />
                       </div>
@@ -365,7 +351,7 @@ class InvoiceList extends React.Component {
                     </div>
                   </div>
                   <ContextLayout.Consumer>
-                    {context => (
+                    {(context) => (
                       <AgGridReact
                         gridOptions={{}}
                         rowSelection="multiple"

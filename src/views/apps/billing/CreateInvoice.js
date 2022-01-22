@@ -50,7 +50,7 @@ class CreateInvoice extends React.Component {
         field: "orderId",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.orderId}</span>
@@ -63,7 +63,7 @@ class CreateInvoice extends React.Component {
         field: "customer_phone",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.customer_phone}</span>
@@ -76,7 +76,7 @@ class CreateInvoice extends React.Component {
         field: "customer_name",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.customer_name}</span>
@@ -89,7 +89,7 @@ class CreateInvoice extends React.Component {
         field: "total_qty",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.total_qty}</span>
@@ -102,7 +102,7 @@ class CreateInvoice extends React.Component {
         field: "total_amount",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
               <span>{params.data.total_amount}</span>
@@ -114,22 +114,21 @@ class CreateInvoice extends React.Component {
         headerName: "Actions",
         field: "transactions",
         width: 400,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-                <Button color="primary" outline className="mr-2"  
-                onClick={() => history.push("/pages/invoice/invoice")}>
+              <Button
+                color="primary"
+                className="mr-2"
+                onClick={() =>
+                  history.push(`/app/billing/billingInvoice/${params.data._id}`)
+                }
+              >
                 Create Invoice
-            
               </Button>
               <Button color="primary" outline className="mr-2">
-              Show Order Details
+                Show Order Details
               </Button>
-              <Button color="primary" className="mr-1">
-                {" "}
-                Create Invoice
-              </Button>
-              <Button color="primary"> View Order</Button>
             </div>
           );
         },
@@ -138,14 +137,11 @@ class CreateInvoice extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig
-   
-      .get("/getbillinglist")
-      .then(response => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get("/getbillinglist").then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   // async runthisfunction(id) {
@@ -156,7 +152,7 @@ class CreateInvoice extends React.Component {
   //       console.log(response);
   //     });
   // }
-  onGridReady = params => {
+  onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -166,11 +162,11 @@ class CreateInvoice extends React.Component {
     });
   };
 
-  updateSearchQuery = val => {
+  updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = val => {
+  filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -255,7 +251,9 @@ class CreateInvoice extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
-                          onChange={e => this.updateSearchQuery(e.target.value)}
+                          onChange={(e) =>
+                            this.updateSearchQuery(e.target.value)
+                          }
                           value={this.state.value}
                         />
                       </div>
@@ -270,7 +268,7 @@ class CreateInvoice extends React.Component {
                     </div>
                   </div>
                   <ContextLayout.Consumer>
-                    {context => (
+                    {(context) => (
                       <AgGridReact
                         gridOptions={{}}
                         rowSelection="multiple"

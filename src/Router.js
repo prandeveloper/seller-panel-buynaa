@@ -96,6 +96,9 @@ const returnedOrder = lazy(() => import("./views/apps/order/ReturnedOrder"));
 
 const createInvoice = lazy(() => import("./views/apps/billing/CreateInvoice"));
 const invoiceList = lazy(() => import("./views/apps/billing/InvoiceList"));
+const billingInvoice = lazy(() =>
+  import("./views/apps/billing/BillingInvoice")
+);
 
 const status = lazy(() => import("./views/apps/order/Status"));
 const newPurchaseOrder = lazy(() =>
@@ -263,6 +266,7 @@ const employeeList = lazy(() =>
 const addEmployee = lazy(() =>
   import("./views/apps/contactUs/employee/AddEmployee")
 );
+const addOrder = lazy(() => import("./views/apps/order/AddOrder"));
 const editEmployee = lazy(() =>
   import("./views/apps/contactUs/employee/EditEmployee")
 );
@@ -751,6 +755,7 @@ class AppRouter extends React.Component {
                   />
                   <AppRoute path="/app/products/coupon" component={coupon} />
                   <AppRoute path="/app/order/allorder" component={allOrder} />
+                  <AppRoute path="/app/order/addorder" component={addOrder} />
                   <AppRoute
                     path="/app/order/pendingOrder"
                     component={pendingOrder}
@@ -774,6 +779,10 @@ class AppRouter extends React.Component {
                   <AppRoute
                     path="/app/billing/invoiceList"
                     component={invoiceList}
+                  />
+                  <AppRoute
+                    path="/app/billing/billingInvoice/:id"
+                    component={billingInvoice}
                   />
                   <AppRoute path="/app/order/status" component={status} />
                   <AppRoute
