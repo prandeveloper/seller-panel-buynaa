@@ -1111,6 +1111,10 @@ class AppRouter extends React.Component {
                     path="/app/slider/addSlider"
                     component={addSlider}
                   />
+                  <AppRoute
+                    path="/extensions/access-control"
+                    component={accessControl}
+                  />
                   <AppRoute path="/app/user/list" component={userList} />
                   <AppRoute path="/app/user/edit" component={userEdit} />
                   <AppRoute path="/app/user/view" component={userView} />
@@ -1336,10 +1340,7 @@ export default AppRouter;
           <AppRoute path="/extensions/clipboard" component={clipboard} />
           <AppRoute path="/extensions/context-menu" component={menu} />
           <AppRoute path="/extensions/swiper" component={swiper} />
-          <AppRoute
-            path="/extensions/access-control"
-            component={accessControl}
-          />
+         
           <AppRoute path="/extensions/i18n" component={i18n} />
           <AppRoute path="/extensions/tree" component={tree} />
           <AppRoute path="/extensions/import" component={Import} />

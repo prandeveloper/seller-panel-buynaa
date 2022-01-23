@@ -147,7 +147,6 @@ const navigationConfig = [
           },
         ],
       },
-    
     ],
   },
   {
@@ -267,9 +266,8 @@ const navigationConfig = [
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/order/returnedOrder"
+        navLink: "/app/order/returnedOrder",
       },
-  
     ],
   },
   //     {
@@ -319,7 +317,6 @@ const navigationConfig = [
         navLink: "/app/purchase/purchaseOrderList",
       },
 
-  
       // {
       //   id: "purchaseInvoice",
       //   title: "Purchase Invoice",
@@ -329,21 +326,21 @@ const navigationConfig = [
       //   navLink: "/app/purchase/purchaseInvoice",
       // },
       {
-      id: "purchaseInvoice",
-      title: "Purchase Invoice",
-      type: "collapse",
-      icon: <Icon.Flag size={20} />,
-      children: [
-        {
-        id: "purchaseInvoiceList",
-        title: "Purchase Invoice List",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/purchase/purchaseInvoice/purchaseInvoiceList",
+        id: "purchaseInvoice",
+        title: "Purchase Invoice",
+        type: "collapse",
+        icon: <Icon.Flag size={20} />,
+        children: [
+          {
+            id: "purchaseInvoiceList",
+            title: "Purchase Invoice List",
+            type: "item",
+            icon: <Icon.Circle size={12} />,
+            permissions: ["admin", "editor"],
+            navLink: "/app/purchase/purchaseInvoice/purchaseInvoiceList",
+          },
+        ],
       },
-    ],
-  },
       // {
       //   id: "invoiceSetting",
       //   title: "Invoice Setting ",
@@ -375,83 +372,80 @@ const navigationConfig = [
         icon: <Icon.ArrowRight size={20} />,
         children: [
           {
-      
-        id: "salesByItem",
-        title: "Sales By Item",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/reports/bysales/salesByItem",
+            id: "salesByItem",
+            title: "Sales By Item",
+            type: "item",
+            icon: <Icon.Circle size={12} />,
+            permissions: ["admin", "editor"],
+            navLink: "/app/reports/bysales/salesByItem",
+          },
+          {
+            id: "salesByCustomer",
+            title: "Sales By Customer",
+            type: "item",
+            icon: <Icon.Circle size={12} />,
+            permissions: ["admin", "editor"],
+            navLink: "/app/reports/bysales/salesByCustomer",
+          },
+          {
+            id: "invoicedIncome",
+            title: "Invoiced Income",
+            type: "item",
+            icon: <Icon.Circle size={12} />,
+            permissions: ["admin", "editor"],
+            navLink: "/app/reports/bysales/invoicedIncome",
+          },
+        ],
       },
-      {
-        id: "salesByCustomer",
-        title: "Sales By Customer",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/reports/bysales/salesByCustomer",
-      },
-      {
-        id: "invoicedIncome",
-        title: "Invoiced Income",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/reports/bysales/invoicedIncome",
-      },
-    ],
-  },
       {
         id: "byactivity",
         title: " By Activity",
         type: "collapse",
         icon: <Icon.ArrowRight size={20} />,
         children: [
-          
-      {
-        id: "systemMails",
-        title: "System Mails",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/reports/byactivity/systemMails",
+          {
+            id: "systemMails",
+            title: "System Mails",
+            type: "item",
+            icon: <Icon.Circle size={12} />,
+            permissions: ["admin", "editor"],
+            navLink: "/app/reports/byactivity/systemMails",
+          },
+        ],
       },
-    ],
-  },
       {
         id: "bypaymentsreceived",
         title: "By Payments Received",
         type: "collapse",
         icon: <Icon.ArrowRight size={20} />,
         children: [
-      {
-        id: "paymentsReceived",
-        title: "By Payments Received",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/reports/bypaymentsreceived/paymentsReceived",
+          {
+            id: "paymentsReceived",
+            title: "By Payments Received",
+            type: "item",
+            icon: <Icon.Circle size={12} />,
+            permissions: ["admin", "editor"],
+            navLink: "/app/reports/bypaymentsreceived/paymentsReceived",
+          },
+        ],
       },
-    ],
-  },
       {
         id: "bypurchases&epenses",
         title: "By Purchases & Epenses",
         type: "collapse",
         icon: <Icon.ArrowRight size={20} />,
         children: [
-
-    {
-        id: "purchaseHistoryReportByItem",
-        title: "Purchases History Report By Item",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/reports/bypurchases&epenses/purchaseHistoryReportByItem",
+          {
+            id: "purchaseHistoryReportByItem",
+            title: "Purchases History Report By Item",
+            type: "item",
+            icon: <Icon.Circle size={12} />,
+            permissions: ["admin", "editor"],
+            navLink:
+              "/app/reports/bypurchases&epenses/purchaseHistoryReportByItem",
+          },
+        ],
       },
-    ],
-  },
-   
     ],
   },
   // {
@@ -471,6 +465,14 @@ const navigationConfig = [
     icon: <Icon.Circle size={12} />,
     permissions: ["admin", "editor"],
     navLink: "/app/notification/notificationList",
+  },
+  {
+    id: "access-control",
+    title: "Access Control",
+    icon: <Icon.Lock size={20} />,
+    type: "item",
+    permissions: ["admin", "editor"],
+    navLink: "/extensions/access-control",
   },
 
   {
@@ -2214,14 +2216,7 @@ export default navigationConfig;
 //   permissions: ["admin", "editor"],
 //   navLink: "/extensions/swiper",
 // },
-// {
-//   id: "access-control",
-//   title: "Access Control",
-//   icon: <Icon.Lock size={20} />,
-//   type: "item",
-//   permissions: ["admin", "editor"],
-//   navLink: "/extensions/access-control",
-// },
+
 // {
 //   id: "i18n",
 //   title: "I18n",

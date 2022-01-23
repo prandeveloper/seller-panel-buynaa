@@ -218,13 +218,15 @@ class AllOrder extends React.Component {
   };
 
   async componentDidMount() {
+    //http://35.154.86.59/api/admin/getorder
     await axiosConfig
-      .get(`/getorderbyseller`, {
+      .get(`/getorder`, {
         headers: {
-          "auth-adtoken": localStorage.getItem("token"),
+          "auth-token": localStorage.getItem("token"),
         },
       })
       .then((response) => {
+        console.log(response);
         let rowData = response.data.data;
 
         this.setState({ rowData });
