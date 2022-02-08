@@ -21,6 +21,7 @@ import {
   // Printer,
   // Download,
   ChevronDown,
+  Eye,
 } from "react-feather";
 //import classnames from "classnames";
 import { history } from "../../../history";
@@ -44,7 +45,7 @@ class AllOrder extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 100,
+        width: 80,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
@@ -55,7 +56,7 @@ class AllOrder extends React.Component {
         headerName: "Order ID",
         field: "orderId",
         filter: true,
-        width: 250,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -64,91 +65,6 @@ class AllOrder extends React.Component {
           );
         },
       },
-      {
-        headerName: "Payment Type",
-        field: "order_type",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center">
-              <span>{params.data.payment_type}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Customer Name",
-        field: "customername",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>
-                {params.data?.customer?.first_name}{" "}
-                {params.data?.customer?.last_name}
-              </span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Product Name",
-        field: "product?.product_name",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.product?.product_name}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Total Qty ",
-        field: "qty",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.qty}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Amount",
-        field: "purchaseprice",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.purchaseprice}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Address",
-        field: "delivery_address",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.delivery_address}</span>
-            </div>
-          );
-        },
-      },
-
       {
         headerName: "Order Date",
         field: "order_date",
@@ -162,6 +78,76 @@ class AllOrder extends React.Component {
           );
         },
       },
+      {
+        headerName: "Order Type",
+        field: "order_type",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center">
+              <span>{params.data.order_type}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Payment Type",
+        field: "payment_type",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center">
+              <span>{params.data.payment_type}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Customer Name",
+        field: "customer?.firstname,customer?.lastname",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>
+                {params.data.customer?.firstname}{" "}
+                {params.data.customer?.lastname}
+              </span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Quantity",
+        field: "qty",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.qty}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Total Amount",
+        field: "purchaseprice",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.purchaseprice}</span>
+            </div>
+          );
+        },
+      },
+
       {
         headerName: "Status",
         field: "status",
@@ -191,38 +177,46 @@ class AllOrder extends React.Component {
           ) : null;
         },
       },
-      //     {
-      //       headerName: "Actions",
-      //       field: "transactions",
-      //       width: 150,
-      //       cellRendererFramework: (params) => {
-      //         return (
-      //           <div className="actions cursor-pointer">
-      //             <Edit
-      //               className="mr-50"
-      //               size={15}
-      //               onClick={() => history.push("/app/user/edit")}
-      //             />
-      //             <Trash2
-      //               size={15}
-      //               onClick={() => {
-      //                 let selectedData = this.gridApi.getSelectedRows();
-      //                 this.gridApi.updateRowData({ remove: selectedData });
-      //               }}
-      //             />
-      //           </div>
-      //         );
-      //       },
-      //     },
+      {
+        headerName: "Actions",
+        field: "transactions",
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="actions cursor-pointer">
+              <Eye
+                className="mr-50"
+                size={20}
+                onClick={() =>
+                  history.push(`/app/order/viewOrder/${params.data._id}`)
+                }
+              />
+              <Edit
+                className="mr-50"
+                size={20}
+                onClick={() =>
+                  history.push(`/app/order/editOrder/${params.data._id}`)
+                }
+              />
+              <Trash2
+                size={20}
+                onClick={() => {
+                  let selectedData = this.gridApi.getSelectedRows();
+                  this.gridApi.updateRowData({ remove: selectedData });
+                }}
+              />
+            </div>
+          );
+        },
+      },
     ],
   };
 
   async componentDidMount() {
-    //http://35.154.86.59/api/admin/getorder
     await axiosConfig
-      .get(`/getorder`, {
+      .get("/getorderbysellerbytoken", {
         headers: {
-          "auth-token": localStorage.getItem("token"),
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
         },
       })
       .then((response) => {

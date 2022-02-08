@@ -65,23 +65,23 @@ class PurchaseOrderList extends React.Component {
           );
         },
       },
-    // {
-    //     headerName: "Status",
-    //     field: "status",
-    //     filter: true,
-    //     width: 150,
-    //     cellRendererFramework: (params) => {
-    //       return params.value === "Active" ? (
-    //         <div className="badge badge-pill badge-success">
-    //           {params.data.status}
-    //         </div>
-    //       ) : params.value === "Inactive" ? (
-    //         <div className="badge badge-pill badge-warning">
-    //           {params.data.status}
-    //         </div>
-    //       ) : null;
-    //     },
-    //   },
+      // {
+      //     headerName: "Status",
+      //     field: "status",
+      //     filter: true,
+      //     width: 150,
+      //     cellRendererFramework: (params) => {
+      //       return params.value === "Active" ? (
+      //         <div className="badge badge-pill badge-success">
+      //           {params.data.status}
+      //         </div>
+      //       ) : params.value === "Inactive" ? (
+      //         <div className="badge badge-pill badge-warning">
+      //           {params.data.status}
+      //         </div>
+      //       ) : null;
+      //     },
+      //   },
 
       {
         headerName: "Actions",
@@ -90,14 +90,10 @@ class PurchaseOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-         
-              <Button color="primary" outline className="mr-2">
-                PDF
-              </Button>
               <Button color="primary" outline className="mr-2">
                 Create Invoice
               </Button>
-              <Button color="primary" outline className="mr-2">
+              {/* <Button color="primary" outline className="mr-2">
                 Destroy
               </Button>
               <Edit
@@ -105,8 +101,8 @@ class PurchaseOrderList extends React.Component {
                 size="25px"
                 color="blue"
                 onClick={() => history.push("/app/myStore/editStore")}
-              />
-              <Trash2
+              /> */}
+              <Button
                 size="25px"
                 color="red"
                 onClick={() => {
@@ -114,7 +110,10 @@ class PurchaseOrderList extends React.Component {
                   this.runthisfunction(params.data._id);
                   this.gridApi.updateRowData({ remove: selectedData });
                 }}
-              />
+              >
+                {" "}
+                Destroy Invoice
+              </Button>
             </div>
           );
         },
@@ -123,10 +122,16 @@ class PurchaseOrderList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getpurchaseorder").then((response) => {
-      let rowData = response.data.data;
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getpurchaseorder", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        this.setState({ rowData });
+      });
   }
 
   // async runthisfunction(id) {
@@ -136,7 +141,7 @@ class PurchaseOrderList extends React.Component {
   //   });
   // }
 
-  onGridReady = params => {
+  onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({

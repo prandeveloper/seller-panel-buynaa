@@ -221,7 +221,6 @@ class AddMyProduct extends React.Component {
     data.append("long_desc", this.state.long_desc);
     data.append("brand", this.state.brand);
     data.append("tag", this.state.tag);
-
     data.append("productcategory", this.state.productcategory);
     data.append("productsubcategory", this.state.productsubcategory);
     data.append("unit", this.state.unit);
@@ -274,9 +273,6 @@ class AddMyProduct extends React.Component {
       colorName: event.label,
     });
   }
-  //   componentDidMount1(){
-  //     this.componentDidMount()
-  // }
 
   render() {
     // const favColors = Object.keys(this.state.sizes)

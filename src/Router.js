@@ -89,6 +89,8 @@ const viewCompletedPaymentsList = lazy(() =>
 );
 
 const allOrder = lazy(() => import("./views/apps/order/AllOrder"));
+const viewOrder = lazy(() => import("./views/apps/order/ViewOrder"));
+const editOrder = lazy(() => import("./views/apps/order/EditOrder"));
 const pendingOrder = lazy(() => import("./views/apps/order/PendingOrder"));
 const orderDelivered = lazy(() => import("./views/apps/order/OrderDelivered"));
 const cancelledOrder = lazy(() => import("./views/apps/order/CancelledOrder"));
@@ -100,7 +102,6 @@ const billingInvoice = lazy(() =>
   import("./views/apps/billing/BillingInvoice")
 );
 
-const status = lazy(() => import("./views/apps/order/Status"));
 const newPurchaseOrder = lazy(() =>
   import("./views/apps/purchase/NewPurchaseOrder")
 );
@@ -172,11 +173,17 @@ const stockAdjustment = lazy(() =>
 const addStockAdjustment = lazy(() =>
   import("./views/apps/stockControl/AddStockAdjustment")
 );
+const viewStockAdjustment = lazy(() =>
+  import("./views/apps/stockControl/ViewStockAdjustment")
+);
 const stockTransferRequest = lazy(() =>
   import("./views/apps/stockControl/StockTransferRequest")
 );
 const addStockTransfer = lazy(() =>
   import("./views/apps/stockControl/AddStockTransfer")
+);
+const viewStockTransfer = lazy(() =>
+  import("./views/apps/stockControl/ViewStockTransfer")
 );
 const salesByItem = lazy(() =>
   import("./views/apps/reports/bysales/SalesByItem")
@@ -570,7 +577,7 @@ class AppRouter extends React.Component {
         <Switch>
           <Route
             render={() =>
-              localStorage.getItem("token") ? (
+              localStorage.getItem("auth-adtoken") ? (
                 <>
                   <AppRoute
                     path="/analyticsDashboard"
@@ -755,6 +762,14 @@ class AppRouter extends React.Component {
                   />
                   <AppRoute path="/app/products/coupon" component={coupon} />
                   <AppRoute path="/app/order/allorder" component={allOrder} />
+                  <AppRoute
+                    path="/app/order/viewOrder/:id"
+                    component={viewOrder}
+                  />
+                  <AppRoute
+                    path="/app/order/editOrder/:id"
+                    component={editOrder}
+                  />
                   <AppRoute path="/app/order/addorder" component={addOrder} />
                   <AppRoute
                     path="/app/order/pendingOrder"
@@ -784,7 +799,7 @@ class AppRouter extends React.Component {
                     path="/app/billing/billingInvoice/:id"
                     component={billingInvoice}
                   />
-                  <AppRoute path="/app/order/status" component={status} />
+
                   <AppRoute
                     path="/app/purchase/newPurchaseOrder"
                     component={newPurchaseOrder}
@@ -904,8 +919,16 @@ class AppRouter extends React.Component {
                     component={addStockTransfer}
                   />
                   <AppRoute
+                    path="/app/stockControl/viewStockTransfer/:id"
+                    component={viewStockTransfer}
+                  />
+                  <AppRoute
                     path="/app/stockControl/stockAdjustment"
                     component={stockAdjustment}
+                  />
+                  <AppRoute
+                    path="/app/stockControl/viewStockAdjustment/:id"
+                    component={viewStockAdjustment}
                   />
                   <AppRoute
                     path="/app/stockControl/addStockAdjustment"
@@ -1000,7 +1023,7 @@ class AppRouter extends React.Component {
                     component={addEmployee}
                   />
                   <AppRoute
-                    path="/app/contactUs/employee/editEmployee"
+                    path="/app/contactUs/employee/editEmployee/:id"
                     component={editEmployee}
                   />
                   <AppRoute
@@ -1111,10 +1134,7 @@ class AppRouter extends React.Component {
                     path="/app/slider/addSlider"
                     component={addSlider}
                   />
-                  <AppRoute
-                    path="/extensions/access-control"
-                    component={accessControl}
-                  />
+
                   <AppRoute path="/app/user/list" component={userList} />
                   <AppRoute path="/app/user/edit" component={userEdit} />
                   <AppRoute path="/app/user/view" component={userView} />
@@ -1294,6 +1314,10 @@ export default AppRouter;
             component={knowledgeBase}
             exact
           />
+          <AppRoute
+                    path="/extensions/access-control"
+                    component={accessControl}
+                  />
           <AppRoute
             path="/pages/knowledge-base/category"
             component={knowledgeBaseCategory}

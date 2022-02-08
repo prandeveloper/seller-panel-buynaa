@@ -60,74 +60,74 @@ class CustomerList extends React.Component {
 
       {
         headerName: "First Name",
-        field: "first_name",
+        field: "firstname",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.first_name}</span>
+              <span>{params.data.firstname}</span>
             </div>
           );
         },
       },
       {
         headerName: "Last Name",
-        field: "last_name",
+        field: "lastname",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.last_name}</span>
+              <span>{params.data.lastname}</span>
             </div>
           );
         },
       },
       {
         headerName: "Email",
-        field: "customer_email",
+        field: "email",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.customer_email}</span>
+              <span>{params.data.email}</span>
             </div>
           );
         },
       },
       {
         headerName: "Mobile No.",
-        field: "mobile_no",
+        field: "mobile",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.mobile_no}</span>
+              <span>{params.data.mobile}</span>
             </div>
           );
         },
       },
 
-      {
-        headerName: "Status",
-        field: "status",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return params.value === "Active" ? (
-            <div className="badge badge-pill badge-success ml-2">
-              {params.data.status}
-            </div>
-          ) : params.value === "Inactive" ? (
-            <div className="badge badge-pill badge-danger">
-              {params.data.status}
-            </div>
-          ) : null;
-        },
-      },
+      // {
+      //   headerName: "Status",
+      //   field: "status",
+      //   filter: true,
+      //   width: 150,
+      //   cellRendererFramework: (params) => {
+      //     return params.value === "Active" ? (
+      //       <div className="badge badge-pill badge-success ml-2">
+      //         {params.data.status}
+      //       </div>
+      //     ) : params.value === "Inactive" ? (
+      //       <div className="badge badge-pill badge-danger">
+      //         {params.data.status}
+      //       </div>
+      //     ) : null;
+      //   },
+      // },
       {
         headerName: "Actions",
         field: "transactions",
@@ -163,7 +163,11 @@ class CustomerList extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("http://35.154.86.59/api/user/allcustomer")
+      .get("http://35.154.86.59/api/user/allcustomer", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         let rowData = response.data.data;
         console.log(rowData);

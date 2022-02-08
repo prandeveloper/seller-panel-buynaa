@@ -25,9 +25,8 @@ class NewPurchaseOrder extends React.Component {
     super(props);
 
     this.state = {
-      seller: "",
+      addTextbox: [{}],
       supplier: "",
-      product: "",
       stock_due: "",
       gstIn: "",
       payment_due: "",
@@ -35,34 +34,113 @@ class NewPurchaseOrder extends React.Component {
       transportation_cost: "",
       grand_total: "",
       instructions: "",
-      productname: [],
       supplierC: [],
-      sellerC: [],
-      sku: [],
-      hsn: [],
-      qty: [],
-      gst: [],
-      cost_price: [],
-      discount: [],
+      productC: [],
+      productG: [""],
+      skuG: [""],
+      hsmG: [""],
+      costG: [""],
+      qtyG: [""],
+      gstG: [""],
+      discountG: [""],
     };
+  }
+
+  addControls() {
+    this.setState({
+      productG: [...this.state.productG, ""],
+      skuG: [...this.state.skuG, ""],
+      hsmG: [...this.state.hsmG, ""],
+      costG: [...this.state.costG, ""],
+      qtyG: [...this.state.qtyG, ""],
+      gstG: [...this.state.gstG, ""],
+      discountG: [...this.state.discountG, ""],
+      addTextbox: [...this.state.addTextbox, ""],
+    });
+  }
+  delControl(i) {
+    console.log(this.state);
+    this.state.addTextbox.splice(i, 1);
+    this.state.productG.splice(i, 1);
+    this.state.skuG.splice(i, 1);
+    this.state.hsmG.splice(i, 1);
+    this.state.costG.splice(i, 1);
+    this.state.qtyG.splice(i, 1);
+    this.state.gstG.splice(i, 1);
+    this.state.discountG.splice(i, 1);
+    this.setState({});
   }
 
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  changeHandlerG = (e, i) => {
+    // console.log(i);
+    // console.log(e.target);
+    var dum = this.state[e.target.name];
+    console.log(dum);
+    dum[i] = e.target.value;
+    this.setState({ [e.target.name]: dum });
+  };
+
   submitHandler = (e) => {
     e.preventDefault();
-
+    var product = [];
+    for (var i = 0; i < this.state.productG.length; i++) {
+      product.push({
+        productname: this.state.productG[i],
+        sku: this.state.skuG[i],
+        hsn: this.state.hsmG[i],
+        qty: this.state.qtyG[i],
+        discount: this.state.discountG[i],
+        gst: this.state.gstG[i],
+        cost_price: this.state.costG[i],
+      });
+    }
+    var option = this.state;
+    option.product = product;
+    console.log("Option", option);
     axiosConfig
-      .post("/addnewpurchaseorder", this.state)
+      .post("/addnewpurchaseorder", option)
       .then((response) => {
         console.log(response);
         this.props.history.push("/app/purchase/purchaseOrderList");
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   };
+
+  async componentDidMount() {
+    axiosConfig
+      .get("/Getsupplier", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        this.setState({ supplierC: response.data.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    axiosConfig
+      .get("/getproduct", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        this.setState({ productC: response.data.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   render() {
     const steps = [
@@ -72,36 +150,21 @@ class NewPurchaseOrder extends React.Component {
           <Row>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label> Seller </Label>
-                <Input
-                  type="text"
-                  name="seller"
-                  placeholder="Seller"
-                  onChange={this.changeHandler}
-                  value={this.state.seller}
-                >
-                  {/* <option>Seller</option>
-                    {this.state.sellerC?.map((sellerS) => (
-                      <option key={seller._id}>{sellerS.company}</option>
-                    ))} */}
-                </Input>
-              </FormGroup>
-            </Col>
-            <Col md="6" sm="12">
-              <FormGroup>
                 <Label> Select Supplier </Label>
-                <Input
-                  type="text"
+                <CustomInput
+                  type="select"
                   name="supplier"
                   placeholder="Select Supplier"
                   value={this.state.supplier}
                   onChange={this.changeHandler}
                 >
-                  {/* <option>Add Supplier</option>
-                      {this.state.supplierC?.map((supplierS) => (
-                        <option key={supplier._id}>{supplierS.company}</option>
-                      ))} */}
-                </Input>
+                  <option>Add Supplier</option>
+                  {this.state.supplierC?.map((supply) => (
+                    <option key={supply._id} value={supply._id}>
+                      {supply.company}
+                    </option>
+                  ))}
+                </CustomInput>
               </FormGroup>
             </Col>
             <Col md="6" sm="12">
@@ -165,127 +228,145 @@ class NewPurchaseOrder extends React.Component {
         title: "2",
         content: (
           <div>
-            {/* {this.state.addTextbox.map((index) => ( */}
-            <div>
-              {/* {index ? ( */}
-              <div id="btn">
+            {this.state.addTextbox.map((item, index) => (
+              <div>
+                {/* {index ? ( */}
+                <div id="btn">
+                  <Row>
+                    <Col flax="left" lg="6" md="6" sm="6" className="mb-2">
+                      <Button
+                        color="primary"
+                        onClick={() => this.addControls()}
+                      >
+                        Add
+                      </Button>
+                    </Col>
+                    <Col flax="left" lg="6" md="6" sm="6" className="mb-2">
+                      <Button
+                        color="danger"
+                        onClick={() => this.delControl(index)}
+                      >
+                        Remove
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
+                {/* ) : null} */}
+
                 <Row>
-                  <Col flax="left" lg="6" md="6" sm="6" className="mb-2">
-                    <Button color="primary" onClick={() => this.addControls()}>
-                      Add
-                    </Button>
-                    <div className="New-line">
-                      <hr />
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          value=""
-                          onClick={() => this.delControl(index)}
-                        />
-                        <label className="mr-1 mb-1" style={{ color: "red" }}>
-                          Remove
-                        </label>
-                      </div>
-                    </div>
+                  <Col md="4" sm="12">
+                    <FormGroup>
+                      <Label> Product Name </Label>
+                      <CustomInput
+                        type="select"
+                        name="productG"
+                        placeholder=" Product Name"
+                        value={this.state.productG[index]}
+                        onChange={(e) => {
+                          this.changeHandlerG(e, index);
+                        }}
+                      >
+                        <option>Add Supplier</option>
+                        {this.state.productC?.map((prod) => (
+                          <option key={prod._id} value={prod._id}>
+                            {prod.product_name}
+                          </option>
+                        ))}
+                      </CustomInput>
+                    </FormGroup>
+                  </Col>
+                  <Col md="4" sm="12">
+                    <FormGroup>
+                      <Label> SKU </Label>
+                      <Input
+                        type="number"
+                        name="skuG"
+                        placeholder="SKU"
+                        value={this.state.skuG[index]}
+                        onChange={(e) => {
+                          this.changeHandlerG(e, index);
+                        }}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md="4" sm="12">
+                    <FormGroup>
+                      <Label> HSN </Label>
+                      <Input
+                        type="number"
+                        rows="5"
+                        name="hsmG"
+                        placeholder="HSN"
+                        value={this.state.hsmG[index]}
+                        onChange={(e) => {
+                          this.changeHandlerG(e, index);
+                        }}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md="3" sm="12">
+                    <FormGroup>
+                      <Label> Quantity </Label>
+                      <Input
+                        type="number"
+                        rows="5"
+                        name="qtyG"
+                        placeholder="Quantity"
+                        value={this.state.qtyG[index]}
+                        onChange={(e) => {
+                          this.changeHandlerG(e, index);
+                        }}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md="3" sm="12">
+                    <FormGroup>
+                      <Label> Cost price </Label>
+                      <Input
+                        type="number"
+                        rows="5"
+                        name="costG"
+                        placeholder="Cost price"
+                        value={this.state.costG[index]}
+                        onChange={(e) => {
+                          this.changeHandlerG(e, index);
+                        }}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md="3" sm="12">
+                    <FormGroup>
+                      <Label> GST </Label>
+                      <Input
+                        type="text"
+                        rows="5"
+                        name="gstG"
+                        placeholder="GST"
+                        value={this.state.gstG[index]}
+                        onChange={(e) => {
+                          this.changeHandlerG(e, index);
+                        }}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md="3" sm="12">
+                    <FormGroup>
+                      <Label> Discount </Label>
+                      <Input
+                        type="number"
+                        rows="5"
+                        name="discountG"
+                        placeholder="Discount"
+                        value={this.state.discountG[index]}
+                        onChange={(e) => {
+                          this.changeHandlerG(e, index);
+                        }}
+                      />
+                    </FormGroup>
                   </Col>
                 </Row>
               </div>
-              {/* ) : null} */}
-
-              <Row>
-                <Col md="4" sm="12">
-                  <FormGroup>
-                    <Label> Product Name </Label>
-                    <Input
-                      type="text"
-                      name="product"
-                      placeholder=" Product Name"
-                      value={this.state.product}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="4" sm="12">
-                  <FormGroup>
-                    <Label> SKU </Label>
-                    <Input
-                      type="number"
-                      name="sku"
-                      placeholder="SKU"
-                      value={this.state.sku}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="4" sm="12">
-                  <FormGroup>
-                    <Label> HSN </Label>
-                    <Input
-                      type="number"
-                      rows="5"
-                      name="hsn"
-                      placeholder="HSN"
-                      value={this.state.hsn}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="3" sm="12">
-                  <FormGroup>
-                    <Label> Quantity </Label>
-                    <Input
-                      type="number"
-                      rows="5"
-                      name="qty"
-                      placeholder="Quantity"
-                      value={this.state.qty}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="3" sm="12">
-                  <FormGroup>
-                    <Label> Cost price </Label>
-                    <Input
-                      type="number"
-                      rows="5"
-                      name="cost_price"
-                      placeholder="Cost price"
-                      value={this.state.cost_price}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="3" sm="12">
-                  <FormGroup>
-                    <Label> GST </Label>
-                    <Input
-                      type="text"
-                      rows="5"
-                      name="gst"
-                      placeholder="GST"
-                      value={this.state.gst}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="3" sm="12">
-                  <FormGroup>
-                    <Label> Discount </Label>
-                    <Input
-                      type="number"
-                      rows="5"
-                      name="discount"
-                      placeholder="Discount"
-                      value={this.state.discount}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-            </div>
-            {/* ))} */}
+            ))}
           </div>
         ),
       },

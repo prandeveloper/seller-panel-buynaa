@@ -101,7 +101,7 @@ class AddMyStore extends React.Component {
     this.onChangeHandler4 = this.onChangeHandler4.bind(this);
   }
 
-  handleClick = event => {
+  handleClick = (event) => {
     const { name, checked } = event.target;
     var day = this.state.day;
     if (day.indexOf(name) != -1) {
@@ -114,14 +114,14 @@ class AddMyStore extends React.Component {
       day,
     });
 
-    this.setState(prevState => {
+    this.setState((prevState) => {
       const days = prevState.days;
       days[name] = checked;
       return days;
     });
   };
 
-  onChangeHandler = event => {
+  onChangeHandler = (event) => {
     var imgSrc = [];
     for (var i = 0; i < event.target.files.length; i++) {
       let file = event.target.files[i];
@@ -148,7 +148,7 @@ class AddMyStore extends React.Component {
     console.log(event.target.files);
   };
 
-  onChangeHandler1 = event => {
+  onChangeHandler1 = (event) => {
     var imgSrc1 = [];
 
     for (var i = 0; i < event.target.files.length; i++) {
@@ -175,7 +175,7 @@ class AddMyStore extends React.Component {
     });
     console.log(event.target.files);
   };
-  onChangeHandler2 = event => {
+  onChangeHandler2 = (event) => {
     var imgSrc2 = [];
     for (var i = 0; i < event.target.files.length; i++) {
       let file = event.target.files[i];
@@ -200,7 +200,7 @@ class AddMyStore extends React.Component {
     });
     console.log(event.target.files);
   };
-  onChangeHandler3 = event => {
+  onChangeHandler3 = (event) => {
     var imgSrc3 = [];
     for (var i = 0; i < event.target.files.length; i++) {
       let file = event.target.files[i];
@@ -225,7 +225,7 @@ class AddMyStore extends React.Component {
     });
     console.log(event.target.files);
   };
-  onChangeHandler4 = event => {
+  onChangeHandler4 = (event) => {
     var imgSrc4 = [];
     for (var i = 0; i < event.target.files.length; i++) {
       let file = event.target.files[i];
@@ -250,7 +250,7 @@ class AddMyStore extends React.Component {
     });
     console.log(event.target.files);
   };
-  onChangeHandler5 = event => {
+  onChangeHandler5 = (event) => {
     var imgSrc5 = [];
     for (var i = 0; i < event.target.files.length; i++) {
       let file = event.target.files[i];
@@ -275,7 +275,7 @@ class AddMyStore extends React.Component {
     });
     console.log(event.target.files);
   };
-  onChangeHandler6 = event => {
+  onChangeHandler6 = (event) => {
     var imgSrc6 = [];
     for (var i = 0; i < event.target.files.length; i++) {
       let file = event.target.files[i];
@@ -301,29 +301,29 @@ class AddMyStore extends React.Component {
     console.log(event.target.files);
   };
 
-  changeHandler1 = e => {
+  changeHandler1 = (e) => {
     this.setState({
       status: e.target.value,
     });
   };
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
-  changeHandler2 = e => {
+  changeHandler2 = (e) => {
     if (e.target.value.length < 7)
       this.setState({
         [e.target.name]: e.target.value,
       });
   };
-  changeHandler3 = e => {
+  changeHandler3 = (e) => {
     if (e.target.value.length < 11)
       this.setState({
         [e.target.name]: e.target.value,
       });
   };
-  changeHandler4 = e => {
+  changeHandler4 = (e) => {
     if (e.target.value.length < 11)
       this.setState({
         [e.target.name]: e.target.value,
@@ -401,13 +401,17 @@ class AddMyStore extends React.Component {
     }
 
     axiosConfig
-      .post("/addstore", data)
-      .then(response => {
+      .post("/addstore", data, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/myStore/storeList");
       })
-      .catch(error => {
+      .catch((error) => {
         swal("Error!", "Error Received", "error");
         console.log(error);
       });
@@ -415,7 +419,7 @@ class AddMyStore extends React.Component {
 
   render() {
     const favColors = Object.keys(this.state.days)
-      .filter(key => this.state.days[key])
+      .filter((key) => this.state.days[key])
       .join(", ");
 
     const steps = [
@@ -447,7 +451,7 @@ class AddMyStore extends React.Component {
                 />
 
                 <div>
-                  {this.fileArrayShop?.map(value => (
+                  {this.fileArrayShop?.map((value) => (
                     <img
                       src={value}
                       style={{
@@ -825,7 +829,7 @@ class AddMyStore extends React.Component {
                   onChange={this.onChangeHandler1}
                 />
                 <div>
-                  {this.fileArrayLogo?.map(value => (
+                  {this.fileArrayLogo?.map((value) => (
                     <img
                       src={value}
                       height="80vh"
@@ -846,7 +850,7 @@ class AddMyStore extends React.Component {
                   onChange={this.onChangeHandler2}
                 />
                 <div>
-                  {this.fileArrayGST?.map(value => (
+                  {this.fileArrayGST?.map((value) => (
                     <img
                       src={value}
                       height="80vh"
@@ -868,7 +872,7 @@ class AddMyStore extends React.Component {
                   onChange={this.onChangeHandler4}
                 />
                 <div>
-                  {this.fileArrayTLIC?.map(value => (
+                  {this.fileArrayTLIC?.map((value) => (
                     <img
                       src={value}
                       height="80vh"
@@ -888,7 +892,7 @@ class AddMyStore extends React.Component {
                 onChange={this.onChangeHandler3}
               />
               <div>
-                {this.fileArrayPersonal?.map(value => (
+                {this.fileArrayPersonal?.map((value) => (
                   <img
                     src={value}
                     height="80vh"
@@ -908,7 +912,7 @@ class AddMyStore extends React.Component {
                   onChange={this.onChangeHandler5}
                 />
                 <div>
-                  {this.fileArrayCompany?.map(value => (
+                  {this.fileArrayCompany?.map((value) => (
                     <img
                       src={value}
                       height="80vh"
@@ -929,7 +933,7 @@ class AddMyStore extends React.Component {
                   onChange={this.onChangeHandler6}
                 />
                 <div>
-                  {this.fileArrayProof?.map(value => (
+                  {this.fileArrayProof?.map((value) => (
                     <img
                       src={value}
                       height="80vh"
@@ -958,7 +962,7 @@ class AddMyStore extends React.Component {
                 <Label className="mb-1"> Status </Label>
                 <div
                   className="form-label-group"
-                  onChange={e => this.changeHandler1(e)}
+                  onChange={(e) => this.changeHandler1(e)}
                 >
                   <Input
                     required

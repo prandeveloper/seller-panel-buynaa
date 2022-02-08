@@ -19,63 +19,45 @@ export class AddEmployee extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      employee_name: "",
-      phone_no: "",
+      name: "",
+      mobile: "",
       email: "",
       password: "",
-      designation: "",
-      brand_img: "",
-      sortorder: "",
-      status: "",
+      cnfrm_password: "",
+      rolename: "",
+      image: "",
       selectedFile: null,
       selectedName: "",
-      colors: {
-        red: true,
-        green: false,
-        blue: true,
-        yellow: false,
-      },
     };
   }
 
-  handleClick = event => {
-    const { name, checked } = event.target;
-
-    this.setState(prevState => {
-      const colors = prevState.colors;
-      colors[name] = checked;
-      return colors;
-    });
-  };
-
-  onChangeHandler = event => {
+  onChangeHandler = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
     this.setState({ selectedName: event.target.files[0].name });
     console.log(event.target.files[0]);
   };
 
-  changeHandler1 = e => {
+  changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  changeHandler2 = e => {
+  changeHandler2 = (e) => {
     if (e.target.value.length < 11)
       this.setState({
         [e.target.name]: e.target.value,
       });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("employee_name", this.state.employee_name);
-    data.append("phone_no", this.state.phone_no);
+    data.append("name", this.state.name);
+    data.append("mobile", this.state.mobile);
     data.append("email", this.state.email);
     data.append("password", this.state.password);
-    data.append("designation", this.state.designation);
-    data.append("sortorder", this.state.sortorder);
-    data.append("status", this.state.status);
+    data.append("cnfrm_password", this.state.cnfrm_password);
+    data.append("rolename", this.state.rolename);
     if (this.state.selectedFile !== null) {
       data.append("image", this.state.selectedFile, this.state.selectedName);
     }
@@ -86,19 +68,20 @@ export class AddEmployee extends Component {
     //     console.log(value);
     //  }
     axiosConfig
-      .post("/addemployee", data)
-      .then(response => {
+      .post("/addemployee", data, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         this.props.history.push("/app/contactUs/employee/employeeList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
   render() {
-    const favColors = Object.keys(this.state.colors)
-      .filter(key => this.state.colors[key])
-      .join(", ");
     return (
       <div>
         <Card>
@@ -140,8 +123,8 @@ export class AddEmployee extends Component {
                     <Input
                       type="number"
                       placeholder="Phone Number"
-                      name="phone_no"
-                      value={this.state.phone_no}
+                      name="mobile"
+                      value={this.state.mobile}
                       onChange={this.changeHandler2}
                     />
                   </FormGroup>
@@ -171,11 +154,22 @@ export class AddEmployee extends Component {
                 </Col>
                 <Col lg="6" md="6">
                   <FormGroup>
-                    <Label>Designation</Label>
+                    <Label>Confirm Password</Label>
+                    <Input
+                      type="password"
+                      name="cnfrm_password"
+                      value={this.state.cnfrm_password}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Role Name</Label>
                     <CustomInput
                       type="select"
-                      name="designation"
-                      value={this.state.designation}
+                      name="rolename"
+                      value={this.state.rolename}
                       onChange={this.changeHandler}
                     >
                       <option>select</option>
@@ -188,563 +182,12 @@ export class AddEmployee extends Component {
 
                 <Col lg="6" md="6">
                   <FormGroup>
-                    <Label>Sort Order</Label>
-                    <Input
-                      type="number"
-                      placeholder="Sort Order"
-                      name="sortorder"
-                      value={this.state.sortorder}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
-
-                <Col lg="6" md="6">
-                  <FormGroup>
-                    <Label>Brand Image / Logo</Label>
+                    <Label>Image</Label>
                     <CustomInput type="file" onChange={this.onChangeHandler} />
                   </FormGroup>
                 </Col>
-
-                <Col lg="6" md="6" sm="6" className="mb-1 ">
-                  <FormGroup>
-                    <Label className="mb-1">Status</Label>
-                    <div
-                      className="form-label-group"
-                      onChange={e => this.changeHandler1(e)}
-                    >
-                      <input
-                        style={{ marginRight: "3px", fontWeight: 800 }}
-                        type="radio"
-                        name="status"
-                        value="Active"
-                      />
-                      <span style={{ marginRight: "20px", fontWeight: 800 }}>
-                        Active
-                      </span>
-
-                      <input
-                        style={{ marginRight: "3px" }}
-                        type="radio"
-                        name="status"
-                        value="Inactive"
-                      />
-                      <span style={{ marginRight: "3px" }}>Inactive</span>
-                    </div>
-                  </FormGroup>
-                </Col>
               </Row>
-              <Card>
-                <h2>Permissions</h2>
-                <Row>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Store</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Employee</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Customer</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Supplier</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Product</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Stock Control</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Offers</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Coupons</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Billing</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Purchase Order</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                  <Col lg="6" className="mt-1">
-                    <main>
-                      <div className="mt-2">
-                        <h4>Purchase Invoice</h4>
-                        <Row>
-                          <Col>
-                            <input
-                              checked={this.state.colors.red}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="red"
-                            />{" "}
-                            Red
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.blue}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="blue"
-                            />{" "}
-                            Blue
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.green}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="green"
-                            />{" "}
-                            Green
-                          </Col>
-                          <Col>
-                            <input
-                              checked={this.state.colors.yellow}
-                              onChange={this.handleClick}
-                              type="checkbox"
-                              name="yellow"
-                            />{" "}
-                            Yellow
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* <p> Your favourite colors are: {favColors}</p> */}
-                    </main>
-                  </Col>
-                </Row>
-              </Card>
+
               <Row>
                 <Button.Ripple
                   color="primary"

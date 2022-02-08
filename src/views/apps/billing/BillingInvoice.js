@@ -13,6 +13,9 @@ import {
 } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import axiosConfig from "../../../axiosConfig";
+import Moment from "react-moment";
+import "moment-timezone";
+import moment from "moment";
 import logo from "../../../assets/img/logo/ilogo.png";
 import { Mail, Phone, FileText, Download } from "react-feather";
 import "../../../assets/scss/pages/invoice.scss";
@@ -57,11 +60,7 @@ class BillingInvoice extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Breadcrumbs
-          breadCrumbTitle="Invoice"
-          breadCrumbParent="Pages"
-          breadCrumbActive="Invoice"
-        />
+        <Breadcrumbs breadCrumbTitle="Invoice" />
         <Row>
           {/* <Col className="mb-1 invoice-header" md="5" sm="12">
             <InputGroup>
@@ -86,10 +85,10 @@ class BillingInvoice extends React.Component {
               <FileText size="15" />
               <span className="align-middle ml-50">Print</span>
             </Button>
-            <Button.Ripple color="primary" outline>
+            {/* <Button.Ripple color="primary" outline>
               <Download size="15" />
               <span className="align-middle ml-50">Download</span>
-            </Button.Ripple>
+            </Button.Ripple> */}
           </Col>
           <Col className="invoice-wrapper" sm="12">
             <Card className="invoice-page">
@@ -103,10 +102,12 @@ class BillingInvoice extends React.Component {
                   <Col md="6" sm="12" className="text-right">
                     <h1>Invoice</h1>
                     <div className="invoice-details mt-2">
-                      <h6>{this.state.data.product_name}</h6>
-                      <p>001/2020</p>
+                      <h6 className="mt-2">ORDER ID</h6>
+                      <p>{this.state.data.orderId}</p>
+                    </div>
+                    <div className="invoice-details mt-2">
                       <h6 className="mt-2">INVOICE DATE</h6>
-                      <p>10 Dec 2018</p>
+                      <p>{moment(this.state.data.createdAt).format("ll")}</p>
                     </div>
                   </Col>
                 </Row>
@@ -114,23 +115,20 @@ class BillingInvoice extends React.Component {
                   <Col md="6" sm="12">
                     <h5>Recipient</h5>
                     <div className="recipient-info my-2">
-                      <p>Peter Stark</p>
-                      <p>8577 West West Drive</p>
-                      <p>Holbrook, NY</p>
-                      <p>90001</p>
+                      <p>{this.state.data.customer_name}</p>
                     </div>
                     <div className="recipient-contact pb-2">
                       <p>
                         <Mail size={15} className="mr-50" />
-                        peter@mail.com
+                        {this.state.data.customer_email}
                       </p>
                       <p>
                         <Phone size={15} className="mr-50" />
-                        +91 988 888 8888
+                        {this.state.data.customer_phone}
                       </p>
                     </div>
                   </Col>
-                  <Col md="6" sm="12" className="text-right">
+                  {/* <Col md="6" sm="12" className="text-right">
                     <h5>Microsion Technologies Pvt. Ltd.</h5>
                     <div className="company-info my-2">
                       <p>9 N. Sherwood Court</p>
@@ -147,7 +145,7 @@ class BillingInvoice extends React.Component {
                         +91 999 999 9999
                       </p>
                     </div>
-                  </Col>
+                  </Col> */}
                 </Row>
                 <div className="invoice-items-table pt-1">
                   <Row>
@@ -155,26 +153,29 @@ class BillingInvoice extends React.Component {
                       <Table responsive borderless>
                         <thead>
                           <tr>
-                            <th>TASK DESCRIPTION</th>
-                            <th>Name</th>
+                            <th>Product Nane</th>
                             <th>Quantity</th>
                             <th>Sell Price</th>
-                            Select Product(tab)
+                            <th>Discount</th>
+                            <th>Amount</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Website Redesign</td>
-                            <td>{this.state.data.name}</td>
-                            <td>{this.state.data.product?.qty}</td>
-                            <td>{this.state.data.product?.cost}</td>
-                          </tr>
-                          <tr>
+                          {this.state.data.product?.map((prod) => (
+                            <tr>
+                              <td>{prod.name}</td>
+                              <td>{prod.qty}</td>
+                              <td>{prod.cost}</td>
+                              <td>{prod.discount}</td>
+                              <td>{prod.amount}</td>
+                            </tr>
+                          ))}
+                          {/* <tr>
                             <td>Newsletter template design</td>
                             <td>{this.state.data.product?.name}</td>
                             <td>{this.state.data.product?.qty}</td>
                             <td>{this.state.data.product?.cost}</td>
-                          </tr>
+                          </tr> */}
                         </tbody>
                       </Table>
                     </Col>
@@ -192,13 +193,10 @@ class BillingInvoice extends React.Component {
                             <th>Sell Price</th>
                             <td>114000 USD</td>
                           </tr> */}
+
                           <tr>
-                            <th>GST</th>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <th>Discount (5%)</th>
-                            <td>{this.state.data.product?.discount}</td>
+                            <th>Total Quantity</th>
+                            <td>{this.state.data.total_qty}</td>
                           </tr>
                           <tr>
                             <th>Grand Total</th>
@@ -208,20 +206,6 @@ class BillingInvoice extends React.Component {
                       </Table>
                     </Col>
                   </Row>
-                </div>
-                <div className="text-right pt-3 invoice-footer">
-                  <p>
-                    Transfer the amounts to the business amount below. Please
-                    include invoice number on your check.
-                  </p>
-                  <p className="bank-details mb-0">
-                    <span className="mr-4">
-                      BANK: <strong>FTSBUS33</strong>
-                    </span>
-                    <span>
-                      IBAN: <strong>G882-1111-2222-3333</strong>
-                    </span>
-                  </p>
                 </div>
               </CardBody>
             </Card>

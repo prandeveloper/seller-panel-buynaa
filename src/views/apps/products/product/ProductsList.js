@@ -243,13 +243,13 @@ class ProductsList extends React.Component {
       },
       {
         headerName: "GST Rate",
-        field: "gst",
+        field: "gstrate.gst_title",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex justify-content-center">
-              <span>{params.data.gst}</span>
+              <span>{params.data.gstrate.gst_title}</span>
             </div>
           );
         },
@@ -262,11 +262,9 @@ class ProductsList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex justify-content-center">
-                {params.data.size.map((i) => (
-             <span>{i.sizeName}</span>
-             
+              {params.data.size.map((i) => (
+                <span>{i.sizeName}</span>
               ))}
-              
             </div>
           );
         },
@@ -279,10 +277,9 @@ class ProductsList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex justify-content-center">
-                  {params.data.color.map((i) => (
-             <span>{i.colorName}</span>
-             
-             ))}
+              {params.data.color.map((i) => (
+                <span>{i.colorName}</span>
+              ))}
             </div>
           );
         },
@@ -375,14 +372,18 @@ class ProductsList extends React.Component {
               />
               <Edit
                 className="mr-50"
-                 size="25px"
-                 color="blue"
-                onClick={() => history.push(`/app/products/product/editProducts/${params.data._id}`)}
+                size="25px"
+                color="blue"
+                onClick={() =>
+                  history.push(
+                    `/app/products/product/editProducts/${params.data._id}`
+                  )
+                }
               />
               <Trash2
-                 className="mr-50"
-                 size="25px"
-                 color="red"
+                className="mr-50"
+                size="25px"
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);

@@ -6,11 +6,12 @@ import {
   CardBody,
   Form,
   CustomInput,
+  FormGroup,
   Label,
   Input,
   Button,
 } from "reactstrap";
-import axios from "axios";
+import axiosConfig from "../../../axiosConfig";
 import { history } from "../../../history";
 
 export default class AddUsers extends Component {
@@ -18,97 +19,84 @@ export default class AddUsers extends Component {
     super(props);
 
     this.state = {
-      userID: "",
-      usertype: "",
-      username: "",
-      password: "",
-      pincode: "",
-      phone_no: "",
-      mobile_no: "",
-      email: "",
-      website: "",  
-      country: "",
-      state: "",
-      city: "",
-      userImage: "",
-      status: "",
-      selectedName: "",
-      selectedFile: null,
-      // udhyog_adhar_no: "",
-      // licence_no: "",
-      // technician_assot_no: "",
-      // gov_licence_no: "",
-      // eb_license: "",
-      // aadhar_no: "",
-      // pancard_no: "",
-      // bank_name: "",
-      // bank_user_name: "",
-      // bank_account_no: "",
-      // ifsc_code: "",
-      // date_of_birth: "",
-      // marriage_anniversary: "",
-      // gstin_no: "",
+      addemp: "",
+      tabs: {
+        store: false,
+        employee: false,
+        customer: false,
+        supplier: false,
+        product: false,
+        stockControl: false,
+        offers: false,
+        coupons: false,
+        subscribe: false,
+        billing: false,
+        order: false,
+        purcahse: false,
+        reports: false,
+        notification: false,
+        rolesPermission: false,
+        setting: false,
+      },
+      employeeD: [],
     };
   }
 
-  //Image Submit Handler
-  onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files[0] });
-    this.setState({ selectedName: event.target.files[0].name });
-    console.log(event.target.files[0]);
+  handleClick = (event) => {
+    const { name, checked } = event.target;
+    this.setState((prevState) => {
+      const tabs = prevState.tabs;
+      tabs[name] = checked;
+      return tabs;
+    });
+    console.log(this.state);
   };
-  changeHandler1 = (e) => {
-    this.setState({ status: e.target.value });
-  };
+
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  async componentDidMount() {
+    //Employee
+    axiosConfig
+      .get("/getemployecreatedbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        this.setState({ employeeD: response.data.data });
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  }
+
   submitHandler = (e) => {
     e.preventDefault();
     console.log(this.state);
-
-    const data = new FormData();
-    data.append("userID", this.state.userID);
-    data.append("usertype", this.state.usertype);
-    data.append("username", this.state.username);
-    data.append("password", this.state.password);
-    data.append("pincode", this.state.pincode);
-    data.append("phone_no", this.state.phone_no);
-    data.append("mobile_no", this.state.mobile_no);
-    data.append("email", this.state.email);
-    data.append("website", this.state.website);
-  
-    data.append("country", this.state.country);
-    data.append("state", this.state.state);
-    data.append("city", this.state.city);
-
-    data.append("status", this.state.status);
-    data.append("userImage", this.state.selectedFile, this.state.selectedName);
-
-    for (var value of data.values()) {
-      console.log(value);
-    }
-
-    for (var key of data.keys()) {
-      console.log(key);
-    }
-    axios
-      .post("http://65.2.150.118:4444/api/user/adduserbyadmin", data)
+    axiosConfig
+      .post("/addrole", this.state)
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
+        this.props.history.push("/app/roleAndPermission/roleList");
       })
       .catch((error) => {
         console.log(error);
       });
   };
   render() {
+    const favtabs = Object.keys(this.state.tabs)
+      .filter((key) => this.state.tabs[key])
+      .join(", ");
     return (
       <div>
         <Card>
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-               Create A New Role
+                Assign Tabs Permission
               </h1>
             </Col>
             <Col>
@@ -123,55 +111,205 @@ export default class AddUsers extends Component {
           <CardBody>
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
-         
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Role Name:</Label>
-                  <Input
-                    required
-                    type="text"
-                    placeholder="Enter Role Name"
-                    name="username"
-                    value={this.state.userID}
-                    onChange={this.changeHandler}
-                  />
-                </Col>
-                
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Assign permissions To Role:</Label>
-                  <Input
-                    required
-                    type="email"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.changeHandler}
-                    placeholder="Enter Email"
-                  />
-                </Col>
-
-      
-
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label className="mb-1">Status</Label>
-                  <div
-                    className="form-label-group"
-                    onChange={(e) => this.changeHandler1(e)}
-                  >
-                    <input
-                      style={{ marginRight: "3px" }}
-                      type="radio"
-                      name="status"
-                      value="Active"
-                    />
-                    <span style={{ marginRight: "20px" }}>Active</span>
-
-                    <input
-                      style={{ marginRight: "3px" }}
-                      type="radio"
-                      name="status"
-                      value="Inactive"
-                    />
-                    <span style={{ marginRight: "3px" }}>Inactive</span>
-                  </div>
+                <Col lg="12">
+                  <Row className="m-2">
+                    <Col md="6" sm="12">
+                      <FormGroup>
+                        <Label>Select Employee</Label>
+                        <CustomInput
+                          type="select"
+                          name="addemp"
+                          placeholder="Employee"
+                          onChange={this.changeHandler}
+                          value={this.state.addemp}
+                        >
+                          {this.state.employeeD?.map((emp) => (
+                            <option key={emp?._id} value={emp?._id}>
+                              {emp?.name}
+                            </option>
+                          ))}
+                        </CustomInput>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row className="m-2">
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.store}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="store"
+                        />{" "}
+                        Store
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.employee}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="employee"
+                        />{" "}
+                        Employee
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.customer}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="customer"
+                        />{" "}
+                        Customer
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.supplier}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="supplier"
+                        />{" "}
+                        Supplier
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.product}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="product"
+                        />{" "}
+                        Product
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.stockControl}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="stockControl"
+                        />{" "}
+                        Stock Control
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.offers}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="offers"
+                        />{" "}
+                        Offers
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.coupons}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="coupons"
+                        />{" "}
+                        Coupons
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.subscribe}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="subscribe"
+                        />{" "}
+                        Subscribe
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.billing}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="billing"
+                        />{" "}
+                        Billing
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.order}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="order"
+                        />{" "}
+                        Order
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.purcahse}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="purcahse"
+                        />{" "}
+                        Purcahse
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.reports}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="reports"
+                        />{" "}
+                        Reports
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.notification}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="notification"
+                        />{" "}
+                        Notification
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.rolesPermission}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="rolesPermission"
+                        />{" "}
+                        Permissions
+                      </div>
+                    </Col>
+                    <Col lg="3" className="m-1">
+                      <div>
+                        <input
+                          checked={this.state.tabs.setting}
+                          onChange={this.handleClick}
+                          type="checkbox"
+                          name="setting"
+                        />{" "}
+                        Setting
+                      </div>
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
               <Row>
@@ -181,7 +319,7 @@ export default class AddUsers extends Component {
                     type="submit"
                     className="mr-1 mb-1"
                   >
-                    Add User
+                    Add Permission
                   </Button.Ripple>
                 </Col>
               </Row>

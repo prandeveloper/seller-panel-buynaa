@@ -9,6 +9,7 @@ import {
   Label,
   Button,
   FormGroup,
+  CustomInput,
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
@@ -18,14 +19,13 @@ export class EditEmployee extends Component {
     super(props);
 
     this.state = {
-      employee_name: "",
-      phone_no: "",
+      name: "",
+      mobile: "",
       email: "",
-      password: "",
-      designation: "",
-      brand_img: "",
-      sortorder: "",
-      status: "",
+      // password: "",
+      // cnfrm_password: "",
+      rolename: "",
+      image: "",
       selectedFile: null,
       selectedName: "",
     };
@@ -41,61 +41,61 @@ export class EditEmployee extends Component {
     console.log(this.props.match.params);
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonebrand/${id}`)
+      .get(`/getoneempcreatedbyseller/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({
-          brand_img: response.data.data.brand_img,
           name: response.data.data.name,
-          desc: response.data.data.desc,
-          sortorder: response.data.data.sortorder,
-          status: response.data.data.status,
+          mobile: response.data.data.mobile,
+          email: response.data.data.email,
+          rolename: response.data.data.rolename,
+          image: response.data.data.image,
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   }
 
-  changeHandler1 = (e) => {
-    this.setState({ status: e.target.value });
-  };
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   submitHandler = (e) => {
     e.preventDefault();
-    //console.log(this.props.match.params, this.state);
     const data = new FormData();
     data.append("name", this.state.name);
-    data.append("desc", this.state.desc);
-    data.append("sortorder", this.state.sortorder);
-    data.append("status", this.state.status);
-    // console.log(this.state.selectedFile);
+    data.append("mobile", this.state.mobile);
+    data.append("email", this.state.email);
+    // data.append("password", this.state.password);
+    // data.append("cnfrm_password", this.state.cnfrm_password);
+    data.append("rolename", this.state.rolename);
     if (this.state.selectedFile !== null) {
-      data.append(
-        "brand_img",
-        this.state.selectedFile,
-        this.state.selectedName
-      );
+      data.append("image", this.state.selectedFile, this.state.selectedName);
     }
-
-    // for (var value of data.values()) {
-    //    console.log(value);
-    // }
-    // for (var key of data.keys()) {
-    //    console.log(key);
-    // }
+    for (var value of data.values()) {
+      console.log(value);
+    }
+    for (var value of data.values()) {
+      console.log(value);
+    }
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editbrand/${id}`, data)
+      .post(`/editempbyseller/${id}`, data, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.props.history.push("/app/contactUs/employee/employeeList");
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   };
   render() {
@@ -134,28 +134,26 @@ export class EditEmployee extends Component {
                     />
                   </FormGroup>
                 </Col>
-
                 <Col lg="6" md="6">
                   <FormGroup>
-                    <Label>Sort Order</Label>
+                    <Label>Phone Number</Label>
                     <Input
                       type="number"
-                      placeholder="Sort Order"
-                      name="sortorder"
-                      value={this.state.sortorder}
+                      placeholder="Phone Number"
+                      name="mobile"
+                      value={this.state.mobile}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
                 </Col>
-
                 <Col lg="6" md="6">
                   <FormGroup>
-                    <Label>Description</Label>
+                    <Label>Employee Email</Label>
                     <Input
-                      type="textarea"
-                      placeholder="Description"
-                      name="desc"
-                      value={this.state.desc}
+                      type="email"
+                      placeholder="Employee Email"
+                      name="email"
+                      value={this.state.email}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
@@ -163,44 +161,36 @@ export class EditEmployee extends Component {
 
                 <Col lg="6" md="6">
                   <FormGroup>
-                    <Label>Brand Image / Logo</Label>
-                    <Input type="file" onChange={this.onChangeHandler} />
+                    <Label>Role Name</Label>
+                    <CustomInput
+                      type="select"
+                      name="rolename"
+                      value={this.state.rolename}
+                      onChange={this.changeHandler}
+                    >
+                      <option>select</option>
+                      <option value="owner">Owner</option>
+                      <option value="manager">Manager</option>
+                      <option value="employee">Employee</option>
+                    </CustomInput>
                   </FormGroup>
                 </Col>
 
-                <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
+                <Col lg="6" md="6">
                   <FormGroup>
-                    <Label className="mb-1">Status</Label>
-                    <div
-                      className="form-label-group"
-                      onChange={(e) => this.changeHandler1(e)}
-                    >
-                      <input
-                        style={{ marginRight: "3px" }}
-                        type="radio"
-                        name="status"
-                        value="Active"
-                      />
-                      <span style={{ marginRight: "20px" }}>Active</span>
-
-                      <input
-                        style={{ marginRight: "3px" }}
-                        type="radio"
-                        name="status"
-                        value="Inactive"
-                      />
-                      <span style={{ marginRight: "3px" }}>Inactive</span>
-                    </div>
+                    <Label>Image</Label>
+                    <CustomInput type="file" onChange={this.onChangeHandler} />
                   </FormGroup>
                 </Col>
               </Row>
+
               <Row>
                 <Button.Ripple
-                  color="danger"
+                  color="primary"
                   type="submit"
-                  className="mr-1 mb-1"
+                  className="ml-2 mb-1"
                 >
-                  Update Employee
+                  Add Employee
                 </Button.Ripple>
               </Row>
             </Form>

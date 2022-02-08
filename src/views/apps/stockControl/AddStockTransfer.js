@@ -19,6 +19,7 @@ export class AddStockTransfer extends Component {
     super(props);
     {
       this.state = {
+        addTextbox: [{}],
         reference_no: "",
         from_warehouse: "",
         to_warehouse: "",
@@ -26,31 +27,75 @@ export class AddStockTransfer extends Component {
         delivery_duedate: "",
         transfer_type: "",
         reason: "",
-        item: {
-          sl_no: "",
-          product_name: "",
-          hsn: "",
-          sku: "",
-          quality: "",
-          cost_price: "",
-          gst: "",
-          total: "",
-        },
-        items: [
-          {
-            sl_no: "",
-            product_name: "",
-            hsn: "",
-            sku: "",
-            quality: "",
-            cost_price: "",
-            gst: "",
-            total: "",
-          },
-        ],
+        grandTotal: "",
+        productC: [],
+        productG: [""],
+        skuG: [""],
+        hsmG: [""],
+        amountG: [""],
+        qtyG: [""],
+        gstG: [""],
       };
     }
   }
+  addControls() {
+    this.setState({
+      productG: [...this.state.productG, ""],
+      skuG: [...this.state.skuG, ""],
+      hsmG: [...this.state.hsmG, ""],
+      amountG: [...this.state.amountG, ""],
+      qtyG: [...this.state.qtyG, ""],
+      gstG: [...this.state.gstG, ""],
+      addTextbox: [...this.state.addTextbox, ""],
+    });
+  }
+  delControl(i) {
+    console.log(this.state);
+    this.state.addTextbox.splice(i, 1);
+    this.state.productG.splice(i, 1);
+    this.state.skuG.splice(i, 1);
+    this.state.hsmG.splice(i, 1);
+    this.state.amountG.splice(i, 1);
+    this.state.qtyG.splice(i, 1);
+    this.state.gstG.splice(i, 1);
+    this.setState({});
+  }
+
+  changeHandlerG = (e, i) => {
+    // console.log(i);
+    // console.log(e.target);
+    var dum = this.state[e.target.name];
+    console.log(dum);
+    dum[i] = e.target.value;
+    this.setState({ [e.target.name]: dum });
+  };
+
+  submitHandler = (e) => {
+    e.preventDefault();
+    var product = [];
+    for (var i = 0; i < this.state.productG.length; i++) {
+      product.push({
+        productname: this.state.productG[i],
+        sku: this.state.skuG[i],
+        hsn: this.state.hsmG[i],
+        qty: this.state.qtyG[i],
+        gst: this.state.gstG[i],
+        amount: this.state.amountG[i],
+      });
+    }
+    var option = this.state;
+    option.product = product;
+    console.log("Option", option);
+    axiosConfig
+      .post("/addstocktransfer", option)
+      .then((response) => {
+        console.log(response);
+        this.props.history.push("/app/stockControl/stockTransferRequest");
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
   async componentDidMount() {
     //Warehouse List
     axiosConfig
@@ -73,167 +118,38 @@ export class AddStockTransfer extends Component {
       .catch((error) => {
         console.log(error);
       });
-    //Transfer Type List
+    //Product Add
     axiosConfig
-      .get("/getTransfertype")
+      .get("/getproduct", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
-        console.log(response);
-        this.setState({ transfertypeL: response.data.data });
+        console.log(response.data.data);
+        this.setState({ productC: response.data.data });
       })
       .catch((error) => {
         console.log(error);
       });
   }
-  changeHandler1 = (e) => {
-    this.setState({ status: e.target.value });
-  };
-
-  //table
-  updateMessage(event) {
-    this.setState({
-      message: event.target.value,
-    });
-  }
-
-  updateMessage(event) {
-    //event.target.name;
-    console.log(event.target.name, event.target.value);
-
-    this.setState((prevState) => {
-      let item = Object.assign({}, prevState.item);
-      item[event.target.name] = event.target.value;
-      // item.sl_no = "someothername";
-      return { item };
-    });
-    console.log(this.state.item);
-    // this.setState({
-    //   message: event.target.value,
-    // });
-  }
-
-  handleClick() {
-    var items = this.state.items;
-
-    items.push(this.state.message);
-
-    this.setState({
-      items: items,
-    });
-  }
-
-  renderRows() {
-    var context = this;
-    return this.state.items.map(function (o, i) {
-      return (
-        <tr key={"item-" + i}>
-          <td>
-            <Input
-              type="text"
-              value={o.sl_no}
-              onChange={context.handleItemChanged.bind(context, i)}
-            />
-          </td>
-          <td>
-            <Input
-              type="text"
-              value={o.product_name}
-              onChange={context.handleItemChanged.bind(context, i)}
-            />
-          </td>
-          <td>
-            <Input
-              type="text"
-              value={o.hsn}
-              onChange={context.handleItemChanged.bind(context, i)}
-            />
-          </td>
-          <td>
-            <Input
-              type="text"
-              value={o.sku}
-              onChange={context.handleItemChanged.bind(context, i)}
-            />
-          </td>
-          <td>
-            <Input
-              type="text"
-              value={o.quality}
-              onChange={context.handleItemChanged.bind(context, i)}
-            />
-          </td>
-          <td>
-            <Input
-              type="text"
-              value={o.cost_price}
-              onChange={context.handleItemChanged.bind(context, i)}
-            />
-          </td>
-          <td>
-            <Input
-              type="text"
-              value={o.gst}
-              onChange={context.handleItemChanged.bind(context, i)}
-            />
-          </td>
-          <td>
-            <Input
-              type="text"
-              value={o.total}
-              onChange={context.handleItemChanged.bind(context, i)}
-            />
-          </td>
-          <td>
-            <Button
-              className="mr-1"
-              color="secondary"
-              type="button"
-              style={{ backgroundColor: "#ab1515" }}
-              onClick={context.handleItemDelete.bind(context, i)}
-            >
-              Delete
-            </Button>
-          </td>
-        </tr>
-      );
-    });
-  }
-
-  handleItemChanged(i, event) {
-    var items = this.state.items;
-
-    items[i] = event.target.value;
-
-    this.setState({
-      items: items,
-    });
-  }
-
-  handleItemDelete(i) {
-    var items = this.state.items;
-
-    items.splice(i, 1);
-
-    this.setState({
-      items: items,
-    });
-  }
 
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = (e) => {
-    e.preventDefault();
-    axiosConfig
-      .post("/addstocktransfer", this.state)
-      .then((response) => {
-        console.log(response);
-        swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push("/app/stockControl/StockTransferRequest");
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  };
+  // submitHandler = (e) => {
+  //   e.preventDefault();
+  //   axiosConfig
+  //     .post("/addstocktransfer", option)
+  //     .then((response) => {
+  //       console.log(response);
+  //       swal("Success!", "Submitted SuccessFull!", "success");
+  //       this.props.history.push("/app/stockControl/StockTransferRequest");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response);
+  //     });
+  // };
   render() {
     return (
       <div>
@@ -323,14 +239,10 @@ export class AddStockTransfer extends Component {
                     value={this.state.transfer_type}
                     onChange={this.changeHandler}
                   >
-                    {this.state.transfertypeL?.map((transfertypeList) => (
-                      <option
-                        key={transfertypeList._id}
-                        value={transfertypeList._id}
-                      >
-                        {transfertypeList.transfer_type}
-                      </option>
-                    ))}
+                    <option value="ABC">ABC</option>
+                    <option value="XYZ">XYZ</option>
+                    <option value="ABCD">ABCD</option>
+                    <option value="EFG">EFG</option>
                   </CustomInput>
                 </Col>
                 <Col lg="6" md="6" className="mb-1">
@@ -349,255 +261,161 @@ export class AddStockTransfer extends Component {
                   </CustomInput>
                 </Col>
               </Row>
-              <Row className="mb-2">
+              <Row>
                 <div>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th width="100px">SL No.</th>
-                        <th width="200px">Product Name </th>
-                        <th width="100px">HSN</th>
-                        <th width="100px">SKU</th>
-                        <th width="100px">Quantity</th>
-                        <th width="100px">Cost Price </th>
-                        <th width="100px">GST</th>
-                        <th width="100px">Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>{this.renderRows()}</tbody>
-                  </table>
-                  <hr />
-                  <table>
-                    {/* <thead>
-                      <tr>
-                        <th width="100px">SL No.</th>
-                        <th width="200px">Product Name </th>
-                        <th width="100px">HSN</th>
-                        <th width="100px">SKU</th>
-                        <th width="100px">Quantity</th>
-                        <th width="100px">Cost Price </th>
-                        <th width="100px">GST</th>
-                        <th width="100px">Total</th>
-                      </tr>
-                    </thead> */}
-                    <tbody>
-                      <tr>
-                        <td width="100px">
-                          <Input
-                            className="md-1"
-                            type="text"
-                            name="sl_no"
-                            onChange={this.updateMessage.bind(this)}
-                          />
-                        </td>
-                        <td width="200px">
-                          <Input
-                            className="md-1"
-                            type="text"
-                            name="product_name"
-                            onChange={this.updateMessage.bind(this)}
-                          />
-                        </td>
-                        <td width="100px">
-                          <Input
-                            className="md-1"
-                            type="text"
-                            name="hsn"
-                            onChange={this.updateMessage.bind(this)}
-                          />
-                        </td>
-                        <td width="100px">
-                          <Input
-                            className="md-1"
-                            type="text"
-                            name="sku"
-                            onChange={this.updateMessage.bind(this)}
-                          />
-                        </td>
-                        <td width="100px">
-                          <Input
-                            className="md-1"
-                            type="text"
-                            name="quality"
-                            onChange={this.updateMessage.bind(this)}
-                          />
-                        </td>
-                        <td width="100px">
-                          <Input
-                            className="md-1"
-                            type="text"
-                            name="cost_price"
-                            onChange={this.updateMessage.bind(this)}
-                          />
-                        </td>
-                        <td width="100px">
-                          <Input
-                            className="md-1"
-                            type="text"
-                            name="gst"
-                            onChange={this.updateMessage.bind(this)}
-                          />
-                        </td>
-                        <td width="100px">
-                          <Input
-                            className="md-1"
-                            type="text"
-                            name="total"
-                            onChange={this.updateMessage.bind(this)}
-                          />
-                        </td>
-                        <td>
-                          <Button
-                            color="primary"
-                            type="button"
-                            onClick={this.handleClick.bind(this)}
-                            className="mr-1"
+                  {this.state.addTextbox.map((item, index) => (
+                    <div>
+                      {/* {index ? ( */}
+                      <div id="btn">
+                        <Row>
+                          <Col
+                            lg="6"
+                            md="6"
+                            sm="6"
+                            className="mb-2 d-flex align-items-start"
                           >
-                            Add
+                            <Button
+                              color="primary"
+                              onClick={() => this.addControls()}
+                            >
+                              Add
+                            </Button>
+                          </Col>
+                        </Row>
+                      </div>
+                      {/* ) : null} */}
+
+                      <Row>
+                        <Col md="2" sm="12">
+                          <FormGroup>
+                            <Label> Product Name </Label>
+                            <CustomInput
+                              type="select"
+                              name="productG"
+                              placeholder=" Product Name"
+                              value={this.state.productG[index]}
+                              onChange={(e) => {
+                                this.changeHandlerG(e, index);
+                              }}
+                            >
+                              <option>Select Product</option>
+                              {this.state.productC?.map((prod) => (
+                                <option key={prod._id} value={prod._id}>
+                                  {prod.product_name}
+                                </option>
+                              ))}
+                            </CustomInput>
+                          </FormGroup>
+                        </Col>
+                        <Col md="2" sm="12">
+                          <FormGroup>
+                            <Label> SKU </Label>
+                            <Input
+                              type="number"
+                              name="skuG"
+                              placeholder="SKU"
+                              value={this.state.skuG[index]}
+                              onChange={(e) => {
+                                this.changeHandlerG(e, index);
+                              }}
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col md="2" sm="12">
+                          <FormGroup>
+                            <Label> HSN </Label>
+                            <Input
+                              type="number"
+                              rows="5"
+                              name="hsmG"
+                              placeholder="HSN"
+                              value={this.state.hsmG[index]}
+                              onChange={(e) => {
+                                this.changeHandlerG(e, index);
+                              }}
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col md="1" sm="12">
+                          <FormGroup>
+                            <Label> Quantity </Label>
+                            <Input
+                              type="number"
+                              rows="5"
+                              name="qtyG"
+                              placeholder="Quantity"
+                              value={this.state.qtyG[index]}
+                              onChange={(e) => {
+                                this.changeHandlerG(e, index);
+                              }}
+                            />
+                          </FormGroup>
+                        </Col>
+
+                        <Col md="2" sm="12">
+                          <FormGroup>
+                            <Label> GST </Label>
+                            <Input
+                              type="text"
+                              rows="5"
+                              name="gstG"
+                              placeholder="GST"
+                              value={this.state.gstG[index]}
+                              onChange={(e) => {
+                                this.changeHandlerG(e, index);
+                              }}
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col md="2" sm="12">
+                          <FormGroup>
+                            <Label> Amount </Label>
+                            <Input
+                              type="number"
+                              rows="5"
+                              name="amountG"
+                              placeholder="Amount"
+                              value={this.state.amountG[index]}
+                              onChange={(e) => {
+                                this.changeHandlerG(e, index);
+                              }}
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col
+                          md="1"
+                          sm="6"
+                          className="p-2 d-flex justify-content-end"
+                        >
+                          <Button
+                            color="danger"
+                            onClick={() => this.delControl(index)}
+                          >
+                            Remove
                           </Button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  {/* <tr>
-                    <td width="100px">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </td>
-                    <td width="200px">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </td>
-                    <td width="100px">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </td>
-                    <td width="100px">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </td>
-                    <td width="100px">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </td>
-                    <td width="100px">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </td>
-                    <td width="100px">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </td>
-                    <td width="100px">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </td>
-                    <td>
-                      <Button
-                        color="primary"
-                        type="button"
-                        onClick={this.handleClick.bind(this)}
-                        className="mr-1"
-                      >
-                        Add Item
-                      </Button>
-                    </td>
-                  </tr> */}
-                  {/* <Row>
-                    <Col md="1">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </Col>
-                    <Col md="3">
-                      <Input
-                        className="md-"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </Col>
-                    <Col md="1">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </Col>
-                    <Col md="1">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </Col>
-                    <Col md="1">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </Col>
-                    <Col md="1">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </Col>
-                    <Col md="1">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </Col>
-                    <Col md="1">
-                      <Input
-                        className="md-1"
-                        type="text"
-                        onChange={this.updateMessage.bind(this)}
-                      />
-                    </Col>
-                    <Button
-                      color="primary"
-                      type="button"
-                      onClick={this.handleClick.bind(this)}
-                      className="mr-1"
-                    >
-                      Add Item
-                    </Button>
-                  </Row> */}
+                        </Col>
+                      </Row>
+                    </div>
+                  ))}
                 </div>
               </Row>
+              <Row className="d-flex justify-content-end">
+                <Col lg="4">
+                  <FormGroup>
+                    <Label>Grand Total</Label>
+                    <Input
+                      type="number"
+                      name="grandTotal"
+                      placeholder="Grand Total"
+                      value={this.state.grandTotal}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
               <Row>
-                <Button color="primary" type="submit" className="mr-1 mb-1">
-                  Add
+                <Button color="danger" type="submit" className="mr-1 mb-1">
+                  Submit
                 </Button>
               </Row>
             </Form>

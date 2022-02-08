@@ -12,7 +12,6 @@ import NavbarUser from "./NavbarUser";
 import userImg from "../../../assets/img/portrait/small/avatar-s-11.jpg";
 
 const UserName = (props) => {
-  console.log(props);
   let username = "";
   if (props.userdata !== undefined) {
     username = props.userdata.name;
@@ -25,7 +24,7 @@ const UserName = (props) => {
       username = props.user.login.values.loggedInUser.name;
     }
   } else {
-    username = "John Doe";
+    username = "John Dada";
   }
 
   return username;

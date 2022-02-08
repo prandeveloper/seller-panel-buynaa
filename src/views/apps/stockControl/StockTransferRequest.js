@@ -17,7 +17,7 @@ import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 
-import { Trash2, ChevronDown } from "react-feather";
+import { Trash2, ChevronDown, Eye } from "react-feather";
 //import classnames from "classnames";
 //import { history } from "../../../history";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
@@ -52,7 +52,7 @@ class StockTransferRequest extends React.Component {
         filter: true,
         resizable: true,
         width: 180,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
@@ -68,7 +68,7 @@ class StockTransferRequest extends React.Component {
         filter: true,
         resizable: true,
         width: 180,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
@@ -84,11 +84,11 @@ class StockTransferRequest extends React.Component {
         filter: true,
         resizable: true,
         width: 180,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.from_warehouse}</span>
+                <span>{params.data.from_warehouse?.warehousename}</span>
               </div>
             </div>
           );
@@ -100,11 +100,11 @@ class StockTransferRequest extends React.Component {
         filter: true,
         resizable: true,
         width: 180,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.to_warehouse}</span>
+                <span>{params.data.to_warehouse?.warehousename}</span>
               </div>
             </div>
           );
@@ -116,7 +116,7 @@ class StockTransferRequest extends React.Component {
         filter: true,
         resizable: true,
         width: 180,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
@@ -132,11 +132,11 @@ class StockTransferRequest extends React.Component {
         filter: true,
         resizable: true,
         width: 180,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
-                <span>{params.data.transfer_type?.transfer_type}</span>
+                <span>{params.data.transfer_type}</span>
               </div>
             </div>
           );
@@ -148,7 +148,7 @@ class StockTransferRequest extends React.Component {
         filter: true,
         resizable: true,
         width: 180,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="ml-2">
@@ -162,10 +162,19 @@ class StockTransferRequest extends React.Component {
         headerName: "Actions",
         field: "transactions",
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Edit className="mr-50" size={20} /> */}
+              <Eye
+                className="mr-50"
+                size="25px"
+                color="blue"
+                onClick={() =>
+                  history.push(
+                    `/app/stockControl/viewStockTransfer/${params.data._id}`
+                  )
+                }
+              />
               <Trash2
                 size={20}
                 onClick={() => {
@@ -181,20 +190,21 @@ class StockTransferRequest extends React.Component {
     ],
   };
   async componentDidMount() {
-    await axiosConfig.get("/getstocktransfer").then(response => {
+    await axiosConfig.get("/getstocktransfer").then((response) => {
       let rowData = response.data.data;
       this.setState({ rowData });
+      console.log(rowData);
     });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/delstocktransfer/${id}`).then(response => {
+    await axiosConfig.get(`/delstocktransfer/${id}`).then((response) => {
       console.log(response);
     });
   }
-  
-  onGridReady = params => {
+
+  onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -204,11 +214,11 @@ class StockTransferRequest extends React.Component {
     });
   };
 
-  updateSearchQuery = val => {
+  updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = val => {
+  filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -292,7 +302,9 @@ class StockTransferRequest extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
-                          onChange={e => this.updateSearchQuery(e.target.value)}
+                          onChange={(e) =>
+                            this.updateSearchQuery(e.target.value)
+                          }
                           value={this.state.value}
                         />
                       </div>
@@ -307,7 +319,7 @@ class StockTransferRequest extends React.Component {
                     </div>
                   </div>
                   <ContextLayout.Consumer>
-                    {context => (
+                    {(context) => (
                       <AgGridReact
                         gridOptions={{}}
                         rowSelection="multiple"

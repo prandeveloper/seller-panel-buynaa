@@ -285,11 +285,17 @@ class PurchaceInvoiceList extends React.Component {
   // Purchase Order Invoice Number, Supplier, Purchase Order Invoice Date, SKU, HSN, Cost Price, GST, Grand Total, Payment Mode, Action - View, Edit, Destroy. Pagination, Next Button
 
   async componentDidMount() {
-    await axiosConfig.get("/getpurchaseorder").then((response) => {
-      let rowData = response.data.data;
-      this.setState({ rowData });
-      console.log(rowData);
-    });
+    await axiosConfig
+      .get("/getpurchaseorder", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        this.setState({ rowData });
+        console.log(rowData);
+      });
   }
 
   // async runthisfunction(id) {
@@ -338,12 +344,16 @@ class PurchaceInvoiceList extends React.Component {
                 </h1>
               </Col>
               <Col>
-                {/* <Button
+                <Button
                   className=" btn btn-danger float-right"
-                  onClick={() => history.push("/app/privacyPolicy/addPolicy")}
+                  onClick={() =>
+                    history.push(
+                      "/app/purchase/purchaseInvoice/addpurchaseInvoice"
+                    )
+                  }
                 >
-                  Add New Policy
-                </Button> */}
+                  Add Purchase Invoice
+                </Button>
               </Col>
             </Row>
             <CardBody>

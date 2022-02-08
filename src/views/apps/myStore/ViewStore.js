@@ -1,318 +1,370 @@
-import React, { Component } from "react";
-import { Card, CardBody, Row, Col, Button, Container } from "reactstrap";
-import { MapPin, Star, Globe, Mail, Clock, Calendar } from "react-feather";
+import React from "react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Media,
+  Container,
+  Row,
+  Col,
+  Button,
+  Label,
+} from "reactstrap";
+import { Edit, Trash } from "react-feather";
+import { Link } from "react-router-dom";
 import axiosConfig from "../../../axiosConfig";
-import { history } from "../../../history";
 import Carousel from "react-elastic-carousel";
+//import Checkbox from "../../../../components/@vuexy/checkbox/CheckboxesVuexy";
+//import userImg from "../../../assets/img/portrait/small/avatar-s-18.jpg";
+import "../../../assets/scss/pages/users.scss";
+import { history } from "../../../history";
 
-export class ViewStore extends Component {
+class ViewStore extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       data: {},
     };
   }
-
   componentDidMount() {
-    console.log("component mounting");
+    console.log(this.props.match.params);
     let { id } = this.props.match.params;
     axiosConfig
       .get(`/getonestore/${id}`)
-      .then(response => {
-        console.log(response);
-        // console.log(response.data.data);
+      .then((response) => {
+        // console.log(response.data);
+        console.log(response.data.data);
         this.setState({ data: response.data.data });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
   render() {
     return (
       <React.Fragment>
-        <Card className="overflow-hidden app-ecommerce-details">
-          <Row className="m-2">
-            <Col>
-              <h1 col-sm-6 className="float-left">
-                Store Details
-              </h1>
-            </Col>
-            <Col>
-              <Button
-                className=" btn btn-danger float-right"
-                onClick={() => history.push("/app/myStore/storeList")}
-              >
-                Back
-              </Button>
-            </Col>
-          </Row>
-          <CardBody className="pb-0">
-            {/* <h1>{this.state.data.storeImg?.length}</h1> */}
-            <Container>
-              <Carousel>
-                {this.state.data?.storeImg?.map(i => (
-                  <img
-                    className="border-black m-0"
-                    src={i}
-                    alt="user avatar"
-                    height="400"
-                  />
-                ))}
-              </Carousel>
-            </Container>
-
-            <Row className="justify-content-md-center mt-3 ">
-              <Col sm="8" className="">
-                <Card className="">
-                  <div className="card-block">
-                    <Row className="mb-3">
-                      <Col className="">
-                        <h3 className="mt-2">{this.state.data.store_name}</h3>
-                      </Col>
-                      <div className="col-md-auto text-right">
-                        {/* <div className="m-t-35">
-                              <button
-                                type="submit"
-                                className="btn btn-outline-primary"
-                              >
-                                Directions
-                              </button>
-                              <button type="submit" className="btn btn-primary">
-                                Call Now
-                              </button>
-                            </div>  */}
+        <Row>
+          <Col sm="12">
+            <Card>
+              <Row className="m-2">
+                <Col>
+                  <h1 col-sm-6 className="float-left">
+                    Store Detail
+                  </h1>
+                </Col>
+                <Col>
+                  <Button
+                    className=" btn btn-danger float-right"
+                    onClick={() => history.push("/app/store/stores/storesList")}
+                  >
+                    Back
+                  </Button>
+                </Col>
+              </Row>
+              <Container>
+                <Carousel>
+                  {this.state.data?.storeImg?.map((i) => (
+                    <img
+                      className="border-black m-0"
+                      src={i}
+                      alt="user avatar"
+                      height="400"
+                    />
+                  ))}
+                </Carousel>
+              </Container>
+              <CardBody>
+                <Row className="mx-0" col="12">
+                  <Col className="pl-0" sm="12" lg="6">
+                    <Media className="d-sm-flex d-block">
+                      <Media className="mt-md-1 mt-0" left>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <h1 col-sm-6 className="float-left">
+                            Shop Logo
+                          </h1>
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <Media
+                            className="rounded mr-2"
+                            object
+                            src={this.state.data.shoplogo_img}
+                            alt="Generic placeholder image"
+                            height="150"
+                            width="180"
+                          />
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <h1 col-sm-6 className="float-left">
+                            GST Image
+                          </h1>
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <Media
+                            className="rounded mr-2"
+                            object
+                            src={this.state.data.gstImg}
+                            alt="Generic placeholder image"
+                            height="150"
+                            width="180"
+                          />
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <h1 col-sm-6 className="float-left">
+                            Store PAN Image
+                          </h1>
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <Media
+                            className="rounded mr-2"
+                            object
+                            src={this.state.data.storepan_img}
+                            alt="Generic placeholder image"
+                            height="150"
+                            width="180"
+                          />
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <h1 col-sm-6 className="float-left">
+                            Tradelicence Image
+                          </h1>
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <Media
+                            className="rounded mr-2"
+                            object
+                            src={this.state.data.tradelicence_img}
+                            alt="Generic placeholder image"
+                            height="150"
+                            width="180"
+                          />
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <h1 col-sm-6 className="float-left">
+                            Company PAN Image
+                          </h1>
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <Media
+                            className="rounded mr-2"
+                            object
+                            src={this.state.data.companypan_img}
+                            alt="Generic placeholder image"
+                            height="150"
+                            width="180"
+                          />
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <h1 col-sm-6 className="float-left">
+                            Adress Proof Image
+                          </h1>
+                        </Col>
+                        <Col className="mt-1 pl-0" sm="12">
+                          <Media
+                            className="rounded mr-2"
+                            object
+                            src={this.state.data.address_proof_img}
+                            alt="Generic placeholder image"
+                            height="150"
+                            width="180"
+                          />
+                        </Col>
+                      </Media>
+                    </Media>
+                  </Col>
+                  {/* <Col className="mt-1 pl-0" sm="12">
+                    <Button.Ripple className="mr-1" color="primary" outline>
+                      <Link to="/app/store/stores/editStore">
+                        <Edit size={15} />
+                        <span className="align-middle ml-50">Edit</span>
+                      </Link>
+                    </Button.Ripple>
+                    <Button.Ripple color="danger" outline>
+                      <Trash size={15} />
+                      <span className="align-middle ml-50">Delete</span>
+                    </Button.Ripple>
+                  </Col> */}
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col sm="12" md="12">
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  <h1>Information</h1>
+                </CardTitle>
+              </CardHeader>
+              <CardBody>
+                {/* <Media body> */}
+                <Row className="ml-4">
+                  <Col sm="9" md="12" lg="12">
+                    <div className="users-page-view-table">
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Store Name
+                        </div>
+                        <div className="text-truncate">
+                          <span>{this.state.data.store_name}</span>
+                        </div>
                       </div>
-                    </Row>
-                    <div className="row">
-                      {/* <div className="col-md-auto">
-                            <div>
-                              <a href="#!">
-                                <Star className="f-18 text-c-yellow" />
-                              </a>
-                              <a href="#!">
-                                <Star className="f-18 text-c-yellow" />
-                              </a>
-                              <a href="#!">
-                                <Star className="f-18 text-c-yellow" />
-                              </a>
-                              <a href="#!">
-                                <Star className="f-18 text-c-yellow" />
-                              </a>
-                              <a href="#!">
-                                <Star className="f-18 text-c-yellow" />
-                              </a>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <h4>
-                              <a href="#">63 Reviews</a>
-                            </h4>
-                          </div> */}
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Store Email
+                        </div>
+                        <div className="text-truncate">
+                          <span>{this.state.data.store_email}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="users-page-view-table">
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Status
+                        </div>
+                        <div>{this.state.data.status}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Business Type
+                        </div>
+                        <div>{this.state.data.business_type}</div>
+                      </div>
                     </div>
 
-                    <Row className="">
-                      <Col className="col-md-auto">
-                        <h3>
-                          <MapPin className="feather icon-map-pin" />
-                        </h3>
-                      </Col>
-                      <div className="col">
-                        <h5>
-                          {this.state.data.address_line1}{" "}
-                          {this.state.data.address_line2}{" "}
-                          {this.state.data.landmark} {this.state.data.city}{" "}
-                          {this.state.data.state} {this.state.data.pincode}
-                        </h5>
+                    {/*  </Media> */}
+                    <div className="users-page-view-table">
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Store Name
+                        </div>
+                        <div>{this.state.data.store_name}</div>
                       </div>
-                    </Row>
-                    <div className="row">
-                      <div className="col-md-auto">
-                        <h3>
-                          <Globe className="feather icon-globe" />
-                        </h3>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Address
+                        </div>
+                        <div>
+                          {this.state.data.address_line1},
+                          {this.state.data.address_line2}
+                        </div>
                       </div>
-                      <div className="col">
-                        <h5>
-                          <a href="www.casualdress.com" target="_blank">
-                            {this.state.data.websiteUrl}
-                          </a>
-                        </h5>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Store Description
+                        </div>
+                        <div>{this.state.data.store_desc}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          LandMark
+                        </div>
+                        <div>{this.state.data.landmark}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Website
+                        </div>
+                        <div>{this.state.data.websiteUrl}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Phone No
+                        </div>
+                        <div>{this.state.data.altphone_no}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Open Days
+                        </div>
+                        <div>{this.state.data.day}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Time
+                        </div>
+                        <div>
+                          {this.state.data.openingTym}-
+                          {this.state.data.closingTym}
+                        </div>
+                      </div>
+                      {/* <div className="d-flex user-info">
+                    <div className="user-info-title font-weight-bold">
+                      Mobile No
+                    </div>
+                    <div>{this.state.data.mobile_no}</div>
+                  </div> */}
+
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          City
+                        </div>
+                        <div>{this.state.data.city}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          State
+                        </div>
+                        <div>{this.state.data.state}</div>
+                      </div>
+                      {/* <div className="d-flex user-info">
+                    <div className="user-info-title font-weight-bold">
+                      Country
+                    </div>
+                    <div>{this.state.data.country}</div>
+                  </div> */}
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Pin Code
+                        </div>
+                        <div>{this.state.data.pincode}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          GST No.
+                        </div>
+                        <div>{this.state.data.gst_no}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Business Type
+                        </div>
+                        <div>{this.state.data.business_type}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          PAN No.
+                        </div>
+                        <div>{this.state.data.pan_no}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Company PAN No.
+                        </div>
+                        <div>{this.state.data.company_panno}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          Address Proof
+                        </div>
+                        <div>{this.state.data.address_proof}</div>
+                      </div>
+                      <div className="d-flex user-info">
+                        <div className="user-info-title font-weight-bold">
+                          short Order
+                        </div>
+                        <div>{this.state.data.sortorder}</div>
                       </div>
                     </div>
-                    <Row className="">
-                      <Col className="col-md-auto">
-                        <h3>
-                          <Mail className="feather icon-mail" />
-                        </h3>
-                      </Col>
-                      <Col className="">
-                        <h5>
-                          <a href="">{this.state.data.store_email}</a>
-                        </h5>
-                      </Col>
-                    </Row>
-                    <Row className="">
-                      <Col className="col-md-auto">
-                        <h3>
-                          <Calendar className="far fa-" />
-                        </h3>
-                      </Col>
-                      <Col className="">
-                        <h5>
-                          <span className="text-success">Opening Days - </span>
-                          <span style={{ textTransform: "capitalize" }}>
-                            {" "}
-                            {this.state.data.day}
-                          </span>{" "}
-                        </h5>
-                      </Col>
-                    </Row>
-                    <Row className="">
-                      <Col className="col-md-auto">
-                        <h3>
-                          <Clock className="far fa-clock" />
-                        </h3>
-                      </Col>
-                      <Col className="">
-                        <h4>
-                          {this.state.data.startTym}-{this.state.data.endTym}
-                        </h4>
-                      </Col>
-                    </Row>
-                    <p className="border-top mb-2 pt-1 mt-2"></p>
-                    <Row className="">
-                      <Col className="">
-                        <h4>Speciality</h4>
-                        <span>{this.state.data.business_type}</span>
-                      </Col>
-                    </Row>
-                    <div className="mb-2 mt-2"></div>
-                    <Row className="">
-                      <Col className="">
-                        <h4>Introduction</h4>
-                        <span>{this.state.data.store_desc}</span>
-                      </Col>
-                    </Row>
-                    <p className="border-top mb-2 pt-1 mt-2"></p>
-                    {/* <Row className="">
-                      <Col className="">
-                        <button type="button" className="btn btn-success">
-                          Topwear{" "}
-                          <span className="badge">
-                            <i className="feather icon-x"></i>
-                          </span>
-                        </button>
-                        <button type="button" className="btn btn-info">
-                          Tshirts{" "}
-                          <span className="badge">
-                            <i className="feather icon-x"></i>
-                          </span>
-                        </button>
-                        <button type="button" className="btn btn-warning">
-                          Bottom Wear{" "}
-                          <span className="badge">
-                            <i className="feather icon-x"></i>
-                          </span>
-                        </button>
-                        <button type="button" className="btn btn-secondary">
-                          Jeans{" "}
-                          <span className="badge">
-                            <i className="feather icon-x"></i>
-                          </span>
-                        </button>
-                        <button type="button" className="btn btn-success">
-                          Topwear{" "}
-                          <span className="badge">
-                            <i className="feather icon-x"></i>
-                          </span>
-                        </button>
-                        <button type="button" className="btn btn-info">
-                          Tshirts{" "}
-                          <span className="badge">
-                            <i className="feather icon-x"></i>
-                          </span>
-                        </button>
-                        <button type="button" className="btn btn-warning">
-                          Bottom Wear{" "}
-                          <span className="badge">
-                            <i className="feather icon-x"></i>
-                          </span>
-                        </button>
-                        <button type="button" className="btn btn-secondary">
-                          Jeans{" "}
-                          <span className="badge">
-                            <i className="feather icon-x"></i>
-                          </span>
-                        </button>
-                      </Col>
-                    </Row> */}
-                    <p className="border-top m-b-20 p-t-10 m-t-20"></p>
-                    {/* <div className="form-group text-right">
-                      <button
-                        type="submit"
-                        className="btn btn-lg btn-outline-primary"
-                      >
-                        Cancel
-                      </button>
-                      <button type="submit" className="btn btn-lg btn-primary">
-                        Save
-                      </button>
-                    </div> */}
-                  </div>
-                </Card>
-              </Col>
-            </Row>
-
-            {/* <Row className="mb-5 mt-2">
-              <Col
-                className="d-flex align-items-start justify-content-center mb-2 mb-md-0"
-                sm="12"
-                md="5"
-              >
-                 {this.state.data.storeImg.map((i) => (
-                  <img src={i} alt="Google Home" height="250" width="250" />
-                ))} 
-              </Col>
-
-              <Col md="7" sm="12">
-                <h4 style={{ fontWeight: 800 }}>Store Name</h4>
-                <h5>{this.state.data.store_name}</h5>
-                <hr />
-                <h4 style={{ fontWeight: 800 }}>Store ID </h4>
-                <h5>{this.state.data.storeID}</h5>
-                <hr />
-                <h4 style={{ fontWeight: 800 }}>Owner Name</h4>
-                <h5>{this.state.data.owner_name}</h5>
-                <hr />
-                <h4 style={{ fontWeight: 800 }}>Email</h4>
-                <h5>{this.state.data.email}</h5>
-                <hr />
-                <h4 style={{ fontWeight: 800 }}>Mobile Number</h4>
-                <h5>{this.state.data.mobile}</h5>
-                <hr />
-                <h4 style={{ fontWeight: 800 }}>Address</h4>
-                <h5>{this.state.data.address}</h5>
-                <hr />
-                <h4 style={{ fontWeight: 800 }}>City</h4>
-                <h5>{this.state.data.city}</h5>
-                <hr />
-                <h4 style={{ fontWeight: 800 }}>State </h4>
-                <h5>{this.state.data.state}</h5>
-                <hr />
-                <h4 style={{ fontWeight: 800 }}>Country</h4>
-                <h5>{this.state.data.country}</h5>
-                <hr />
-                <h4 style={{ fontWeight: 800 }}>Status</h4>
-                <h5>{this.state.data.status}</h5>
-                <hr />
-              </Col>
-            </Row> */}
-          </CardBody>
-        </Card>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col sm="12" md="6"></Col>
+        </Row>
       </React.Fragment>
     );
   }
 }
-
 export default ViewStore;

@@ -188,7 +188,7 @@ class CreateInvoice extends React.Component {
                   Create Invoice
                 </h1>
               </Col>
-              <Col>
+              {/* <Col>
                 <Button
                   className=" btn btn-danger float-right"
                   onClick={() =>
@@ -197,7 +197,7 @@ class CreateInvoice extends React.Component {
                 >
                   Add New Customer
                 </Button>
-              </Col>
+              </Col> */}
             </Row>
             <CardBody>
               {this.state.rowData === null ? null : (

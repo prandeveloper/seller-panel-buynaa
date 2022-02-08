@@ -466,13 +466,30 @@ const navigationConfig = [
     permissions: ["admin", "editor"],
     navLink: "/app/notification/notificationList",
   },
+
   {
-    id: "access-control",
-    title: "Access Control",
-    icon: <Icon.Lock size={20} />,
-    type: "item",
-    permissions: ["admin", "editor"],
-    navLink: "/extensions/access-control",
+    id: "rolesAndPermission",
+    title: "Permission",
+    type: "collapse",
+    icon: <Icon.Truck size={20} />,
+    children: [
+      {
+        id: "roleList",
+        title: "Permission List",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/roleAndPermission/roleList",
+      },
+      {
+        id: "addRole",
+        title: "Add Permissions",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/roleAndPermission/addRole",
+      },
+    ],
   },
 
   {
@@ -1059,6 +1076,14 @@ export default navigationConfig;
 //     },
 //   ]
 // },
+// {
+//     id: "access-control",
+//     title: "Access Control",
+//     icon: <Icon.Lock size={20} />,
+//     type: "item",
+//     permissions: ["admin", "editor"],
+//     navLink: "/extensions/access-control",
+//   },
 
 // {
 //   id: "activity",

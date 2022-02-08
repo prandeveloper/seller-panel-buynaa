@@ -39,11 +39,11 @@ class Login extends React.Component {
       .post("http://35.154.86.59/api/admin/sellerlogin", this.state)
       .then((response) => {
         console.log(response);
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("auth-adtoken", response.data.token);
         history.push("/analyticsDashboard");
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   };
   render() {
@@ -58,7 +58,7 @@ class Login extends React.Component {
             className="d-flex justify-content-center"
           >
             <Col lg="8" md="12" className="p-1">
-              <Card className="rounded-0 mb-0 px-2 login-tabs-container">
+              <Card className="rounded-0 mb-0 px-2 pb-3 login-tabs-container">
                 <CardHeader className="pb-1">
                   <img src={glogo} class="img-fluid" alt="..." />
                   {/* <img src={glogo} alt="glogo" /> */}
@@ -93,6 +93,16 @@ class Login extends React.Component {
                       required
                     />
                   </FormGroup>
+
+                  <div className="m-2">
+                    <h6
+                      onClick={() => {
+                        history.push("/pages/forgot-password");
+                      }}
+                    >
+                      Forget Password
+                    </h6>
+                  </div>
 
                   <div className="d-flex justify-content-between">
                     <Button.Ripple

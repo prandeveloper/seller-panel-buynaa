@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import {
   NavItem,
   NavLink,
@@ -8,31 +8,31 @@ import {
   DropdownItem,
   DropdownToggle,
   Media,
-  Badge
-} from "reactstrap"
-import PerfectScrollbar from "react-perfect-scrollbar"
-import axios from "axios"
-import * as Icon from "react-feather"
-import classnames from "classnames"
-import ReactCountryFlag from "react-country-flag"
-import Autocomplete from "../../../components/@vuexy/autoComplete/AutoCompleteComponent"
+  Badge,
+} from "reactstrap";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import axios from "axios";
+import * as Icon from "react-feather";
+import classnames from "classnames";
+import ReactCountryFlag from "react-country-flag";
+import Autocomplete from "../../../components/@vuexy/autoComplete/AutoCompleteComponent";
 //import { useAuth0 } from "../../../authServices/auth0/auth0Service"
-import { history } from "../../../history"
-import { IntlContext } from "../../../utility/context/Internationalization"
+import { history } from "../../../history";
+import { IntlContext } from "../../../utility/context/Internationalization";
 
 const handleNavigation = (e, path) => {
-  e.preventDefault()
-  history.push(path)
-}
+  e.preventDefault();
+  history.push(path);
+};
 
-const UserDropdown = props => {
+const UserDropdown = (props) => {
   // const { logout, isAuthenticated } = useAuth0()
   return (
     <DropdownMenu right>
       <DropdownItem
         tag="a"
         href="#"
-        onClick={e => handleNavigation(e, "/pages/profile/userProfile")}
+        onClick={(e) => handleNavigation(e, "/pages/profile/userProfile")}
       >
         <Icon.User size={14} className="mr-50" />
         <span className="align-middle">Edit Profile</span>
@@ -69,33 +69,33 @@ const UserDropdown = props => {
       <DropdownItem
         tag="a"
         href="/pages/login"
-        onClick={e => {
-          e.preventDefault()
-          // if (isAuthenticated) {
-          //    // return logout({
-          //    //   returnTo: window.location.origin + process.env.REACT_APP_PUBLIC_PATH
-          //    // })
-          // }
-            const provider = props.loggedInWith
-            if (provider !== null) {
-              if (provider === "jwt") {
-                return props.logoutWithJWT()
-              }
-              if (provider === "firebase") {
-                return props.logoutWithFirebase()
-              }
-            } else {
-              history.push("/pages/login")
-            }
-          }
-        }
+        // onClick={(e) => {
+        //   e.preventDefault();
+        //   if () {
+        //     return logout({
+        //       returnTo:
+        //         window.location.origin + process.env.REACT_APP_PUBLIC_PATH,
+        //     });
+        //   } else {
+        //     history.push("/");
+        //   }
+        // }}
       >
         <Icon.Power size={14} className="mr-50" />
-        <span className="align-middle">Log Out</span>
+        <span
+          className="align-middle"
+          onClick={(e) => {
+            window.localStorage.removeItem("auth-adtoken");
+            window.location.push = "/";
+            return false;
+          }}
+        >
+          Log Out
+        </span>
       </DropdownItem>
     </DropdownMenu>
-  )
-}
+  );
+};
 
 class NavbarUser extends React.PureComponent {
   state = {
@@ -104,74 +104,63 @@ class NavbarUser extends React.PureComponent {
     shoppingCart: [
       {
         id: 1,
-        name:
-          "Apple - Apple Watch Series 1 42mm Space Gray Aluminum Case Black Sport Band - Space Gray Aluminum",
-        desc:
-          "Durable, lightweight aluminum cases in silver, space gray, gold, and rose gold. Sport Band in a variety of colors. All the features of the original Apple Watch, plus a new dual-core processor for faster performance. All models run watchOS 3. Requires an iPhone 5 or later.",
+        name: "Apple - Apple Watch Series 1 42mm Space Gray Aluminum Case Black Sport Band - Space Gray Aluminum",
+        desc: "Durable, lightweight aluminum cases in silver, space gray, gold, and rose gold. Sport Band in a variety of colors. All the features of the original Apple Watch, plus a new dual-core processor for faster performance. All models run watchOS 3. Requires an iPhone 5 or later.",
         price: "$299",
         img: require("../../../assets/img/pages/eCommerce/4.png"),
-        width: 75
+        width: 75,
       },
       {
         id: 2,
-        name:
-          "Apple - Macbook® (Latest Model) - 12' Display - Intel Core M5 - 8GB Memory - 512GB Flash Storage Space Gray",
-        desc:
-          "MacBook delivers a full-size experience in the lightest and most compact Mac notebook ever. With a full-size keyboard, force-sensing trackpad, 12-inch Retina display,1 sixth-generation Intel Core M processor, multifunctional USB-C port, and now up to 10 hours of battery life,2 MacBook features big thinking in an impossibly compact form.",
+        name: "Apple - Macbook® (Latest Model) - 12' Display - Intel Core M5 - 8GB Memory - 512GB Flash Storage Space Gray",
+        desc: "MacBook delivers a full-size experience in the lightest and most compact Mac notebook ever. With a full-size keyboard, force-sensing trackpad, 12-inch Retina display,1 sixth-generation Intel Core M processor, multifunctional USB-C port, and now up to 10 hours of battery life,2 MacBook features big thinking in an impossibly compact form.",
         price: "$1599.99",
         img: require("../../../assets/img/pages/eCommerce/dell-inspirion.jpg"),
         width: 100,
-        imgClass: "mt-1 pl-50"
+        imgClass: "mt-1 pl-50",
       },
       {
         id: 3,
         name: "Sony - PlayStation 4 Pro Console",
-        desc:
-          "PS4 Pro Dynamic 4K Gaming & 4K Entertainment* PS4 Pro gets you closer to your game. Heighten your experiences. Enrich your adventures. Let the super-charged PS4 Pro lead the way.** GREATNESS AWAITS",
+        desc: "PS4 Pro Dynamic 4K Gaming & 4K Entertainment* PS4 Pro gets you closer to your game. Heighten your experiences. Enrich your adventures. Let the super-charged PS4 Pro lead the way.** GREATNESS AWAITS",
         price: "$399.99",
         img: require("../../../assets/img/pages/eCommerce/7.png"),
-        width: 88
+        width: 88,
       },
       {
         id: 4,
-        name:
-          "Beats by Dr. Dre - Geek Squad Certified Refurbished Beats Studio Wireless On-Ear Headphones - Red",
-        desc:
-          "Rock out to your favorite songs with these Beats by Dr. Dre Beats Studio Wireless GS-MH8K2AM/A headphones that feature a Beats Acoustic Engine and DSP software for enhanced clarity. ANC (Adaptive Noise Cancellation) allows you to focus on your tunes.",
+        name: "Beats by Dr. Dre - Geek Squad Certified Refurbished Beats Studio Wireless On-Ear Headphones - Red",
+        desc: "Rock out to your favorite songs with these Beats by Dr. Dre Beats Studio Wireless GS-MH8K2AM/A headphones that feature a Beats Acoustic Engine and DSP software for enhanced clarity. ANC (Adaptive Noise Cancellation) allows you to focus on your tunes.",
         price: "$379.99",
         img: require("../../../assets/img/pages/eCommerce/10.png"),
-        width: 75
+        width: 75,
       },
       {
         id: 5,
-        name:
-          "Sony - 75' Class (74.5' diag) - LED - 2160p - Smart - 3D - 4K Ultra HD TV with High Dynamic Range - Black",
-        desc:
-          "This Sony 4K HDR TV boasts 4K technology for vibrant hues. Its X940D series features a bold 75-inch screen and slim design. Wires remain hidden, and the unit is easily wall mounted. This television has a 4K Processor X1 and 4K X-Reality PRO for crisp video. This Sony 4K HDR TV is easy to control via voice commands.",
+        name: "Sony - 75' Class (74.5' diag) - LED - 2160p - Smart - 3D - 4K Ultra HD TV with High Dynamic Range - Black",
+        desc: "This Sony 4K HDR TV boasts 4K technology for vibrant hues. Its X940D series features a bold 75-inch screen and slim design. Wires remain hidden, and the unit is easily wall mounted. This television has a 4K Processor X1 and 4K X-Reality PRO for crisp video. This Sony 4K HDR TV is easy to control via voice commands.",
         price: "$4499.99",
         img: require("../../../assets/img/pages/eCommerce/sony-75class-tv.jpg"),
         width: 100,
-        imgClass: "mt-1 pl-50"
+        imgClass: "mt-1 pl-50",
       },
       {
         id: 6,
-        name:
-          "Nikon - D810 DSLR Camera with AF-S NIKKOR 24-120mm f/4G ED VR Zoom Lens - Black",
-        desc:
-          "Shoot arresting photos and 1080p high-definition videos with this Nikon D810 DSLR camera, which features a 36.3-megapixel CMOS sensor and a powerful EXPEED 4 processor for clear, detailed images. The AF-S NIKKOR 24-120mm lens offers shooting versatility. Memory card sold separately.",
+        name: "Nikon - D810 DSLR Camera with AF-S NIKKOR 24-120mm f/4G ED VR Zoom Lens - Black",
+        desc: "Shoot arresting photos and 1080p high-definition videos with this Nikon D810 DSLR camera, which features a 36.3-megapixel CMOS sensor and a powerful EXPEED 4 processor for clear, detailed images. The AF-S NIKKOR 24-120mm lens offers shooting versatility. Memory card sold separately.",
         price: "$4099.99",
         img: require("../../../assets/img/pages/eCommerce/canon-camera.jpg"),
         width: 70,
-        imgClass: "mt-1 pl-50"
-      }
+        imgClass: "mt-1 pl-50",
+      },
     ],
-    suggestions: []
-  }
+    suggestions: [],
+  };
 
   componentDidMount() {
     axios.get("/api/main-search/data").then(({ data }) => {
-      this.setState({ suggestions: data.searchResult })
-    })
+      this.setState({ suggestions: data.searchResult });
+    });
   }
 
   // handleNavbarSearch = () => {
@@ -180,21 +169,21 @@ class NavbarUser extends React.PureComponent {
   //   })
   // }
 
-  removeItem = id => {
-    let cart = this.state.shoppingCart
+  removeItem = (id) => {
+    let cart = this.state.shoppingCart;
 
-    let updatedCart = cart.filter(i => i.id !== id)
+    let updatedCart = cart.filter((i) => i.id !== id);
 
     this.setState({
-      shoppingCart: updatedCart
-    })
-  }
+      shoppingCart: updatedCart,
+    });
+  };
 
   handleLangDropdown = () =>
-    this.setState({ langDropdown: !this.state.langDropdown })
+    this.setState({ langDropdown: !this.state.langDropdown });
 
   render() {
-    const renderCartItems = this.state.shoppingCart.map(item => {
+    const renderCartItems = this.state.shoppingCart.map((item) => {
       return (
         <div className="cart-item" key={item.id}>
           <Media
@@ -225,28 +214,28 @@ class NavbarUser extends React.PureComponent {
                 <Icon.X
                   className="danger"
                   size={15}
-                  onClick={e => {
-                    e.stopPropagation()
-                    this.removeItem(item.id)
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.removeItem(item.id);
                   }}
                 />
               </div>
             </Media>
           </Media>
         </div>
-      )
-    })
+      );
+    });
 
     return (
       <ul className="nav navbar-nav navbar-nav-user float-right">
         <IntlContext.Consumer>
-          {context => {
+          {(context) => {
             let langArr = {
               // "en" : "English",
               // "de" : "German",
               // "fr" : "French",
               // "pt" : "Portuguese"
-            }
+            };
             return (
               <Dropdown
                 tag="li"
@@ -255,10 +244,7 @@ class NavbarUser extends React.PureComponent {
                 toggle={this.handleLangDropdown}
                 data-tour="language"
               >
-                <DropdownToggle
-                  tag="a"
-                  className="nav-link"
-                >
+                <DropdownToggle tag="a" className="nav-link">
                   {/* <ReactCountryFlag
                   className="country-flag"
                     countryCode={
@@ -303,24 +289,24 @@ class NavbarUser extends React.PureComponent {
                   </DropdownItem> */}
                 </DropdownMenu>
               </Dropdown>
-            )
+            );
           }}
         </IntlContext.Consumer>
 
         {/* <NavItem className="nav-search" onClick={this.handleNavbarSearch}> */}
-          {/* <NavLink className="nav-link-search">
+        {/* <NavLink className="nav-link-search">
             <Icon.Search size={21} data-tour="search" />
           </NavLink> */}
-          {/* <div
+        {/* <div
             className={classnames("search-input", {
               open: this.state.navbarSearch,
               "d-none": this.state.navbarSearch === false
             })}
           > */}
-            {/* <div className="search-input-icon">
+        {/* <div className="search-input-icon">
               <Icon.Search size={17} className="primary" />
             </div> */}
-            {/* <Autocomplete
+        {/* <Autocomplete
               className="form-control"
               suggestions={this.state.suggestions}
               filterKey="title"
@@ -419,8 +405,8 @@ class NavbarUser extends React.PureComponent {
                 }
               }}
             /> */}
-            {/* <div className="search-input-close"> */}
-              {/* <Icon.X
+        {/* <div className="search-input-close"> */}
+        {/* <Icon.X
                 size={24}
                 onClick={(e) => {
                   e.stopPropagation()
@@ -430,14 +416,14 @@ class NavbarUser extends React.PureComponent {
                   this.props.handleAppOverlay("")
                 }}
               /> */}
-            {/* </div> */}
-          {/* </div> */}
+        {/* </div> */}
+        {/* </div> */}
         {/* </NavItem> */}
         {/* <UncontrolledDropdown
           tag="li"
           className="dropdown-notification nav-item"
         > */}
-          {/* <DropdownToggle tag="a" className="nav-link position-relative">
+        {/* <DropdownToggle tag="a" className="nav-link position-relative">
             <Icon.ShoppingCart size={21} />
             {this.state.shoppingCart.length > 0 ? (
               <Badge pill color="primary" className="badge-up">
@@ -445,14 +431,14 @@ class NavbarUser extends React.PureComponent {
               </Badge>
             ) : null}
           </DropdownToggle> */}
-          {/* <DropdownMenu
+        {/* <DropdownMenu
             tag="ul"
             right
             className={`dropdown-menu-media dropdown-cart ${
               this.state.shoppingCart.length === 0 ? "empty-cart" : ""
             }`}
           > */}
-            {/* <li
+        {/* <li
               className={`dropdown-menu-header ${
                 this.state.shoppingCart.length === 0 ? "d-none" : "d-block"
               }`}
@@ -464,7 +450,7 @@ class NavbarUser extends React.PureComponent {
                 <span className="notification-title">In Your Cart</span>
               </div>
             </li> */}
-            {/* <PerfectScrollbar
+        {/* <PerfectScrollbar
               className="media-list overflow-hidden position-relative"
               options={{
                 wheelPropagation: false
@@ -472,7 +458,7 @@ class NavbarUser extends React.PureComponent {
             >
               {renderCartItems}
             </PerfectScrollbar> */}
-            {/* <li
+        {/* <li
               className={`dropdown-menu-footer border-top ${
                 this.state.shoppingCart.length === 0 ? "d-none" : "d-block"
               }`}
@@ -487,7 +473,7 @@ class NavbarUser extends React.PureComponent {
                 </span>
               </div>
             </li> */}
-            {/* <li
+        {/* <li
               className={`empty-cart ${
                 this.state.shoppingCart.length > 0 ? "d-none" : "d-block"
               } p-2`}
@@ -517,7 +503,7 @@ class NavbarUser extends React.PureComponent {
             <PerfectScrollbar
               className="media-list overflow-hidden position-relative"
               options={{
-                wheelPropagation: false
+                wheelPropagation: false,
               }}
             >
               <div className="d-flex justify-content-between">
@@ -676,7 +662,7 @@ class NavbarUser extends React.PureComponent {
           <UserDropdown {...this.props} />
         </UncontrolledDropdown>
       </ul>
-    )
+    );
   }
 }
-export default NavbarUser
+export default NavbarUser;

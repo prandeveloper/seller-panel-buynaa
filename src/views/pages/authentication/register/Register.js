@@ -16,17 +16,18 @@ import Checkbox from "../../../../components/@vuexy/checkbox/CheckboxesVuexy";
 import { Check } from "react-feather";
 import glogo from "../../../../assets/img/pages/glogo.png";
 import axios from "axios";
+import { history } from "../../../../history";
 
 class Register extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      seller_name: "",
+      name: "",
       email: "",
       mobile: "",
       password: "",
-      confirm_password: "",
+      cnfrm_password: "",
       otp: true,
       otpnumber: "",
       token: "",
@@ -44,8 +45,8 @@ class Register extends React.Component {
       })
       .then((response) => {
         console.log(response);
-        localStorage.setItem("user", response.data.data._id);
-        localStorage.setItem("token", this.state.token || "null");
+        //localStorage.setItem("user", response.data.data._id);
+        localStorage.setItem("auth-adtoken", this.state.token || "null");
         // const location = this.props.location;
         // if (location.state && location.state.nextPathname) {
         //   History.push("/login-register");
@@ -59,7 +60,7 @@ class Register extends React.Component {
       })
       .catch((error) => {
         console.log(error.status);
-        console.log(error.msg);
+        console.log(error.response);
       });
   };
 
@@ -78,12 +79,12 @@ class Register extends React.Component {
 
     this.setState({ otp: false });
     axios
-      .post("http://35.154.86.59/api/admin/seller_signup", this.state)
+      .post("http://35.154.86.59/api/admin/signup", this.state)
       .then((response) => {
         console.log(response);
         // localStorage.setItem("token", response.data.token);
         this.setState({
-          token: response.data.token,
+          "auth-adtoken": response.data.token,
         });
         //this.props.history.push("/");
       })
@@ -131,8 +132,8 @@ class Register extends React.Component {
                         type="text"
                         placeholder="Seller Name"
                         required
-                        name="seller_name"
-                        value={this.state.seller_name}
+                        name="name"
+                        value={this.state.name}
                         onChange={this.changeHandler}
                       />
                     </FormGroup>
@@ -176,8 +177,8 @@ class Register extends React.Component {
                         type="password"
                         placeholder="Confirm Password"
                         required
-                        name="confirm_password"
-                        value={this.state.confirm_password}
+                        name="cnfrm_password"
+                        value={this.state.cnfrm_password}
                         onChange={this.changeHandler}
                       />
                     </FormGroup>

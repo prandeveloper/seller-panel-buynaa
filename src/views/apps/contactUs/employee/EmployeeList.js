@@ -55,7 +55,7 @@ class EmployeeList extends React.Component {
               <img
                 className="rounded-circle  mr-4"
                 src={params.data.image}
-                alt=" brand"
+                alt="img"
                 height="40"
                 width="40"
               />
@@ -63,42 +63,29 @@ class EmployeeList extends React.Component {
           );
         },
       },
-      {
-        headerName: "Employee ID",
-        field: "employeeId",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.employeeId}</span>
-            </div>
-          );
-        },
-      },
+      // {
+      //   headerName: "Employee ID",
+      //   field: "employeeId",
+      //   filter: true,
+      //   width: 200,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div className="ml-2 mr-4">
+      //         <span>{params.data.employeeId}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
 
       {
         headerName: "Employee Name",
-        field: "employee_name",
+        field: "name",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.employee_name}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Phone No.",
-        field: "phone_no",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.phone_no}</span>
+              <span>{params.data.name}</span>
             </div>
           );
         },
@@ -117,62 +104,49 @@ class EmployeeList extends React.Component {
         },
       },
       {
-        headerName: "Password",
-        field: "password",
+        headerName: "Phone No.",
+        field: "mobile",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.password}</span>
+              <span>{params.data.mobile}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Designation",
-        field: "designation",
+        headerName: "Role Name",
+        field: "rolename",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="ml-2 mr-4">
-              <span>{params.data.designation}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Role",
-        field: "role?.role_name",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.role?.role_name}</span>
+              <span>{params.data.rolename}</span>
             </div>
           );
         },
       },
 
-      {
-        headerName: "Status",
-        field: "status",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return params.value === "Active" ? (
-            <div className="badge badge-pill badge-success ml-2">
-              {params.data.status}
-            </div>
-          ) : params.value === "Inactive" ? (
-            <div className="badge badge-pill badge-danger">
-              {params.data.status}
-            </div>
-          ) : null;
-        },
-      },
+      // {
+      //   headerName: "Status",
+      //   field: "status",
+      //   filter: true,
+      //   width: 150,
+      //   cellRendererFramework: (params) => {
+      //     return params.value === "Active" ? (
+      //       <div className="badge badge-pill badge-success ml-2">
+      //         {params.data.status}
+      //       </div>
+      //     ) : params.value === "Inactive" ? (
+      //       <div className="badge badge-pill badge-danger">
+      //         {params.data.status}
+      //       </div>
+      //     ) : null;
+      //   },
+      // },
       {
         headerName: "Actions",
         field: "transactions",
@@ -191,9 +165,9 @@ class EmployeeList extends React.Component {
                 }
               />
               <Trash2
-                 className="mr-50"
-                 size="25px"
-                 color="red"
+                className="mr-50"
+                size="25px"
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
@@ -208,16 +182,22 @@ class EmployeeList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getemployee").then((response) => {
-      let rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getemployecreatedbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/del_employee/${id}`).then((response) => {
+    await axiosConfig.get(`/delSeller/${id}`).then((response) => {
       console.log(response);
     });
   }
