@@ -38,7 +38,7 @@ class CustomerList extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 100,
+        width: 80,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
@@ -163,7 +163,7 @@ class CustomerList extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("http://35.154.86.59/api/user/allcustomer", {
+      .get("http://35.154.86.59/api/user/Customerbysellerbytoken", {
         headers: {
           "auth-adtoken": localStorage.getItem("auth-adtoken"),
         },

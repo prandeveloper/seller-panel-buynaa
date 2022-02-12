@@ -270,30 +270,7 @@ const navigationConfig = [
       },
     ],
   },
-  //     {
-  //       id: "productCategory",
-  //       title: "Category",
-  //       type: "collapse",
-  //       icon: <Icon.ShoppingBag size={20} />,
-  //       children: [
-  //         {
-  //           id: "categoryList",
-  //           title: "Category List",
-  //           type: "item",
-  //           icon: <Icon.Circle size={12} />,
-  //           permissions: ["admin", "editor"],
-  //           navLink: "/app/category/categoryList",
-  //         },
-  //         {
-  //           id: "subCategory",
-  //           title: "Sub-Category",
-  //           type: "item",
-  //           icon: <Icon.Circle size={12} />,
-  //           permissions: ["admin", "editor"],
-  //           navLink: "/app/category/subCategory",
-  //         },
-  //       ],
-  //     },
+
   {
     id: "purchase",
     title: "Purchase",
@@ -580,44 +557,6 @@ const navigationConfig = [
       },
     ],
   },
-  // {
-  //   id: "varientList  ",
-  //   title: "Variant",
-  //   type: "item",
-  //   icon: <Icon.Circle size={12} />,
-  //   permissions: ["admin", "editor"],
-  //   navLink: "/app/products/varient/varientList",
-  // },
-  // {
-  //   id: "coupon",
-  //   title: "Coupon",
-  //   type: "item",
-  //   icon: <Icon.Circle size={12} />,
-  //   permissions: ["admin", "editor"],
-  //   navLink: "/app/products/coupon/coupon",
-  // },
-
-  // {
-  //   id: "invoice",
-  //   title: "Invoice Setting",
-  //   type: "item",
-  //   icon: <Icon.Settings size={20} />,
-  //   permissions: ["admin", "editor"],
-  //   navLink: "/pages/invoice/invoice",
-  //   collapsed: true,
-  // },
-
-  // {
-  //   id: "shipping",
-  //   title: "Shipping Information",
-  //   type: "item",
-  //   icon: <Icon.Info size={20} />,
-  //   permissions: ["admin", "editor"],
-  //   navLink: "/app/shipping/shipinfo",
-
-  //   // navLink: "/pages/shipping",
-  //   collapsed: true,
-  // },
 
   // {
   //   id: "sales",

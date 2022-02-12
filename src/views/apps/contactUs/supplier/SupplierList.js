@@ -137,25 +137,25 @@ class SupplierList extends React.Component {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>
-                {params.data.address_one} {params.data.address_two}
+                {params.data.address_one}
               </span>
             </div>
           );
         },
       },
-      // {
-      //   headerName: "Address 2",
-      //   field: "address_two",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.address_two}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        headerName: "Address 2",
+        field: "address_two",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.address_two}</span>
+            </div>
+          );
+        },
+      },
       {
         headerName: "State",
         field: "state",
@@ -209,23 +209,7 @@ class SupplierList extends React.Component {
         },
       },
 
-      {
-        headerName: "Status",
-        field: "status",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return params.value === "Active" ? (
-            <div className="badge badge-pill badge-success ml-2">
-              {params.data.status}
-            </div>
-          ) : params.value === "Inactive" ? (
-            <div className="badge badge-pill badge-danger">
-              {params.data.status}
-            </div>
-          ) : null;
-        },
-      },
+      
       {
         headerName: "Actions",
         field: "transactions",
@@ -261,7 +245,11 @@ class SupplierList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/Getsupplier").then((response) => {
+    await axiosConfig.get("/Getsupplier",{
+      headers:{
+        "auth-adtoken" : localStorage.getItem("auth-adtoken")
+      }
+    }).then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });

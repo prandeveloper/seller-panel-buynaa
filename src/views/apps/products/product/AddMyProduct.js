@@ -63,7 +63,11 @@ class AddMyProduct extends React.Component {
   async componentDidMount() {
     //Product Category
     axiosConfig
-      .get("/getproductCategory")
+      .get("/allcatByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ productC: response.data.data });
@@ -74,7 +78,11 @@ class AddMyProduct extends React.Component {
 
     //Product Sub Category
     axiosConfig
-      .get("/getproductsubcategory")
+      .get("/getsubcatByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ productSC: response.data.data });
@@ -106,7 +114,11 @@ class AddMyProduct extends React.Component {
       });
     //Brand
     axiosConfig
-      .get("/allbrand")
+      .get("/allbrandbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ pBrand: response.data.data });

@@ -20,6 +20,7 @@ export default class AddUsers extends Component {
 
     this.state = {
       addemp: "",
+      emp:"",
       tabs: {
         store: false,
         employee: false,
@@ -77,7 +78,11 @@ export default class AddUsers extends Component {
     e.preventDefault();
     console.log(this.state);
     axiosConfig
-      .post("/addrole", this.state)
+      .post("/addrole", this.state,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then((response) => {
         console.log(response);
         this.props.history.push("/app/roleAndPermission/roleList");
@@ -118,10 +123,10 @@ export default class AddUsers extends Component {
                         <Label>Select Employee</Label>
                         <CustomInput
                           type="select"
-                          name="addemp"
+                          name="emp"
                           placeholder="Employee"
                           onChange={this.changeHandler}
-                          value={this.state.addemp}
+                          value={this.state.emp}
                         >
                           {this.state.employeeD?.map((emp) => (
                             <option key={emp?._id} value={emp?._id}>

@@ -220,7 +220,11 @@ class BundleOffer extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getcoupon").then(response => {
+    await axiosConfig.get("/getcoupon",{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      }).then(response => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });

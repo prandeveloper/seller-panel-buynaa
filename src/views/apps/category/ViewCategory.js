@@ -15,7 +15,11 @@ class ViewCategory extends React.Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getone_productcategory/${id}`)
+      .get(`/getone_productcategory/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response.data.data);
         this.setState({ data: response.data.data });

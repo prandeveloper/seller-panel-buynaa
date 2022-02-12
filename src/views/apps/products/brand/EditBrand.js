@@ -39,7 +39,11 @@ export class EditBrand extends Component {
     console.log(this.props.match.params);
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonebrand/${id}`)
+      .get(`/viewonebrand/${id}`,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then(response => {
         console.log(response);
         this.setState({
@@ -81,7 +85,11 @@ export class EditBrand extends Component {
 
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editbrand/${id}`, data)
+      .post(`/editbrand/${id}`, data,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then(response => {
         console.log(response);
         this.props.history.push("/app/products/brand/brandList");

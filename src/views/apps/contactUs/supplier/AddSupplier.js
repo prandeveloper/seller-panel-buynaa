@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { history } from "../../../../history";
 import axiosConfig from "../../../../axiosConfig";
+import swal from "sweetalert";
 
 export class AddSupplier extends Component {
   constructor(props) {
@@ -29,14 +30,11 @@ export class AddSupplier extends Component {
       city: "",
       postcode: "",
       gst_no: "",
-      sortorder: "",
-      status: "",
+      
     };
   }
 
-  changeHandler1 = (e) => {
-    this.setState({ status: e.target.value });
-  };
+  
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -44,7 +42,11 @@ export class AddSupplier extends Component {
     e.preventDefault();
 
     axiosConfig
-      .post("/addsupplier", this.state)
+      .post("/addsupplier", this.state,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
@@ -108,7 +110,7 @@ export class AddSupplier extends Component {
                     <Label>Supplier Email</Label>
                     <Input
                       type="email"
-                      placeholder="Customer Email"
+                      placeholder="Supplier Email"
                       name="email"
                       value={this.state.email}
                       onChange={this.changeHandler}
@@ -212,44 +214,9 @@ export class AddSupplier extends Component {
                   </FormGroup>
                 </Col>
 
-                <Col lg="6" md="6">
-                  <FormGroup>
-                    <Label>Sort Order</Label>
-                    <Input
-                      type="number"
-                      placeholder="Sort Order"
-                      name="sortorder"
-                      value={this.state.sortorder}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
+                
 
-                <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
-                  <FormGroup>
-                    <Label className="mb-1">Status</Label>
-                    <div
-                      className="form-label-group"
-                      onChange={(e) => this.changeHandler1(e)}
-                    >
-                      <input
-                        style={{ marginRight: "3px" }}
-                        type="radio"
-                        name="status"
-                        value="Active"
-                      />
-                      <span style={{ marginRight: "20px" }}>Active</span>
-
-                      <input
-                        style={{ marginRight: "3px" }}
-                        type="radio"
-                        name="status"
-                        value="Inactive"
-                      />
-                      <span style={{ marginRight: "3px" }}>Inactive</span>
-                    </div>
-                  </FormGroup>
-                </Col>
+               
               </Row>
               <Row>
                 <Button.Ripple

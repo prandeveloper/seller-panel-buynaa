@@ -30,8 +30,7 @@ export class EditSupplier extends Component {
       city: "",
       postcode: "",
       gst_no: "",
-      sortorder: "",
-      status: "",
+      
     };
   }
 
@@ -39,7 +38,11 @@ export class EditSupplier extends Component {
     //console.log(this.props.match.params);
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getonesupplier/${id}`)
+      .get(`/getonesupplier/${id}`,{
+        headers:{
+          "auth-adtoken" :localStorage.getItem("auth-adtoken")
+        }
+      })
       .then((response) => {
         console.log(response);
         this.setState({
@@ -54,8 +57,7 @@ export class EditSupplier extends Component {
           city: response.data.data.city,
           gst_no: response.data.data.gst_no,
           postcode: response.data.data.postcode,
-          sortorder: response.data.data.sortorder,
-          status: response.data.data.status,
+          
         });
       })
       .catch((error) => {
@@ -63,9 +65,7 @@ export class EditSupplier extends Component {
       });
   }
 
-  changeHandler1 = (e) => {
-    this.setState({ status: e.target.value });
-  };
+  
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -76,7 +76,11 @@ export class EditSupplier extends Component {
 
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/edit_supplier/${id}`, this.state)
+      .post(`/edit_supplier/${id}`, this.state,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then((response) => {
         console.log(response);
         swal("Success!", "Updated SuccessFull!", "success");
@@ -139,7 +143,7 @@ export class EditSupplier extends Component {
                     <Label>Supplier Email</Label>
                     <Input
                       type="email"
-                      placeholder="Customer Email"
+                      placeholder="Supplier Email"
                       name="email"
                       value={this.state.email}
                       onChange={this.changeHandler}
@@ -243,44 +247,9 @@ export class EditSupplier extends Component {
                   </FormGroup>
                 </Col>
 
-                <Col lg="6" md="6">
-                  <FormGroup>
-                    <Label>Sort Order</Label>
-                    <Input
-                      type="number"
-                      placeholder="Sort Order"
-                      name="sortorder"
-                      value={this.state.sortorder}
-                      onChange={this.changeHandler}
-                    />
-                  </FormGroup>
-                </Col>
+                
 
-                <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
-                  <FormGroup>
-                    <Label className="mb-1">Status</Label>
-                    <div
-                      className="form-label-group"
-                      onChange={(e) => this.changeHandler1(e)}
-                    >
-                      <input
-                        style={{ marginRight: "3px" }}
-                        type="radio"
-                        name="status"
-                        value="Active"
-                      />
-                      <span style={{ marginRight: "20px" }}>Active</span>
-
-                      <input
-                        style={{ marginRight: "3px" }}
-                        type="radio"
-                        name="status"
-                        value="Inactive"
-                      />
-                      <span style={{ marginRight: "3px" }}>Inactive</span>
-                    </div>
-                  </FormGroup>
-                </Col>
+                
               </Row>
               <Row>
                 <Button.Ripple

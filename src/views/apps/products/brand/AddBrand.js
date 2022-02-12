@@ -60,7 +60,11 @@ export class AddBrand extends Component {
     //     console.log(value);
     //  }
     axiosConfig
-      .post("/addbrand", data)
+      .post("/addbrand", data ,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then((response) => {
         console.log(response);
         this.props.history.push("/app/products/brand/brandList");

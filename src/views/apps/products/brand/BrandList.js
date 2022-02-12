@@ -140,7 +140,11 @@ class BrandList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/allbrand").then(response => {
+    await axiosConfig.get("/allbrandbyseller",{
+      headers:{
+        "auth-adtoken" : localStorage.getItem("auth-adtoken")
+      }
+    }).then(response => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });

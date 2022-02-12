@@ -38,7 +38,11 @@ export class AddSubCategory extends Component {
   async componentDidMount() {
     //Product Category
     axiosConfig
-      .get("/getproductCategory")
+      .get("/allcatByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ productC: response.data.data });
@@ -79,7 +83,11 @@ export class AddSubCategory extends Component {
     //     console.log(value);
     //  }
     axiosConfig
-      .post("/addproductsubcategory", data)
+      .post("/addproductsubcategory", data, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.props.history.push("/app/category/subCategory");

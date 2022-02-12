@@ -57,7 +57,11 @@ export class AddCoupon extends Component {
     e.preventDefault();
 
     axiosConfig
-      .post("/addcoupon", this.state)
+      .post("/addcoupon", this.state,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then(response => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");

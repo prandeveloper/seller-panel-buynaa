@@ -49,7 +49,7 @@ class AllUsers extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.addemp?.name}</span>
+              <span>{params.data.emp?.name}</span>
             </div>
           );
         },
@@ -287,7 +287,11 @@ class AllUsers extends React.Component {
 
   async componentDidMount() {
     await axios
-      .get("http://35.154.86.59/api/admin/allrole")
+      .get("http://35.154.86.59/api/admin/allrole",{
+      headers:{
+        "auth-adtoken" : localStorage.getItem("auth-adtoken")
+      }
+    })
       .then((response) => {
         let rowData = response.data.data;
         this.setState({ rowData });
@@ -337,7 +341,7 @@ class AllUsers extends React.Component {
             <Row className="m-2">
               <Col>
                 <h1 col-sm-6 className="float-left">
-                  All Users
+                  All User Roles
                 </h1>
               </Col>
               <Col>

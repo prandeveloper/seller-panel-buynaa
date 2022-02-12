@@ -397,11 +397,17 @@ class ProductsList extends React.Component {
     ],
   };
   async componentDidMount() {
-    await axiosConfig.get("/getproduct").then((response) => {
-      const rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getproduct", {
+        hearders: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        const rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
   async runthisfunction(id) {
     console.log(id);

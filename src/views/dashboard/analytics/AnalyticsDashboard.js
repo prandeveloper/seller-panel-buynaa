@@ -10,6 +10,7 @@ import {
   AccordionItem,
 } from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
+import axios from "axios";
 import DispatchedOrders from "./DispatchedOrders";
 import "../../../assets/scss/pages/dashboard-analytics.scss";
 // import AvgSession from "../../ui-elements/cards/analytics/AvgSessions";
@@ -54,15 +55,22 @@ class AnalyticsDashboard extends React.Component {
     super(props);
     this.state = {
       product: {},
-      users: {},
+      store: {},
+      customer:{},
       staff: {},
+      supplier:{},
       brand: {},
+      coupons:{},
     };
   }
 
   componentDidMount() {
     axiosConfig
-      .get("/total_product")
+      .get("/totalproductbyseller",{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then((response) => {
         console.log(response.data);
         //console.log(response.data.data);
@@ -73,18 +81,40 @@ class AnalyticsDashboard extends React.Component {
       });
 
     axiosConfig
-      .get("/total_users")
+      .get("/totalstorebyseller",{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then((response) => {
         console.log(response.data);
         //console.log(response.data.data);
-        this.setState({ users: response.data });
+        this.setState({ store: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      axios.get("http://35.154.86.59/api/user/totalcustomerbyseller",{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
+      .then((response) => {
+        console.log(response.data);
+        //console.log(response.data.data);
+        this.setState({ customer: response.data });
       })
       .catch((error) => {
         console.log(error);
       });
 
     axiosConfig
-      .get("/total_staff")
+      .get("/totalempbyseller",{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then((response) => {
         console.log(response.data);
         //console.log(response.data.data);
@@ -94,12 +124,46 @@ class AnalyticsDashboard extends React.Component {
         console.log(error);
       });
 
+      axiosConfig
+      .get("/totalsupplierBytoken",{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
+      .then((response) => {
+        console.log(response.data);
+        //console.log(response.data.data);
+        this.setState({ supplier: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     axiosConfig
-      .get("/total_brand")
+      .get("/totalbrandbyseller",{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then((response) => {
         console.log(response.data);
         //console.log(response.data.data);
         this.setState({ brand: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      axiosConfig
+      .get("/totalCoupon",{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
+      .then((response) => {
+        console.log(response.data);
+        //console.log(response.data.data);
+        this.setState({ coupons: response.data });
       })
       .catch((error) => {
         console.log(error);
@@ -128,33 +192,44 @@ class AnalyticsDashboard extends React.Component {
           <Col lg="3" md="12">
             <Card className="bg-success" body inverse>
               <CardTitle className="mb-1" tag="h4" style={{ color: "white" }}>
-                Total Users
+                Total Store
               </CardTitle>
 
               <CardText tag="h3" style={{ color: "white" }}>
-                {this.state.users.totalUser}
+                {this.state.store.data}
+              </CardText>
+            </Card>
+          </Col>
+          <Col lg="3" md="12">
+            <Card className="bg-info" body inverse>
+              <CardTitle className="mb-1" tag="h4" style={{ color: "white" }}>
+                Total Customer
+              </CardTitle>
+
+              <CardText tag="h3" style={{ color: "white" }}>
+                {this.state.customer.data}
               </CardText>
             </Card>
           </Col>
           <Col lg="3" md="12">
             <Card className="bg-danger" body inverse>
               <CardTitle className="mb-1" tag="h4" style={{ color: "white" }}>
-                Total Store
+                Total Staff
               </CardTitle>
 
               <CardText tag="h3" style={{ color: "white" }}>
-                {this.state.staff.totalStaff}
+                {this.state.staff.data}
               </CardText>
             </Card>
           </Col>
           <Col lg="3" md="12">
             <Card className="bg-warning" body inverse>
               <CardTitle className="mb-1" tag="h4" style={{ color: "white" }}>
-                Total Seller
+                Total Supplier
               </CardTitle>
 
               <CardText tag="h3" style={{ color: "white" }}>
-                {this.state.brand.totalBrand}
+                {this.state.supplier.data}
               </CardText>
             </Card>
           </Col>
@@ -176,18 +251,18 @@ class AnalyticsDashboard extends React.Component {
               </CardTitle>
 
               <CardText tag="h3" style={{ color: "white" }}>
-                {this.state.brand.totalBrand}
+                {this.state.brand.data}
               </CardText>
             </Card>
           </Col>
           <Col lg="3" md="12">
             <Card className="bg-success" body inverse>
               <CardTitle className="mb-1" tag="h4" style={{ color: "white" }}>
-                Total Brands
+                Total Coupons
               </CardTitle>
 
               <CardText tag="h3" style={{ color: "white" }}>
-                {this.state.brand.totalBrand}
+                {this.state.coupons.data}
               </CardText>
             </Card>
           </Col>
@@ -217,11 +292,11 @@ class AnalyticsDashboard extends React.Component {
         </Row>
 
         {/* theme Componets  */}
-        <Row>
+        {/* <Row>
           <Col sm="12">
             <DispatchedOrders />
           </Col>
-        </Row>
+        </Row> */}
         {/* <Row className="match-height">
           <Col md="6" sm="12">
             <AvgSession labelColor={$label_color} primary={$primary} />

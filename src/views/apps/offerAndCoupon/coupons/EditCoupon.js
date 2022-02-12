@@ -48,7 +48,11 @@ export class EditCoupon extends Component {
 
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getonecoupon/${id}`)
+      .get(`/getonecoupon/${id}`,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then(response => {
         console.log(response);
         this.setState({
@@ -77,7 +81,11 @@ export class EditCoupon extends Component {
     e.preventDefault();
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editcoupon/${id}`, this.state)
+      .post(`/editcoupon/${id}`, this.state,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
+      })
       .then(response => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");

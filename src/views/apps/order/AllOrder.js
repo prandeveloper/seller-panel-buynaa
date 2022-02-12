@@ -27,6 +27,10 @@ import {
 import { history } from "../../../history";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
+import Moment from "react-moment";
+import "moment-timezone";
+import moment from "moment";
+
 class AllOrder extends React.Component {
   state = {
     rowData: [],
@@ -54,95 +58,97 @@ class AllOrder extends React.Component {
 
       {
         headerName: "Order ID",
-        field: "orderId",
+        field: "orderId._id",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.orderId}</span>
+              <span>{params.data.orderId._id}</span>
             </div>
           );
         },
       },
       {
         headerName: "Order Date",
-        field: "order_date",
+        field: "cartId.createdAt",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.order_date}</span>
+              <span>
+                {moment(this.state.data?.cartId?.createdAt).format("ll")}
+              </span>
             </div>
           );
         },
       },
       {
         headerName: "Order Type",
-        field: "order_type",
+        field: "orderId.order_type",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center">
-              <span>{params.data.order_type}</span>
+              <span>{params.data?.orderId?.order_type}</span>
             </div>
           );
         },
       },
       {
         headerName: "Payment Type",
-        field: "payment_type",
+        field: "orderId.payment_type",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center">
-              <span>{params.data.payment_type}</span>
+              <span>{params.data?.orderId?.payment_type}</span>
             </div>
           );
         },
       },
       {
         headerName: "Customer Name",
-        field: "customer?.firstname,customer?.lastname",
+        field: "cartId.customer.firstname",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
               <span>
-                {params.data.customer?.firstname}{" "}
-                {params.data.customer?.lastname}
+                {params.data?.cartId[0]?.customer?.firstname}{" "}
+                {params.data?.cartId[0]?.customer?.lastname}
               </span>
             </div>
           );
         },
       },
 
+      // {
+      //   headerName: "Quantity",
+      //   field: "qty",
+      //   filter: true,
+      //   width: 150,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div className="d-flex align-items-center cursor-pointer">
+      //         <span>{params.data?.cartId[0]?.product_qty}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
       {
-        headerName: "Quantity",
-        field: "qty",
+        headerName: "Shipping Date",
+        field: "orderId.shipping_date",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.qty}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Total Amount",
-        field: "purchaseprice",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.purchaseprice}</span>
+              <span>{params.data.orderId?.shipping_date}</span>
             </div>
           );
         },
@@ -154,7 +160,11 @@ class AllOrder extends React.Component {
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
-          return params.value === "Delivery" ? (
+          return params.value === "Order Placed" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
+            </div>
+          ) : params.value === "Delivered" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
             </div>
@@ -162,15 +172,11 @@ class AllOrder extends React.Component {
             <div className="badge badge-pill badge-primary">
               {params.data.status}
             </div>
-          ) : params.value === "Cancel" ? (
+          ) : params.value === "Cancelled" ? (
             <div className="badge badge-pill badge-danger">
               {params.data.status}
             </div>
-          ) : params.value === "Returned" ? (
-            <div className="badge badge-pill badge-warning">
-              {params.data.status}
-            </div>
-          ) : params.value === "Complete" ? (
+          ) : params.value === "Completed" ? (
             <div className="badge badge-pill badge-warning">
               {params.data.status}
             </div>
@@ -214,7 +220,7 @@ class AllOrder extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("/getorderbysellerbytoken", {
+      .get("/getorderProductbyseller", {
         headers: {
           "auth-adtoken": localStorage.getItem("auth-adtoken"),
         },
@@ -266,14 +272,14 @@ class AllOrder extends React.Component {
                   Order List
                 </h1>
               </Col>
-              <Col>
+              {/* <Col>
                 <Button
                   className=" btn btn-danger float-right"
                   onClick={() => history.push("/app/order/addorder")}
                 >
                   Add New Order
                 </Button>
-              </Col>
+              </Col> */}
             </Row>
             <CardBody>
               {this.state.rowData === null ? null : (
