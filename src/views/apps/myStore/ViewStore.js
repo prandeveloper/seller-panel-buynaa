@@ -84,16 +84,18 @@ class ViewStore extends React.Component {
                             Shop Logo
                           </h1>
                         </Col>
-                        <Col className="mt-1 pl-0" sm="12">
-                          <Media
-                            className="rounded mr-2"
-                            object
-                            src={this.state.data.shoplogo_img}
-                            alt="Generic placeholder image"
-                            height="150"
-                            width="180"
-                          />
-                        </Col>
+                        {this.state.data?.shoplogo?.map((logo) => (
+                          <Col className="mt-1 pl-0" md="4" sm="12">
+                            <Media
+                              className="rounded mr-2"
+                              object
+                              src={logo}
+                              alt="Generic placeholder image"
+                              height="150"
+                              width="180"
+                            />
+                          </Col>
+                        ))}
                         <Col className="mt-1 pl-0" sm="12">
                           <h1 col-sm-6 className="float-left">
                             GST Image

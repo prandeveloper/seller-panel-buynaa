@@ -14,7 +14,6 @@ import {
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import axiosConfig from "../../../axiosConfig";
 import { history } from "../../../history";
-
 import "moment-timezone";
 import moment from "moment";
 import logo from "../../../assets/img/logo/ilogo.png";
