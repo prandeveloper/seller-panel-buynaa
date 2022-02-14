@@ -87,7 +87,11 @@ export class AddStockTransfer extends Component {
     option.product = product;
     console.log("Option", option);
     axiosConfig
-      .post("/addstocktransfer", option)
+      .post("/addstocktransfer", option, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.props.history.push("/app/stockControl/stockTransferRequest");
@@ -99,7 +103,11 @@ export class AddStockTransfer extends Component {
   async componentDidMount() {
     //Warehouse List
     axiosConfig
-      .get("/getwarehouse")
+      .get("/getwarehouse", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ warehouseL: response.data.data });
@@ -110,7 +118,11 @@ export class AddStockTransfer extends Component {
 
     //Reason List
     axiosConfig
-      .get("/getReason")
+      .get("/getReason", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ reasonL: response.data.data });
@@ -120,7 +132,7 @@ export class AddStockTransfer extends Component {
       });
     //Product Add
     axiosConfig
-      .get("/getproduct", {
+      .get("/productbysellerbytoken", {
         headers: {
           "auth-adtoken": localStorage.getItem("auth-adtoken"),
         },

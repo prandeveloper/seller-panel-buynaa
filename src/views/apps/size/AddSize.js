@@ -22,28 +22,32 @@ export default class AddSize extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sizeName: "", 
-        status: ""
+      sizeName: "",
+      status: "",
     };
   }
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
 
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
 
     axiosConfig
-      .post("/addsize", this.state)
-      .then(response => {
+      .post("/addsize", this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/size/sizeList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -118,8 +122,8 @@ export default class AddSize extends Component {
                     onChange={this.changeHandler}
                   ></Input>
                 </Col> */}
-              
-              {/* <Col lg="6" md="6" sm="6" className="mb-2">
+
+                {/* <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label className="mb-1">Status</Label>
                   <div
                     className="form-label-group"
@@ -142,7 +146,7 @@ export default class AddSize extends Component {
                     <span style={{ marginRight: "3px" }}>Inactive</span>
                   </div>
                 </Col>  */}
-                </Row>
+              </Row>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Button.Ripple

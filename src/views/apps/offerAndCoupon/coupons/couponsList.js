@@ -68,7 +68,7 @@ class BundleOffer extends React.Component {
         field: "offer_code",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="">
               <span>{params.data.offer_code}</span>
@@ -81,7 +81,7 @@ class BundleOffer extends React.Component {
         field: "CouponTitle",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="">
               <span>{params.data.CouponTitle}</span>
@@ -94,7 +94,7 @@ class BundleOffer extends React.Component {
         field: "product_name",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="">
               <span>{params.data.product?.product_name}</span>
@@ -107,7 +107,7 @@ class BundleOffer extends React.Component {
         field: "startDate",
         filter: true,
         width: 180,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="">
               <span>{params.data.startDate}</span>
@@ -121,7 +121,7 @@ class BundleOffer extends React.Component {
         field: "expireOn",
         filter: true,
         width: 180,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className=" mr-4">
               <span>{params.data.expireOn}</span>
@@ -134,7 +134,7 @@ class BundleOffer extends React.Component {
         field: "usage_limit",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className=" mr-4">
               <span>{params.data.usage_limit}</span>
@@ -147,7 +147,7 @@ class BundleOffer extends React.Component {
         field: "amount",
         filter: true,
         width: 120,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className=" mr-4">
               <span>{params.data.amount}</span>
@@ -160,7 +160,7 @@ class BundleOffer extends React.Component {
         field: "description",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.description}</span>
@@ -174,7 +174,7 @@ class BundleOffer extends React.Component {
         field: "status",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return params.value === "Active" ? (
             <div className="badge badge-pill badge-success ">
               {params.data.status}
@@ -190,13 +190,13 @@ class BundleOffer extends React.Component {
         headerName: "Actions",
         field: "transactions",
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
               <Edit
                 className="mr-50"
                 size={15}
-                color= "blue" 
+                color="blue"
                 onClick={() =>
                   history.push(
                     `/app/offerAndCoupon/coupons/editCoupon/${params.data._id}`
@@ -205,7 +205,7 @@ class BundleOffer extends React.Component {
               />
               <Trash2
                 size={15}
-                color= "red" 
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
@@ -220,25 +220,27 @@ class BundleOffer extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getcoupon",{
-        headers:{
-          "auth-adtoken" : localStorage.getItem("auth-adtoken")
-        }
-      }).then(response => {
-      let rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getcoupon", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/delcoupon/${id}`).then(response => {
+    await axiosConfig.get(`/delcoupon/${id}`).then((response) => {
       console.log(response);
     });
   }
 
-  onGridReady = params => {
+  onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -248,11 +250,11 @@ class BundleOffer extends React.Component {
     });
   };
 
-  updateSearchQuery = val => {
+  updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = val => {
+  filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -338,7 +340,9 @@ class BundleOffer extends React.Component {
                       <div className="table-input mr-1">
                         <Input
                           placeholder="search..."
-                          onChange={e => this.updateSearchQuery(e.target.value)}
+                          onChange={(e) =>
+                            this.updateSearchQuery(e.target.value)
+                          }
                           value={this.state.value}
                         />
                       </div>
@@ -353,7 +357,7 @@ class BundleOffer extends React.Component {
                     </div>
                   </div>
                   <ContextLayout.Consumer>
-                    {context => (
+                    {(context) => (
                       <AgGridReact
                         gridOptions={{}}
                         rowSelection="multiple"

@@ -249,7 +249,7 @@ class ProductsList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex justify-content-center">
-              <span>{params.data.gstrate.gst_title}</span>
+              <span>{params.data.gstrate?.gst_title}</span>
             </div>
           );
         },
@@ -398,8 +398,8 @@ class ProductsList extends React.Component {
   };
   async componentDidMount() {
     await axiosConfig
-      .get("/getproduct", {
-        hearders: {
+      .get("/productbysellerbytoken", {
+        headers: {
           "auth-adtoken": localStorage.getItem("auth-adtoken"),
         },
       })

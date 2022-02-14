@@ -21,45 +21,53 @@ export default class EditTax extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        gst_title: "", 
-        value: "",
-        desc: "",
+      gst_title: "",
+      value: "",
+      desc: "",
     };
   }
 
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonegst/${id}`)
-      .then(response => {
+      .get(`/viewonegst/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         this.setState({
-            gst_title: response.data.data.gst_title,
-            value: response.data.data.value,
-            desc: response.data.data.desc,
+          gst_title: response.data.data.gst_title,
+          value: response.data.data.value,
+          desc: response.data.data.desc,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
-  changeHandler1 = e => {
+  changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editgst/${id}`, this.state)
-      .then(response => {
+      .post(`/editgst/${id}`, this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/tax/taxList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };

@@ -221,11 +221,17 @@ class InvoiceList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getbillinglist").then((response) => {
-      let rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getorderProductbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
 
   // async runthisfunction(id) {

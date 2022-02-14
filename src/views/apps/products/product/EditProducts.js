@@ -24,6 +24,8 @@ import { RichUtils } from "draft-js";
 import Select from "react-select";
 
 class EditProduct extends React.Component {
+  fileArrayProd = [];
+
   constructor(props) {
     super(props);
     this.state = {
@@ -68,11 +70,16 @@ class EditProduct extends React.Component {
       data: {},
     };
     this.submitHandler = this.submitHandler.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
   }
   async componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getoneproduct/${id}`)
+      .get(`/getoneproduct/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({
@@ -133,9 +140,13 @@ class EditProduct extends React.Component {
       });
     //Product Category
     axiosConfig
-      .get("/getproductCategory")
+      .get("/allcatByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
-        //console.log(response);
+        console.log(response);
         this.setState({ productC: response.data.data });
       })
       .catch((error) => {
@@ -144,9 +155,13 @@ class EditProduct extends React.Component {
 
     //Product Sub Category
     axiosConfig
-      .get("/getproductsubcategory")
+      .get("/getsubcatByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
-        //console.log(response);
+        console.log(response);
         this.setState({ productSC: response.data.data });
       })
       .catch((error) => {
@@ -155,9 +170,13 @@ class EditProduct extends React.Component {
 
     //GST
     axiosConfig
-      .get("/viewallgst")
+      .get("/getgstbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
-        //console.log(response);
+        console.log(response);
         this.setState({ gsts: response.data.data });
       })
       .catch((error) => {
@@ -166,19 +185,27 @@ class EditProduct extends React.Component {
 
     //Units
     axiosConfig
-      .get("/viewallunits")
+      .get("/viewallunitByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
-        //console.log(response);
-        this.setState({ pUnit: response.data.data });
+        console.log(response);
+        this.setState({ units: response.data.data });
       })
       .catch((error) => {
         console.log(error);
       });
     //Brand
     axiosConfig
-      .get("/allbrand")
+      .get("/allbrandbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
-        //console.log(response);
+        console.log(response);
         this.setState({ pBrand: response.data.data });
       })
       .catch((error) => {
@@ -187,9 +214,13 @@ class EditProduct extends React.Component {
 
     //colour
     axiosConfig
-      .get("/getcolor")
+      .get("/getcolorbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
-        //console.log(response);
+        console.log(response);
         let resultarray = [];
         for (let i = 0; i < response.data.data.length; i++) {
           const element = response.data.data[i];
@@ -201,7 +232,7 @@ class EditProduct extends React.Component {
           //console.log(element)
         }
         this.setState({ pColour: response.data.data });
-        console.log(this.state.pColour);
+        //console.log(this.state.pColour);
       })
       .catch((error) => {
         console.log(error);
@@ -209,9 +240,13 @@ class EditProduct extends React.Component {
 
     //size
     axiosConfig
-      .get("/getsize")
+      .get("/getsizebyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
-        //console.log(response);
+        console.log(response);
         let resultarray = [];
         for (let i = 0; i < response.data.data.length; i++) {
           const element = response.data.data[i];
@@ -221,9 +256,7 @@ class EditProduct extends React.Component {
           })["sizeName"];
           resultarray.push(element);
         }
-        // this.setState({ pSize: resultarray });
-        this.setState({ pSize: response.data.data });
-        console.log(this.state.pSize);
+        this.setState({ pSize: resultarray });
       })
       .catch((error) => {
         console.log(error);
@@ -231,9 +264,13 @@ class EditProduct extends React.Component {
 
     //Material
     axiosConfig
-      .get("/getallmaterial")
+      .get("/getmaterialByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
-        //console.log(response);
+        console.log(response);
         this.setState({ pMaterial: response.data.data });
       })
       .catch((error) => {
@@ -243,8 +280,29 @@ class EditProduct extends React.Component {
 
   //Image Submit Handler
   onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files });
-    this.setState({ selectedName: event.target.files.name });
+    var imgSrc = [];
+    for (var i = 0; i < event.target.files.length; i++) {
+      let file = event.target.files[i];
+      let reader = new FileReader();
+      let url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        console.log(i);
+        this.fileArrayProd.push(reader.result);
+        imgSrc.push([reader.result]);
+
+        this.setState({
+          imgSrc: [reader.result],
+        });
+      }.bind(this);
+    }
+    console.log(imgSrc);
+    this.setState({
+      selectedFile: event.target.files,
+      imgSrc,
+    });
+    this.setState({
+      selectedName: event.target.files.name,
+    });
     console.log(event.target.files);
   };
 
@@ -332,7 +390,11 @@ class EditProduct extends React.Component {
     }
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editproduct/${id}`, data)
+      .post(`/editproduct/${id}`, data, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
       })
@@ -681,6 +743,18 @@ class EditProduct extends React.Component {
                   onChange={this.onChangeHandler}
                   multiple
                 />
+                <div>
+                  {this.fileArrayProd?.map((value) => (
+                    <img
+                      src={value}
+                      style={{
+                        padding: "3px",
+                        width: "100px",
+                        height: "100px",
+                      }}
+                    />
+                  ))}
+                </div>
               </FormGroup>
             </Col>
             <Col md="6" sm="12">

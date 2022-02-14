@@ -165,11 +165,17 @@ class SubCategory extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getproductsubcategory").then((response) => {
-      let rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getsubcatByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
 
   async runthisfunction(id) {

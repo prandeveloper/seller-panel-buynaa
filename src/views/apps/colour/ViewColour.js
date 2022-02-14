@@ -22,13 +22,17 @@ class ViewColour extends React.Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonecolor/${id}`)
-      .then(response => {
+      .get(`/viewonecolor/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         // console.log(response.data);
         console.log(response.data.data);
         this.setState({ data: response.data.data });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -65,7 +69,8 @@ class ViewColour extends React.Component {
               <Col>
                 <Button
                   className=" btn btn-danger float-right"
-                  onClick={() => history.push("/app/colour/colourList")}>
+                  onClick={() => history.push("/app/colour/colourList")}
+                >
                   Back
                 </Button>
               </Col>
@@ -93,6 +98,3 @@ class ViewColour extends React.Component {
   }
 }
 export default ViewColour;
-
-
-

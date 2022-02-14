@@ -21,8 +21,11 @@ import axiosConfig from "../../../../axiosConfig";
 import { history } from "../../../../history";
 import { RichUtils } from "draft-js";
 import Select from "react-select";
+import swal from "sweetalert";
 
 class AddMyProduct extends React.Component {
+  fileArrayProd = [];
+
   constructor(props) {
     super(props);
     this.state = {
@@ -59,6 +62,7 @@ class AddMyProduct extends React.Component {
       imgSrc: [],
     };
     this.submitHandler = this.submitHandler.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
   }
   async componentDidMount() {
     //Product Category
@@ -93,7 +97,11 @@ class AddMyProduct extends React.Component {
 
     //GST
     axiosConfig
-      .get("/viewallgst")
+      .get("/getgstbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ gsts: response.data.data });
@@ -104,7 +112,11 @@ class AddMyProduct extends React.Component {
 
     //Units
     axiosConfig
-      .get("/viewallunits")
+      .get("/viewallunitByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ units: response.data.data });
@@ -129,7 +141,11 @@ class AddMyProduct extends React.Component {
 
     //colour
     axiosConfig
-      .get("/getcolor")
+      .get("/getcolorbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         let resultarray = [];
@@ -151,7 +167,11 @@ class AddMyProduct extends React.Component {
 
     //size
     axiosConfig
-      .get("/getsize")
+      .get("/getsizebyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         let resultarray = [];
@@ -171,7 +191,11 @@ class AddMyProduct extends React.Component {
 
     //Material
     axiosConfig
-      .get("/getallmaterial")
+      .get("/getmaterialByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ pMaterial: response.data.data });
@@ -183,8 +207,29 @@ class AddMyProduct extends React.Component {
 
   //Image Submit Handler
   onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files });
-    this.setState({ selectedName: event.target.files.name });
+    var imgSrc = [];
+    for (var i = 0; i < event.target.files.length; i++) {
+      let file = event.target.files[i];
+      let reader = new FileReader();
+      let url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        console.log(i);
+        this.fileArrayProd.push(reader.result);
+        imgSrc.push([reader.result]);
+
+        this.setState({
+          imgSrc: [reader.result],
+        });
+      }.bind(this);
+    }
+    console.log(imgSrc);
+    this.setState({
+      selectedFile: event.target.files,
+      imgSrc,
+    });
+    this.setState({
+      selectedName: event.target.files.name,
+    });
     console.log(event.target.files);
   };
 
@@ -267,17 +312,19 @@ class AddMyProduct extends React.Component {
     }
 
     axiosConfig
-      .post("/addproduct", data)
+      .post("/addproduct", data, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
+        swal("Success!", "Submitted SuccessFull!", "success");
+        this.props.history.push("/app/products/product/productList");
       })
       .catch((error) => {
         console.log(error);
       });
-    // value = orderOptions(value)
-    // this.setState({ value: value })
-    // value = orderOptions1(value)
-    // this.setState({ value: value })
   };
   onChange(event) {
     this.setState({
@@ -552,6 +599,7 @@ class AddMyProduct extends React.Component {
                   value={this.state.unit}
                   onChange={this.changeHandler}
                 >
+                  <option>Select Unit.....</option>
                   {this.state.units?.map((dUnits) => (
                     <option value={dUnits._id} key={dUnits._id}>
                       {dUnits.units_title}
@@ -623,6 +671,18 @@ class AddMyProduct extends React.Component {
                   onChange={this.onChangeHandler}
                   multiple
                 />
+                <div>
+                  {this.fileArrayProd?.map((value) => (
+                    <img
+                      src={value}
+                      style={{
+                        padding: "3px",
+                        width: "100px",
+                        height: "100px",
+                      }}
+                    />
+                  ))}
+                </div>
               </FormGroup>
             </Col>
             <Col md="6" sm="12">

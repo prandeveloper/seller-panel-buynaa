@@ -136,9 +136,7 @@ class SupplierList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>
-                {params.data.address_one}
-              </span>
+              <span>{params.data.address_one}</span>
             </div>
           );
         },
@@ -209,7 +207,6 @@ class SupplierList extends React.Component {
         },
       },
 
-      
       {
         headerName: "Actions",
         field: "transactions",
@@ -228,9 +225,9 @@ class SupplierList extends React.Component {
                 }
               />
               <Trash2
-                 className="mr-50"
-                 size="25px"
-                 color="red"
+                className="mr-50"
+                size="25px"
+                color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
@@ -245,15 +242,17 @@ class SupplierList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/Getsupplier",{
-      headers:{
-        "auth-adtoken" : localStorage.getItem("auth-adtoken")
-      }
-    }).then((response) => {
-      let rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/Getsupplier", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
 
   async runthisfunction(id) {

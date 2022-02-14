@@ -21,46 +21,52 @@ export default class EditColour extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colorName: "", 
-        state: "",
-       
+      colorName: "",
+      state: "",
     };
   }
 
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonecolor/${id}`)
-      .then(response => {
+      .get(`/viewonecolor/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         this.setState({
           colorName: response.data.data.colorName,
-            state: response.data.data.state,
-           
+          state: response.data.data.state,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
-  changeHandler1 = e => {
+  changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
 
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editcolor/${id}`, this.state)
-      .then(response => {
+      .post(`/editcolor/${id}`, this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/colour/colourList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -128,7 +134,7 @@ export default class EditColour extends Component {
                     onChange={this.changeHandler}
                   ></Input>
                 </Col> */}
-                       {/* <Col lg="6" md="6" sm="6" className="mb-2">
+                {/* <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label className="mb-1">Status</Label>
                   <div
                     className="form-label-group"

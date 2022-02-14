@@ -22,28 +22,32 @@ export default class AddColour extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colorName: "", 
-        status: ""
+      colorName: "",
+      status: "",
     };
   }
-  changeHandler1 = e => {
+  changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
 
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
 
     axiosConfig
-      .post("/addcolor", this.state)
-      .then(response => {
+      .post("/addcolor", this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/colour/colourList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -59,7 +63,7 @@ export default class AddColour extends Component {
                   Home
                 </BreadcrumbItem>
                 <BreadcrumbItem href="/app/colour/colourList" tag="a">
-                Colour List
+                  Colour List
                 </BreadcrumbItem>
                 <BreadcrumbItem active>Add Colour</BreadcrumbItem>
               </Breadcrumb>
@@ -118,8 +122,8 @@ export default class AddColour extends Component {
                     onChange={this.changeHandler}
                   ></Input>
                 </Col> */}
-             
-              {/* <Col lg="6" md="6" sm="6" className="mb-2">
+
+                {/* <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label className="mb-1">Status</Label>
                   <div
                     className="form-label-group"
@@ -142,7 +146,7 @@ export default class AddColour extends Component {
                     <span style={{ marginRight: "3px" }}>Inactive</span>
                   </div>
                 </Col>  */}
-                </Row>
+              </Row>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Button.Ripple

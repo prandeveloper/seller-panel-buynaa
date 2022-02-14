@@ -76,7 +76,9 @@ class ReasonList extends React.Component {
                 className="mr-50"
                 color="blue"
                 size={20}
-                onClick={() => history.push(`/app/reason/editReason/${params.data._id}`)}
+                onClick={() =>
+                  history.push(`/app/reason/editReason/${params.data._id}`)
+                }
               />
               <Trash2
                 size={20}
@@ -95,11 +97,17 @@ class ReasonList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get(`/getReason`).then((response) => {
-      const rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get(`/getReason`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        const rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
   async runthisfunction(id) {
     console.log(id);
@@ -142,15 +150,13 @@ class ReasonList extends React.Component {
       console.log(rowData),
       (
         <Row className="app-user-list">
-          <Col sm="12">
-            
-          </Col>
+          <Col sm="12"></Col>
           <Col sm="12">
             <Card>
               <Row className="m-2">
                 <Col>
                   <h1 sm="6" className="float-left">
-                  Reason List
+                    Reason List
                   </h1>
                 </Col>
                 <Col>

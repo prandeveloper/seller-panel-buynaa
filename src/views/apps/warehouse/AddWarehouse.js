@@ -21,7 +21,7 @@ import swal from "sweetalert";
 export default class AddWarehouse extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       warehousename: "",
       email: "",
@@ -32,21 +32,25 @@ export default class AddWarehouse extends Component {
       pin: "",
     };
   }
-  
-  changeHandler = e => {
+
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
 
     axiosConfig
-      .post("/addwarehouse", this.state)
-      .then(response => {
+      .post("/addwarehouse", this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/warehouse/warehouseList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };

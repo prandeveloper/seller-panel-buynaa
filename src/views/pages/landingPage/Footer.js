@@ -18,10 +18,10 @@ const Footer = () => {
           <div className="row">
             <div className="col-xl-3 col-lg-4 col-md-6">
               <div className="footer-widget">
-                <div className="footer_logo">
-                  <h2 className="text-light font-weight-bold">Apple</h2>
+                <div className="footer_logo text-center">
+                  <h2 className="text-light font-weight-bold">Buynaa</h2>
                 </div>
-                <div className="fw-text">
+                <div className="fw-text ">
                   <div className="footer-contact-list mt-20">
                     <ul>
                       <li>
@@ -31,8 +31,7 @@ const Footer = () => {
                         <span>Email: </span> Demo@fmo.com
                       </li>
                       <li>
-                        <span>Address: </span> Most of its text is made up from
-                        sections 1.10.32–3 of Cicero's De finibus
+                        <span>Address: 123 demo city , Demo Square </span>
                       </li>
                     </ul>
                   </div>
@@ -41,7 +40,7 @@ const Footer = () => {
             </div>
             <div className="col-xl-2 col-lg-4 col-md-6">
               <div className="footer-widget">
-                <div className="fw-title mb-25">
+                <div className="fw-title mb-25 text-center">
                   <h5>Commuinity</h5>
                 </div>
                 <div className="fw-links">
@@ -50,13 +49,10 @@ const Footer = () => {
                       <Link to="/">Home</Link>
                     </li>
                     <li>
-                      <Link to="/group_tuition">Group Tuition</Link>
+                      <Link to="/group_tuition">Company</Link>
                     </li>
                     <li>
-                      <Link to="/online_tuition">Online Tuition</Link>
-                    </li>
-                    <li>
-                      <Link to="/on_demand">On-Demand Tuition</Link>
+                      <Link to="/online_tuition">Manufacture</Link>
                     </li>
                   </ul>
                 </div>
@@ -64,13 +60,13 @@ const Footer = () => {
             </div>
             <div className="col-xl-2 col-lg-4 col-md-6">
               <div className="footer-widget">
-                <div className="fw-title mb-25">
-                  <h5>Others Link</h5>
+                <div className="fw-title mb-25 text-center">
+                  <h5>Legal</h5>
                 </div>
                 <div className="fw-links">
                   <ul className="quick">
                     <li>
-                      <Link to="/terms">Terms & Conditions</Link>
+                      <Link to="/terms">Terms Of Use</Link>
                     </li>
                     <li>
                       <Link to="/policy">Privacy & policy</Link>
@@ -78,9 +74,7 @@ const Footer = () => {
                     <li>
                       <a href="#"></a>
                     </li>
-                    <li>
-                      <Link to="/about">About Us</Link>
-                    </li>
+
                     <li>
                       <Link to="/contact">Contact Us</Link>
                     </li>
@@ -90,35 +84,28 @@ const Footer = () => {
             </div>
             <div className="col-xl-2 col-lg-4 col-md-6">
               <div className="footer-widget">
-                <div className="fw-title mb-25">
-                  <h5>Join Us</h5>
+                <div className="fw-title mb-25 text-center">
+                  <h5>Help & Support</h5>
                 </div>
                 <div className="fw-links">
                   <ul className="quick">
                     <li>
-                      <Link to="/become_teacher">Become Teacher</Link>
+                      <Link to="/become_teacher">Support</Link>
                     </li>
                     <li>
-                      <Link to="/become_student">Become Student</Link>
+                      <Link to="/become_teacher">Help Center</Link>
+                    </li>
+                    <li>
+                      <Link to="/become_teacher">Faq</Link>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
-            <div className="col-xl-3 col-lg-4 col-md-6">
-              <div className="footer-widget">
+            <div className="col-xl-3 col-lg-4 col-md-6 d-flex justify-content-center align-items-center">
+              <div className="footer-widget ">
                 <div className="fw-title mb-25">
-                  <h5>Download App</h5>
-                </div>
-                <div className="footer_btns">
-                  <button>
-                    <h2 className="text-light font-weight-bold">Apple</h2>
-                    Apple iOS
-                  </button>
-                  <button>
-                    <h2 className="text-light font-weight-bold">Apple</h2>
-                    Google Play
-                  </button>
+                  <h1>Subscribe Now</h1>
                 </div>
               </div>
             </div>

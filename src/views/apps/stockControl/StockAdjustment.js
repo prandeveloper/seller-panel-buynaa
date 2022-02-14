@@ -196,10 +196,16 @@ class StockAdjustment extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getstockadjustment").then((response) => {
-      let rowData = response.data.data;
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getstockadjustment", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        this.setState({ rowData });
+      });
   }
 
   async runthisfunction(id) {

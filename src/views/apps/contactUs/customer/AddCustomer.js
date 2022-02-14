@@ -57,10 +57,10 @@ export class AddCustomer extends Component {
     //     console.log(value);
     //  }
     axios
-      .post("http://35.154.86.59/api/user/addcustomerbyseller", this.state,{
-        headers:{
-          "auth-adtoken" : localStorage.getItem("auth-adtoken")
-        }
+      .post("http://35.154.86.59/api/user/addcustomerbyseller", this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
       })
       .then((response) => {
         console.log(response);

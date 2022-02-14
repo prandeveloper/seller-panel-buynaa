@@ -15,7 +15,11 @@ class ViewStockTransfer extends React.Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getonestocktransfer/${id}`)
+      .get(`/getonestocktransfer/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         // console.log(response.data);
         console.log(response.data.data);

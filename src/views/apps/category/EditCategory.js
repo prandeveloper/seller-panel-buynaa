@@ -41,7 +41,11 @@ export class EditCategory extends Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getone_productcategory/${id}`)
+      .get(`/getone_productcategory/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({
@@ -87,11 +91,11 @@ export class EditCategory extends Component {
     }
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editproductcategory/${id}`, data,{
-      headers:{
-        "auth-adtoken" : localStorage.getItem("auth-adtoken")
-      }
-    })
+      .post(`/editproductcategory/${id}`, data, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.props.history.push("/app/category/categoryList");

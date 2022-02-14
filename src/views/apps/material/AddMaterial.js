@@ -26,20 +26,24 @@ export default class AddMaterial extends Component {
     };
   }
 
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
 
     axiosConfig
-      .post("/addmaterial", this.state)
-      .then(response => {
+      .post("/addmaterial", this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/material/materialList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };

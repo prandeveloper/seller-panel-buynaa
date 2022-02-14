@@ -31,7 +31,11 @@ export class EditCustomer extends Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axios
-      .get(`http://35.154.86.59/api/user/getonecustomer/${id}`)
+      .get(`http://35.154.86.59/api/user/getonecustomer/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({
@@ -59,7 +63,11 @@ export class EditCustomer extends Component {
     e.preventDefault();
     let { id } = this.props.match.params;
     axios
-      .post(`http://35.154.86.59/api/user/editcustomer/${id}`, this.state)
+      .post(`http://35.154.86.59/api/user/editcustomer/${id}`, this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         swal("Success!", "Updated SuccessFull!", "success");

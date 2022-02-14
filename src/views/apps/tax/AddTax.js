@@ -22,31 +22,33 @@ export default class AddTax extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        gst_title: "", 
-        value: "",
-        desc: "",
-
-    
+      gst_title: "",
+      value: "",
+      desc: "",
     };
   }
-  changeHandler1 = e => {
+  changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
 
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
 
     axiosConfig
-      .post("/addgst", this.state)
-      .then(response => {
+      .post("/addgst", this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/tax/taxList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };

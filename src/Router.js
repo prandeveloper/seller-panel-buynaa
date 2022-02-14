@@ -1015,6 +1015,7 @@ class AppRouter extends React.Component {
                     component={forgotPassword}
                     fullLayout
                   />
+
                   <AppRoute
                     path="/misc/error/404"
                     component={error404}

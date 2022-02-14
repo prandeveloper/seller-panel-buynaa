@@ -32,8 +32,12 @@ export class EditUnit extends Component {
     console.log(this.props.match.params);
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewoneunits/${id}`)
-      .then(response => {
+      .get(`/viewoneunits/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         this.setState({
           units_title: response.data.data.units_title,
@@ -43,30 +47,34 @@ export class EditUnit extends Component {
           status: response.data.data.status,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
 
-  changeHandler1 = e => {
+  changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
     // console.log(this.props.match.params , this.state);
     let { id } = this.props.match.params;
 
     axiosConfig
-      .post(`/editunits/${id}`, this.state)
-      .then(response => {
+      .post(`/editunits/${id}`, this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         this.props.history.push("/app/products/unit/unitList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -149,7 +157,7 @@ export class EditUnit extends Component {
                     <Label className="mb-1">Status</Label>
                     <div
                       className="form-label-group"
-                      onChange={e => this.changeHandler1(e)}
+                      onChange={(e) => this.changeHandler1(e)}
                     >
                       <input
                         style={{ marginRight: "3px" }}

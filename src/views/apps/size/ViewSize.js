@@ -22,13 +22,17 @@ class ViewSize extends React.Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonesize/${id}`)
-      .then(response => {
+      .get(`/viewonesize/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         // console.log(response.data);
         console.log(response.data.data);
         this.setState({ data: response.data.data });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -65,7 +69,8 @@ class ViewSize extends React.Component {
               <Col>
                 <Button
                   className=" btn btn-danger float-right"
-                  onClick={() => history.push("/app/size/sizeList")}>
+                  onClick={() => history.push("/app/size/sizeList")}
+                >
                   Back
                 </Button>
               </Col>

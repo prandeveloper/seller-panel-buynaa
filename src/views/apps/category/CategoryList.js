@@ -149,14 +149,16 @@ class CategoryList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/allcatByseller",{
-      headers:{
-        "auth-adtoken" : localStorage.getItem("auth-adtoken")
-      }
-    }).then((response) => {
-      let rowData = response.data.data;
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/allcatByseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        this.setState({ rowData });
+      });
   }
 
   async runthisfunction(id) {

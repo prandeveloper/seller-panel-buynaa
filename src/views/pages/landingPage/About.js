@@ -33,7 +33,7 @@ const About = () => {
         <CardGroup className="pcard">
           <Row>
             <Col lg="4">
-              <Card className="p-3">
+              <Card className="p-3 w-100 h-100">
                 <img
                   src={logo1}
                   alt=""
@@ -49,14 +49,14 @@ const About = () => {
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="p-3">
+              <Card className="p-3 w-100 h-100">
                 <img
                   src={logo2}
                   alt=""
                   style={{ width: "90px", height: "12vh" }}
                 />
                 <CardBody>
-                  <CardTitle tag="h5">Role Based Accessibility</CardTitle>
+                  <CardTitle tag="h5">Customer Management</CardTitle>
                   <CardText>
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
@@ -65,14 +65,16 @@ const About = () => {
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="p-3">
+              <Card className="p-3 w-100 h-100">
                 <img
                   src={logo3}
                   alt=""
                   style={{ width: "90px", height: "12vh" }}
                 />
                 <CardBody>
-                  <CardTitle tag="h5">Role Based Accessibility</CardTitle>
+                  <CardTitle tag="h5">
+                    Subscriptions Management and Billing
+                  </CardTitle>
                   <CardText>
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
@@ -81,14 +83,14 @@ const About = () => {
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="p-3">
+              <Card className="p-3 w-100 h-100">
                 <img
                   src={logo4}
                   alt=""
                   style={{ width: "90px", height: "12vh" }}
                 />
                 <CardBody>
-                  <CardTitle tag="h5">Role Based Accessibility</CardTitle>
+                  <CardTitle tag="h5">Inventory & Stock Management</CardTitle>
                   <CardText>
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
@@ -97,14 +99,14 @@ const About = () => {
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="p-3">
+              <Card className="p-3 w-100 h-100">
                 <img
                   src={logo5}
                   alt=""
                   style={{ width: "90px", height: "12vh" }}
                 />
                 <CardBody>
-                  <CardTitle tag="h5">Role Based Accessibility</CardTitle>
+                  <CardTitle tag="h5">Automated order workflow</CardTitle>
                   <CardText>
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
@@ -113,14 +115,14 @@ const About = () => {
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="p-3">
+              <Card className="p-3 w-100 h-100">
                 <img
                   src={logo6}
                   alt=""
                   style={{ width: "90px", height: "12vh" }}
                 />
                 <CardBody>
-                  <CardTitle tag="h5">Role Based Accessibility</CardTitle>
+                  <CardTitle tag="h5">Order Billing</CardTitle>
                   <CardText>
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
@@ -129,14 +131,14 @@ const About = () => {
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="p-3">
+              <Card className="p-3 w-100 h-100">
                 <img
                   src={logo7}
                   alt=""
                   style={{ width: "90px", height: "12vh" }}
                 />
                 <CardBody>
-                  <CardTitle tag="h5">Role Based Accessibility</CardTitle>
+                  <CardTitle tag="h5">Purchase Order Management</CardTitle>
                   <CardText>
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
@@ -145,14 +147,14 @@ const About = () => {
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="p-3">
+              <Card className="p-3 w-100 h-100">
                 <img
                   src={logo8}
                   alt=""
                   style={{ width: "90px", height: "12vh" }}
                 />
                 <CardBody>
-                  <CardTitle tag="h5">Role Based Accessibility</CardTitle>
+                  <CardTitle tag="h5">Visibility</CardTitle>
                   <CardText>
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
@@ -161,14 +163,16 @@ const About = () => {
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="p-3">
+              <Card className="p-3 w-100 h-100">
                 <img
                   src={logo9}
                   alt=""
                   style={{ width: "90px", height: "12vh" }}
                 />
                 <CardBody>
-                  <CardTitle tag="h5">Role Based Accessibility</CardTitle>
+                  <CardTitle tag="h5">
+                    Location based profile discovery by customer
+                  </CardTitle>
                   <CardText>
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.

@@ -57,11 +57,11 @@ export class AddCategory extends Component {
     //     console.log(value);
     //  }
     axiosConfig
-      .post("/addproductcategory", data,{
-      headers:{
-        "auth-adtoken" : localStorage.getItem("auth-adtoken")
-      }
-    })
+      .post("/addproductcategory", data, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.props.history.push("/app/category/categoryList");

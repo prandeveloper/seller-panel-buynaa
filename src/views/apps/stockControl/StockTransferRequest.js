@@ -190,11 +190,17 @@ class StockTransferRequest extends React.Component {
     ],
   };
   async componentDidMount() {
-    await axiosConfig.get("/getstocktransfer").then((response) => {
-      let rowData = response.data.data;
-      this.setState({ rowData });
-      console.log(rowData);
-    });
+    await axiosConfig
+      .get("/getstocktransfer", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        this.setState({ rowData });
+        console.log(rowData);
+      });
   }
 
   async runthisfunction(id) {

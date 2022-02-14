@@ -15,7 +15,11 @@ class ViewStockAdjustment extends React.Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getonestockadjustment/${id}`)
+      .get(`/getonestockadjustment/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         // console.log(response.data);
         console.log(response.data.data);

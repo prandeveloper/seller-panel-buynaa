@@ -29,32 +29,40 @@ export default class EditMaterial extends Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonematerial/${id}`)
-      .then(response => {
+      .get(`/viewonematerial/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         this.setState({
           materialname: response.data.data.materialname,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
 
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editmaterial/${id}`, this.state)
-      .then(response => {
+      .post(`/editmaterial/${id}`, this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/material/materialList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };

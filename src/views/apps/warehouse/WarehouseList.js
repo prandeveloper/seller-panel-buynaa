@@ -52,7 +52,7 @@ class WarehouseList extends React.Component {
         field: "warehousename",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div>
               <span>{params.data.warehousename}</span>
@@ -66,7 +66,7 @@ class WarehouseList extends React.Component {
         field: "email	",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div>
               <span>{params.data.email}</span>
@@ -80,7 +80,7 @@ class WarehouseList extends React.Component {
         field: "phone_no",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div>
               <span>{params.data.phone_no}</span>
@@ -93,7 +93,7 @@ class WarehouseList extends React.Component {
         field: "address1",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div>
               <span>{params.data.address1}</span>
@@ -106,7 +106,7 @@ class WarehouseList extends React.Component {
         field: "address2",
         filter: true,
         width: 200,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div>
               <span>{params.data.address2}</span>
@@ -119,7 +119,7 @@ class WarehouseList extends React.Component {
         field: "city",
         filter: true,
         width: 120,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div>
               <span>{params.data.city}</span>
@@ -132,7 +132,7 @@ class WarehouseList extends React.Component {
         field: "pin",
         filter: true,
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div>
               <span>{params.data.pin}</span>
@@ -147,7 +147,7 @@ class WarehouseList extends React.Component {
 
         // field: "transactions",
         width: 150,
-        cellRendererFramework: params => {
+        cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
               <Eye
@@ -184,21 +184,27 @@ class WarehouseList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getwarehouse").then(response => {
-      const rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getwarehouse", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        const rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/del_warehouse/${id}`).then(response => {
+    await axiosConfig.get(`/del_warehouse/${id}`).then((response) => {
       console.log(response);
     });
   }
 
-  onGridReady = params => {
+  onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.setState({
@@ -208,11 +214,11 @@ class WarehouseList extends React.Component {
     });
   };
 
-  updateSearchQuery = val => {
+  updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = val => {
+  filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -309,7 +315,7 @@ class WarehouseList extends React.Component {
                         <div className="table-input mr-1">
                           <Input
                             placeholder="search..."
-                            onChange={e =>
+                            onChange={(e) =>
                               this.updateSearchQuery(e.target.value)
                             }
                             value={this.state.value}
@@ -326,7 +332,7 @@ class WarehouseList extends React.Component {
                       </div>
                     </div>
                     <ContextLayout.Consumer>
-                      {context => (
+                      {(context) => (
                         <AgGridReact
                           gridOptions={{}}
                           rowSelection="multiple"

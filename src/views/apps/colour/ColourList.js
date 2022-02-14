@@ -56,50 +56,50 @@ class ColourList extends React.Component {
           );
         },
       },
-    //   {
-    //     headerName: "Value",
-    //     field: "value",
-    //     filter: true,
-    //     width: 170,
-    //     cellRendererFramework: (params) => {
-    //       return (
-    //         <div className="d-flex align-items-center cursor-pointer">
-    //           <span>{params.data.value}</span>
-    //         </div>
-    //       );
-    //     },
-    //   },
-    //   {
-    //     headerName: "Description",
-    //     field: "desc",
-    //     filter: true,
-    //     width: 200,
-    //     cellRendererFramework: (params) => {
-    //       return (
-    //         <div>
-    //           <span>{params.data.desc}</span>
-    //         </div>
-    //       );
-    //     },
-    //   },
+      //   {
+      //     headerName: "Value",
+      //     field: "value",
+      //     filter: true,
+      //     width: 170,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <div className="d-flex align-items-center cursor-pointer">
+      //           <span>{params.data.value}</span>
+      //         </div>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "Description",
+      //     field: "desc",
+      //     filter: true,
+      //     width: 200,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <div>
+      //           <span>{params.data.desc}</span>
+      //         </div>
+      //       );
+      //     },
+      //   },
 
-    // {
-    //     headerName: "Status",
-    //     field: "status",
-    //     filter: true,
-    //     width: 150,
-    //     cellRendererFramework: (params) => {
-    //       return params.value === "Active" ? (
-    //         <div className="badge badge-pill badge-success">
-    //           {params.data.status}
-    //         </div>
-    //       ) : params.value === "Inactive" ? (
-    //         <div className="badge badge-pill badge-warning">
-    //           {params.data.status}
-    //         </div>
-    //       ) : null;
-    //     },
-    //   },
+      // {
+      //     headerName: "Status",
+      //     field: "status",
+      //     filter: true,
+      //     width: 150,
+      //     cellRendererFramework: (params) => {
+      //       return params.value === "Active" ? (
+      //         <div className="badge badge-pill badge-success">
+      //           {params.data.status}
+      //         </div>
+      //       ) : params.value === "Inactive" ? (
+      //         <div className="badge badge-pill badge-warning">
+      //           {params.data.status}
+      //         </div>
+      //       ) : null;
+      //     },
+      //   },
       {
         headerName: "Actions",
         field: "sortorder",
@@ -120,9 +120,9 @@ class ColourList extends React.Component {
                 className="mr-50"
                 color="blue"
                 size={20}
-                onClick={() => 
-                  history.push(`/app/colour/editColour/${params.data._id}`
-                )}
+                onClick={() =>
+                  history.push(`/app/colour/editColour/${params.data._id}`)
+                }
               />
               <Trash2
                 color="red"
@@ -141,11 +141,17 @@ class ColourList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get(`/getcolor`).then((response) => {
-      const rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getcolorbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        const rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
   async runthisfunction(id) {
     console.log(id);
@@ -188,9 +194,7 @@ class ColourList extends React.Component {
       console.log(rowData),
       (
         <Row className="app-user-list">
-          <Col sm="12">
-            
-          </Col>
+          <Col sm="12"></Col>
           <Col sm="12">
             <Card>
               <Row className="m-2">

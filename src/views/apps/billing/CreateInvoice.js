@@ -21,6 +21,8 @@ import { history } from "../../../history";
 // import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
+import "moment-timezone";
+import moment from "moment";
 
 class CreateInvoice extends React.Component {
   state = {
@@ -46,68 +48,90 @@ class CreateInvoice extends React.Component {
         // headerCheckboxSelection: true,
       },
       {
-        headerName: "Order Id",
-        field: "orderId",
+        headerName: "Order ID",
+        field: "orderId._id",
         filter: true,
-        width: 150,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.orderId}</span>
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.orderId._id}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Phone",
-        field: "customer_phone",
+        headerName: "Order Date",
+        field: "cartId.createdAt",
         filter: true,
-        width: 150,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.customer_phone}</span>
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>
+                {moment(this.state.data?.cartId?.createdAt).format("ll")}
+              </span>
             </div>
           );
         },
       },
       {
         headerName: "Customer Name",
-        field: "customer_name",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.customer_name}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Quantity",
-        field: "total_qty",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.total_qty}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Total Amount",
-        field: "total_amount",
+        field: "cartId.customer.firstname",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
-            <div className="ml-2 mr-4">
-              <span>{params.data.total_amount}</span>
+            <div>
+              <span>
+                {params.data?.cartId[0]?.customer?.firstname}{" "}
+                {params.data?.cartId[0]?.customer?.lastname}
+              </span>
             </div>
           );
+        },
+      },
+      {
+        headerName: "Shipping Date",
+        field: "orderId.shipping_date",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.orderId?.shipping_date}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Status",
+        field: "status",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return params.value === "Order Placed" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
+            </div>
+          ) : params.value === "Delivered" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
+            </div>
+          ) : params.value === "Pending" ? (
+            <div className="badge badge-pill badge-primary">
+              {params.data.status}
+            </div>
+          ) : params.value === "Cancelled" ? (
+            <div className="badge badge-pill badge-danger">
+              {params.data.status}
+            </div>
+          ) : params.value === "Completed" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
+          ) : null;
         },
       },
       {
@@ -126,9 +150,6 @@ class CreateInvoice extends React.Component {
               >
                 Create Invoice
               </Button>
-              <Button color="primary" outline className="mr-2">
-                Show Order Details
-              </Button>
             </div>
           );
         },
@@ -137,11 +158,17 @@ class CreateInvoice extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get("/getbillinglist").then((response) => {
-      let rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getorderProductbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        let rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
 
   // async runthisfunction(id) {

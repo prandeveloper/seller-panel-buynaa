@@ -34,8 +34,12 @@ export default class EditWarehouse extends Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getonewarehouse/${id}`)
-      .then(response => {
+      .get(`/getonewarehouse/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         this.setState({
           warehousename: response.data.data.warehousename,
@@ -47,27 +51,27 @@ export default class EditWarehouse extends Component {
           pin: response.data.data.pin,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-    }
-  changeHandler = e => {
+  }
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
     let { id } = this.props.match.params;
     axiosConfig
       .post(`/editwarehouse/${id}`, this.state)
-      .then(response => {
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/warehouse/warehouseList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-    };
+  };
   render() {
     return (
       <div>

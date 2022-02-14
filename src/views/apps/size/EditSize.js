@@ -21,45 +21,52 @@ export default class EditSize extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sizeName: "", 
-        status: ""
+      sizeName: "",
+      status: "",
     };
   }
 
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/viewonesize/${id}`)
-      .then(response => {
+      .get(`/viewonesize/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         this.setState({
           sizeName: response.data.data.sizeName,
-            status: response.data.data.status,
-          
+          status: response.data.data.status,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
-  changeHandler1 = e => {
+  changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
 
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editsize/${id}`, this.state)
-      .then(response => {
+      .post(`/editsize/${id}`, this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/size/sizeList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -107,9 +114,7 @@ export default class EditSize extends Component {
                     name="sizeName"
                     value={this.state.sizeName}
                     onChange={this.changeHandler}
-                  >
-                 
-                  </Input>
+                  ></Input>
                 </Col>
                 {/* <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Value</Label>

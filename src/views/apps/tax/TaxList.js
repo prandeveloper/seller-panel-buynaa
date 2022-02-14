@@ -102,7 +102,9 @@ class TaxList extends React.Component {
                 className="mr-50"
                 color="blue"
                 size={20}
-                onClick={() => history.push(`/app/tax/editTax/${params.data._id}`)}
+                onClick={() =>
+                  history.push(`/app/tax/editTax/${params.data._id}`)
+                }
               />
               <Trash2
                 color="red"
@@ -121,11 +123,17 @@ class TaxList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig.get(`/viewallgst`).then((response) => {
-      const rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get("/getgstbyseller", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
+        const rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
   async runthisfunction(id) {
     console.log(id);
@@ -168,9 +176,7 @@ class TaxList extends React.Component {
       console.log(rowData),
       (
         <Row className="app-user-list">
-          <Col sm="12">
-            
-          </Col>
+          <Col sm="12"></Col>
           <Col sm="12">
             <Card>
               <Row className="m-2">

@@ -83,7 +83,11 @@ export class AddStockAdjustment extends Component {
     option.product = product;
     console.log("Option", option);
     axiosConfig
-      .post("/addstockadjustment", option)
+      .post("/addstockadjustment", option, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.props.history.push("/app/stockControl/stockAdjustment");
@@ -95,7 +99,11 @@ export class AddStockAdjustment extends Component {
   async componentDidMount() {
     //Warehouse List
     axiosConfig
-      .get("/getwarehouse")
+      .get("/getwarehouse", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ warehouseL: response.data.data });
@@ -106,7 +114,11 @@ export class AddStockAdjustment extends Component {
 
     //Reason List
     axiosConfig
-      .get("/getReason")
+      .get("/getReason", {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         this.setState({ reasonL: response.data.data });
@@ -116,7 +128,7 @@ export class AddStockAdjustment extends Component {
       });
     //Product Add
     axiosConfig
-      .get("/getproduct", {
+      .get("/productbysellerbytoken", {
         headers: {
           "auth-adtoken": localStorage.getItem("auth-adtoken"),
         },

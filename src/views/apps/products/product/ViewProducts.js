@@ -48,12 +48,16 @@ class ViewProducts extends React.Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getoneproduct/${id}`)
-      .then(response => {
+      .get(`/getoneproduct/${id}`, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response.data.data);
         this.setState({ data: response.data.data });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -86,7 +90,7 @@ class ViewProducts extends React.Component {
             <Card>
               <div>
                 <Carousel>
-                  {this.state.data?.product_img?.map(i => (
+                  {this.state.data?.product_img?.map((i) => (
                     <img
                       className="border-black m-0"
                       src={i}
@@ -164,16 +168,21 @@ class ViewProducts extends React.Component {
                 <h6>{this.state.data.productsubcategory?.name}</h6>
                 <hr />
                 <h4>Size</h4>
-                <h6>{this.state.data?.size?.map(item => (
-                  <span>{item?.sizeName}</span>
-                ))}</h6>
+                <h6>
+                  {this.state.data?.size?.map((item) => (
+                    <span>{item?.sizeName}</span>
+                  ))}
+                </h6>
                 <hr />
                 <h4>Colour </h4>
-                <h6>{this.state.data?.color?.map(item => (
-                  <span style={{color:item?.colorName}}>{item?.colorName}</span>
-                  // <Button style={{background-color:item?.colorName!important;}}>{item?.colorName}</Button>
-                ))}</h6>
-
+                <h6>
+                  {this.state.data?.color?.map((item) => (
+                    <span style={{ color: item?.colorName }}>
+                      {item?.colorName}
+                    </span>
+                    // <Button style={{background-color:item?.colorName!important;}}>{item?.colorName}</Button>
+                  ))}
+                </h6>
 
                 <hr />
                 <h4>Material </h4>

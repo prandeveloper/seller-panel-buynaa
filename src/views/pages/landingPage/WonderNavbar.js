@@ -26,7 +26,7 @@ export default function WonderNavbar(props) {
           className=""
         >
           {/* <h1 className="text-primary">Buynaa</h1> */}
-          <a href="/">
+          <a href="/analyticsDashboard">
             <img src={glogo} alt="" className="st-logo" width={150} />
           </a>
         </NavbarBrand>

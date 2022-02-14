@@ -22,28 +22,32 @@ export default class addReason extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        reason: "", 
-        status: ""
+      reason: "",
+      status: "",
     };
   }
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
 
-  changeHandler = e => {
+  changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
 
     axiosConfig
-      .post("/addReason", this.state)
-      .then(response => {
+      .post("/addReason", this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
+      .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/reason/reasonList");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -75,7 +79,8 @@ export default class addReason extends Component {
             <Col>
               <Button
                 className=" btn btn-danger float-right"
-                onClick={() => history.push("/app/reason/reasonList")}>
+                onClick={() => history.push("/app/reason/reasonList")}
+              >
                 Back
               </Button>
             </Col>
@@ -86,13 +91,13 @@ export default class addReason extends Component {
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Reason</Label>
                   <Input
-                        required
-                        type="text"
-                        name="reason"
-                        placeholder=""
-                        value={this.state.reason}
-                        onChange={this.changeHandler}
-                    />
+                    required
+                    type="text"
+                    name="reason"
+                    placeholder=""
+                    value={this.state.reason}
+                    onChange={this.changeHandler}
+                  />
                 </Col>
               </Row>
               <Row>
