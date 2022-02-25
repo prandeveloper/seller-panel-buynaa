@@ -310,7 +310,19 @@ class ProductsList extends React.Component {
           );
         },
       },
-
+      {
+        headerName: "Stock Avilable",
+        field: "stock",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex justify-content-center">
+              <span>{params.data.stock}</span>
+            </div>
+          );
+        },
+      },
       {
         headerName: "Reorder Level",
         field: "reorder_level",

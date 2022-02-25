@@ -58,43 +58,45 @@ class AllOrder extends React.Component {
 
       {
         headerName: "Order ID",
-        field: "cus_orderId",
+        field: "orderId._id",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.cus_orderId}</span>
+              <span>{params.data.orderId._id}</span>
             </div>
           );
         },
       },
       {
         headerName: "Order Date",
-        field: "createdAt",
+        field: "cartId.createdAt",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{moment(this.state.data?.createdAt).format("ll")}</span>
+              <span>
+                {moment(this.state.data?.cartId?.createdAt).format("ll")}
+              </span>
             </div>
           );
         },
       },
-      // {
-      //   headerName: "Order Type",
-      //   field: "orderId.order_type",
-      //   filter: true,
-      //   width: 150,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center">
-      //         <span>{params.data?.orderId?.order_type}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        headerName: "Order Type",
+        field: "orderId.order_type",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center">
+              <span>{params.data?.orderId?.order_type}</span>
+            </div>
+          );
+        },
+      },
       {
         headerName: "Payment Type",
         field: "orderId.payment_type",
@@ -103,7 +105,7 @@ class AllOrder extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center">
-              <span>{params.data?.payment_type}</span>
+              <span>{params.data?.orderId?.payment_type}</span>
             </div>
           );
         },
@@ -117,8 +119,8 @@ class AllOrder extends React.Component {
           return (
             <div>
               <span>
-                {params.data?.customer?.firstname}{" "}
-                {params.data?.customer?.lastname}
+                {params.data?.cartId[0]?.customer?.firstname}{" "}
+                {params.data?.cartId[0]?.customer?.lastname}
               </span>
             </div>
           );
@@ -138,19 +140,19 @@ class AllOrder extends React.Component {
       //     );
       //   },
       // },
-      // {
-      //   headerName: "Shipping Date",
-      //   field: "orderId.shipping_date",
-      //   filter: true,
-      //   width: 150,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.orderId?.shipping_date}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        headerName: "Shipping Date",
+        field: "orderId.shipping_date",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.orderId?.shipping_date}</span>
+            </div>
+          );
+        },
+      },
 
       {
         headerName: "Status",
@@ -218,7 +220,7 @@ class AllOrder extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("/orderbyseller", {
+      .get("/getorderProductbyseller", {
         headers: {
           "auth-adtoken": localStorage.getItem("auth-adtoken"),
         },

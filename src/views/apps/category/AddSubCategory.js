@@ -121,7 +121,6 @@ export class AddSubCategory extends Component {
                 <Col lg="6" md="6" className="mb-2">
                   <Label> Main Category</Label>
                   <CustomInput
-                    required
                     type="select"
                     name="productcategory"
                     value={this.state.productcategory}
@@ -137,7 +136,6 @@ export class AddSubCategory extends Component {
                 <Col lg="6" md="6" className="mb-2">
                   <Label>Category Name</Label>
                   <Input
-                    required
                     type="text"
                     placeholder="Enter Category"
                     name="name"
@@ -148,7 +146,6 @@ export class AddSubCategory extends Component {
                 <Col lg="6" md="6" className="mb-2">
                   <Label>Description</Label>
                   <Input
-                    required
                     type="textarea"
                     name="desc"
                     value={this.state.desc}
@@ -159,7 +156,6 @@ export class AddSubCategory extends Component {
                 <Col lg="6" md="6" className="mb-2">
                   <Label>Sort Order</Label>
                   <Input
-                    required
                     type="number"
                     placeholder="Sort Order"
                     name="sortorder"
@@ -170,11 +166,7 @@ export class AddSubCategory extends Component {
 
                 <Col lg="6" md="6" className="mb-2">
                   <Label>Image</Label>
-                  <CustomInput
-                    required
-                    type="file"
-                    onChange={this.onChangeHandler}
-                  />
+                  <CustomInput type="file" onChange={this.onChangeHandler} />
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
                   <Label className="mb-1">Status</Label>

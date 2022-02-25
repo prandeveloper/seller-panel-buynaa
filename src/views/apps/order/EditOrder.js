@@ -15,7 +15,7 @@ import {
   CustomInput,
   Label,
 } from "reactstrap";
-//import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import axiosConfig from "../../../axiosConfig";
 import { history } from "../../../history";
 

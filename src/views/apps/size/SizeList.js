@@ -59,8 +59,8 @@ class SizeList extends React.Component {
 
       {
         headerName: "Actions",
-        field: "actions",
-
+        field: "sortorder",
+        // field: "transactions",
         width: 150,
         cellRendererFramework: (params) => {
           return (

@@ -21,25 +21,39 @@ export class EditCoupon extends Component {
 
     this.state = {
       CouponTitle: "",
-
+      product: "",
       description: "",
       startDate: "",
       expireOn: "",
-
+      usage_limit: "",
       amount: "",
       status: "",
+    };
+    this.state = {
+      productS: [],
     };
   }
 
   async componentDidMount() {
+    //Product List
+    axiosConfig
+      .get("/getproduct")
+      .then(response => {
+        console.log(response);
+        this.setState({ productS: response.data.data });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/getonecoupon/${id}`, {
-        headers: {
-          "auth-adtoken": localStorage.getItem("auth-adtoken"),
-        },
+      .get(`/getonecoupon/${id}`,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
       })
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.setState({
           CouponTitle: response.data.data.CouponTitle,
@@ -52,32 +66,32 @@ export class EditCoupon extends Component {
           status: response.data.data.status,
         });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }
 
-  changeHandler1 = (e) => {
+  changeHandler1 = e => {
     this.setState({ status: e.target.value });
   };
-  changeHandler = (e) => {
+  changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = (e) => {
+  submitHandler = e => {
     e.preventDefault();
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/editcoupon/${id}`, this.state, {
-        headers: {
-          "auth-adtoken": localStorage.getItem("auth-adtoken"),
-        },
+      .post(`/editcoupon/${id}`, this.state,{
+        headers:{
+          "auth-adtoken" : localStorage.getItem("auth-adtoken")
+        }
       })
-      .then((response) => {
+      .then(response => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/offerAndCoupon/coupons/couponsList");
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -114,7 +128,22 @@ export class EditCoupon extends Component {
                     onChange={this.changeHandler}
                   />
                 </Col>
-
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Product </Label>
+                  <CustomInput
+                    type="select"
+                    name="product"
+                    value={this.state.product}
+                    onChange={this.changeHandler}
+                  >
+                    <option>Select Product</option>
+                    {this.state.productS.map(productH => (
+                      <option key={productH._id} value={productH._id}>
+                        {productH.product_name}
+                      </option>
+                    ))}
+                  </CustomInput>
+                </Col>
                 <Col lg="6" md="6" className="mb-2">
                   <Label>Description </Label>
                   <Input
@@ -145,6 +174,15 @@ export class EditCoupon extends Component {
                   />
                 </Col>
 
+                <Col lg="6" md="6" className="mb-2">
+                  <Label>Usage Limit</Label>
+                  <Input
+                    type="text"
+                    name="usage_limit"
+                    value={this.state.usage_limit}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
                 <Col lg="6" md="6" className="mb-1">
                   <Label>Amount </Label>
                   <Input
@@ -159,7 +197,7 @@ export class EditCoupon extends Component {
                   <Label className="mb-1">Status</Label>
                   <div
                     className="form-label-group"
-                    onChange={(e) => this.changeHandler1(e)}
+                    onChange={e => this.changeHandler1(e)}
                   >
                     <input
                       style={{ marginRight: "3px" }}

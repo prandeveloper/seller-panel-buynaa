@@ -21,7 +21,7 @@ import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 
 import "../../../../assets/scss/pages/users.scss";
 
-class couponsList extends React.Component {
+class BundleOffer extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -44,7 +44,25 @@ class couponsList extends React.Component {
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-
+      // {
+      //   headerName: "Code",
+      //   field: "product_img",
+      //   filter: false,
+      //   width: 120,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div className="d-flex align-items-center cursor-pointer">
+      //         <img
+      //           className="rounded-circle  mr-4"
+      //           src={params.data?.product_img}
+      //           alt=" brand"
+      //           height="40"
+      //           width="40"
+      //         />
+      //       </div>
+      //     );
+      //   },
+      // },
       {
         headerName: "Coupon Code",
         field: "offer_code",
@@ -71,7 +89,19 @@ class couponsList extends React.Component {
           );
         },
       },
-
+      {
+        headerName: "Product Name",
+        field: "product_name",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="">
+              <span>{params.data.product?.product_name}</span>
+            </div>
+          );
+        },
+      },
       {
         headerName: "Start Date",
         field: "startDate",
@@ -99,7 +129,19 @@ class couponsList extends React.Component {
           );
         },
       },
-
+      {
+        headerName: "Usage Limit",
+        field: "usage_limit",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.usage_limit}</span>
+            </div>
+          );
+        },
+      },
       {
         headerName: "Amont",
         field: "amount",
@@ -343,4 +385,4 @@ class couponsList extends React.Component {
   }
 }
 
-export default couponsList;
+export default BundleOffer;

@@ -19,19 +19,19 @@ export class EditCustomer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: "",
-      lastname: "",
-      email: "",
-      mobile: "",
-      // password: "",
-      // cnfrmPassword: "",
+      first_name: "",
+      last_name: "",
+      customer_email: "",
+      mobile_no: "",
+      sortorder: "",
+      status: "",
     };
   }
 
   componentDidMount() {
     let { id } = this.props.match.params;
     axios
-      .get(`http://35.154.86.59/api/user/getonecusByseller/${id}`, {
+      .get(`http://35.154.86.59/api/user/getonecustomer/${id}`, {
         headers: {
           "auth-adtoken": localStorage.getItem("auth-adtoken"),
         },
@@ -39,16 +39,16 @@ export class EditCustomer extends Component {
       .then((response) => {
         console.log(response);
         this.setState({
-          firstname: response.data.data.firstname,
-          lastname: response.data.data.lastname,
-          email: response.data.data.email,
-          mobile: response.data.data.mobile,
-          // password: response.data.data.password,
-          // cnfrmPassword: response.data.data.cnfrmPassword,
+          first_name: response.data.data.first_name,
+          last_name: response.data.data.last_name,
+          customer_email: response.data.data.customer_email,
+          mobile_no: response.data.data.mobile_no,
+          sortorder: response.data.data.sortorder,
+          status: response.data.data.status,
         });
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error);
       });
   }
 
@@ -63,15 +63,11 @@ export class EditCustomer extends Component {
     e.preventDefault();
     let { id } = this.props.match.params;
     axios
-      .post(
-        `http://35.154.86.59/api/user/editcustomerbyseller/${id}`,
-        this.state,
-        {
-          headers: {
-            "auth-adtoken": localStorage.getItem("auth-adtoken"),
-          },
-        }
-      )
+      .post(`http://35.154.86.59/api/user/editcustomer/${id}`, this.state, {
+        headers: {
+          "auth-adtoken": localStorage.getItem("auth-adtoken"),
+        },
+      })
       .then((response) => {
         console.log(response);
         swal("Success!", "Updated SuccessFull!", "success");
@@ -79,7 +75,7 @@ export class EditCustomer extends Component {
       })
       .catch((error) => {
         swal("Error!", "Error Received", "error");
-        console.log(error.response);
+        console.log(error);
       });
   };
   render() {
@@ -112,8 +108,8 @@ export class EditCustomer extends Component {
                     <Input
                       type="text"
                       placeholder="First Name"
-                      name="firstname"
-                      value={this.state.firstname}
+                      name="first_name"
+                      value={this.state.first_name}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
@@ -124,8 +120,8 @@ export class EditCustomer extends Component {
                     <Input
                       type="text"
                       placeholder="Last Name"
-                      name="lastname"
-                      value={this.state.lastname}
+                      name="last_name"
+                      value={this.state.last_name}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
@@ -136,8 +132,8 @@ export class EditCustomer extends Component {
                     <Input
                       type="email"
                       placeholder="Customer Email"
-                      name="email"
-                      value={this.state.email}
+                      name="customer_email"
+                      value={this.state.customer_email}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
@@ -148,10 +144,51 @@ export class EditCustomer extends Component {
                     <Input
                       type="number"
                       placeholder="Mobile Number"
-                      name="mobile"
-                      value={this.state.mobile}
-                      onChange={this.changeHandler2}
+                      name="mobile_no"
+                      value={this.state.mobile_no}
+                      onChange={this.changeHandler}
                     />
+                  </FormGroup>
+                </Col>
+
+                <Col lg="6" md="6">
+                  <FormGroup>
+                    <Label>Sort Order</Label>
+                    <Input
+                      type="number"
+                      placeholder="Sort Order"
+                      name="sortorder"
+                      value={this.state.sortorder}
+                      onChange={this.changeHandler}
+                    />
+                  </FormGroup>
+                </Col>
+
+                <Col lg="6" md="6" sm="6" className="mb-1 ">
+                  <FormGroup>
+                    <Label className="mb-1">Status</Label>
+                    <div
+                      className="form-label-group"
+                      onChange={(e) => this.changeHandler1(e)}
+                    >
+                      <input
+                        style={{ marginRight: "3px", fontWeight: 800 }}
+                        type="radio"
+                        name="status"
+                        value="Active"
+                      />
+                      <span style={{ marginRight: "20px", fontWeight: 800 }}>
+                        Active
+                      </span>
+
+                      <input
+                        style={{ marginRight: "3px" }}
+                        type="radio"
+                        name="status"
+                        value="Inactive"
+                      />
+                      <span style={{ marginRight: "3px" }}>Inactive</span>
+                    </div>
                   </FormGroup>
                 </Col>
               </Row>

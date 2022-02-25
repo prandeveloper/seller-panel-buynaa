@@ -19,15 +19,18 @@ export class AddCustomer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: "",
-      lastname: "",
-      email: "",
-      mobile: "",
-      password: "",
-      cnfrmPassword: "",
+      first_name: "",
+      last_name: "",
+      customer_email: "",
+      mobile_no: "",
+      sortorder: "",
+      status: "",
     };
   }
 
+  changeHandler1 = (e) => {
+    this.setState({ status: e.target.value });
+  };
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -39,7 +42,20 @@ export class AddCustomer extends Component {
   };
   submitHandler = (e) => {
     e.preventDefault();
-
+    // const data = new FormData();
+    // data.append("employee_name", this.state.employee_name);
+    // data.append("phone_no", this.state.phone_no);
+    // data.append("email", this.state.email);
+    // data.append("password", this.state.password);
+    // data.append("designation", this.state.designation);
+    // data.append("sortorder", this.state.sortorder);
+    // data.append("status", this.state.status);
+    // if (this.state.selectedFile !== null) {
+    //   data.append("image", this.state.selectedFile, this.state.selectedName);
+    // }
+    //   for (var value of data.values()) {
+    //     console.log(value);
+    //  }
     axios
       .post("http://35.154.86.59/api/user/addcustomerbyseller", this.state, {
         headers: {
@@ -84,11 +100,10 @@ export class AddCustomer extends Component {
                   <FormGroup>
                     <Label>FirstName</Label>
                     <Input
-                      required
                       type="text"
                       placeholder="First Name"
-                      name="firstname"
-                      value={this.state.firstname}
+                      name="first_name"
+                      value={this.state.first_name}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
@@ -97,11 +112,10 @@ export class AddCustomer extends Component {
                   <FormGroup>
                     <Label>LastName</Label>
                     <Input
-                      required
                       type="text"
                       placeholder="Last Name"
-                      name="lastname"
-                      value={this.state.lastname}
+                      name="last_name"
+                      value={this.state.last_name}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
@@ -110,11 +124,10 @@ export class AddCustomer extends Component {
                   <FormGroup>
                     <Label>Customer Email</Label>
                     <Input
-                      required
                       type="email"
                       placeholder="Customer Email"
-                      name="email"
-                      value={this.state.email}
+                      name="customer_email"
+                      value={this.state.customer_email}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
@@ -123,11 +136,10 @@ export class AddCustomer extends Component {
                   <FormGroup>
                     <Label>Mobile Number</Label>
                     <Input
-                      required
                       type="number"
                       placeholder="Mobile Number"
-                      name="mobile"
-                      value={this.state.mobile}
+                      name="mobile_no"
+                      value={this.state.mobile_no}
                       onChange={this.changeHandler2}
                     />
                   </FormGroup>
@@ -135,29 +147,42 @@ export class AddCustomer extends Component {
 
                 <Col lg="6" md="6">
                   <FormGroup>
-                    <Label>Password</Label>
+                    <Label>Sort Order</Label>
                     <Input
-                      required
-                      type="password"
-                      placeholder="Password"
-                      name="password"
-                      value={this.state.password}
+                      type="number"
+                      placeholder="Sort Order"
+                      name="sortorder"
+                      value={this.state.sortorder}
                       onChange={this.changeHandler}
                     />
                   </FormGroup>
                 </Col>
 
-                <Col lg="6" md="6">
+                <Col lg="6" md="6" sm="6" className="mb-1 ">
                   <FormGroup>
-                    <Label> Confirm Password</Label>
-                    <Input
-                      required
-                      type="password"
-                      placeholder=" Confirm Password"
-                      name="cnfrmPassword"
-                      value={this.state.cnfrmPassword}
-                      onChange={this.changeHandler}
-                    />
+                    <Label className="mb-1">Status</Label>
+                    <div
+                      className="form-label-group"
+                      onChange={(e) => this.changeHandler1(e)}
+                    >
+                      <input
+                        style={{ marginRight: "3px", fontWeight: 800 }}
+                        type="radio"
+                        name="status"
+                        value="Active"
+                      />
+                      <span style={{ marginRight: "20px", fontWeight: 800 }}>
+                        Active
+                      </span>
+
+                      <input
+                        style={{ marginRight: "3px" }}
+                        type="radio"
+                        name="status"
+                        value="Inactive"
+                      />
+                      <span style={{ marginRight: "3px" }}>Inactive</span>
+                    </div>
                   </FormGroup>
                 </Col>
               </Row>

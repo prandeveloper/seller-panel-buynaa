@@ -7,8 +7,8 @@ const navigationConfig = [
     title: "Dashboard",
     type: "collapse",
     icon: <Icon.Home size={20} />,
-    // badge: "warning",
-    // badgeText: "2",
+    badge: "warning",
+    badgeText: "2",
     children: [
       {
         id: "analyticsDash",
@@ -35,7 +35,7 @@ const navigationConfig = [
   //   collapsed: true,
   // },
   {
-    id: "store",
+    id: "Store",
     title: "Store",
     type: "collapse",
     icon: <Icon.ShoppingCart size={20} />,
@@ -61,15 +61,7 @@ const navigationConfig = [
     ],
   },
   {
-    id: "subscription",
-    title: "Subscriptions",
-    type: "item",
-    icon: <Icon.Youtube size={20} />,
-    permissions: ["admin", "editor"],
-    navLink: "/app/subscription/addSubscription",
-  },
-  {
-    id: "contacts",
+    id: "contact",
     title: "Contacts",
     type: "collapse",
     icon: <Icon.PhoneCall size={20} />,
@@ -126,7 +118,7 @@ const navigationConfig = [
   },
 
   {
-    id: "inventory",
+    id: "Inventory",
     title: "Inventory",
     type: "collapse",
     icon: <Icon.ShoppingBag size={20} />,
@@ -181,31 +173,38 @@ const navigationConfig = [
       },
     ],
   },
-  // {
-  //   id: "coupons",
-  //   title: "Coupons",
-  //   type: "collapse",
-  //   icon: <Icon.Gift size={20} />,
-  //   children: [
-  //     // {
-  //     //   id: "specialOfferList",
-  //     //   title: "Offers",
-  //     //   type: "item",
-  //     //   icon: <Icon.Circle size={12} />,
-  //     //   permissions: ["admin", "editor"],
-  //     //   navLink: "/app/offerAndCoupon/specialOffer/specialOfferList",
-  //     // },
-  //     {
-  //       id: "couponsList",
-  //       title: "Coupons",
-  //       type: "item",
-  //       icon: <Icon.Circle size={12} />,
-  //       permissions: ["admin", "editor"],
-  //       navLink: "/app/offerAndCoupon/coupons/couponsList",
-  //     },
-  //   ],
-  // },
-
+  {
+    id: "offersandcoupons",
+    title: "Coupons",
+    type: "collapse",
+    icon: <Icon.Gift size={20} />,
+    children: [
+      // {
+      //   id: "specialOfferList",
+      //   title: "Offers",
+      //   type: "item",
+      //   icon: <Icon.Circle size={12} />,
+      //   permissions: ["admin", "editor"],
+      //   navLink: "/app/offerAndCoupon/specialOffer/specialOfferList",
+      // },
+      {
+        id: "couponsList",
+        title: "Coupons",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/offerAndCoupon/coupons/couponsList",
+      },
+    ],
+  },
+  {
+    id: "addSubscription",
+    title: "Subscriptions",
+    type: "item",
+    icon: <Icon.Youtube size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/subscription/addSubscription",
+  },
   {
     id: "billing",
     title: "Billing",
@@ -232,7 +231,7 @@ const navigationConfig = [
   },
 
   {
-    id: "order",
+    id: "orderManagement",
     title: "Orders Management",
     type: "collapse",
     icon: <Icon.Truck size={20} />,
@@ -437,7 +436,7 @@ const navigationConfig = [
   // },
 
   {
-    id: "rolesPermission",
+    id: "rolesAndPermission",
     title: "Permission",
     type: "collapse",
     icon: <Icon.Truck size={20} />,

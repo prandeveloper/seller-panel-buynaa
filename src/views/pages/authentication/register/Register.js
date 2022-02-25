@@ -47,7 +47,6 @@ class Register extends React.Component {
         console.log(response);
         //localStorage.setItem("user", response.data.data._id);
         localStorage.setItem("auth-adtoken", this.state.token || "null");
-        localStorage.setItem("hasSubscribed", true); //change false with parameter
         // const location = this.props.location;
         // if (location.state && location.state.nextPathname) {
         //   History.push("/login-register");
