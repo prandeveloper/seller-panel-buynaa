@@ -17,15 +17,9 @@ class SidebarHeader extends Component {
       <div className="navbar-header">
         <ul className="nav navbar-nav flex-row">
           <li className="nav-item mr-auto">
-<<<<<<< HEAD
-            <NavLink to="/analyticsDashboard" className="navbar-brand">
-              <div className="brand-logo" />
-
-=======
             <NavLink to="/" className="navbar-brand">
               <div className="brand-logo" />
               {/* <h2 className="brand-text mb-0">Deepak</h2> */}
->>>>>>> main
               <img src={glogo} alt="glogo" width="160px" height="45px" />
             </NavLink>
           </li>
