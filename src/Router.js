@@ -1005,6 +1005,28 @@ class AppRouter extends React.Component {
                     component={resetPassword}
                     fullLayout
                   />
+                  <AppRoute path="/pages/login" component={Login} fullLayout />
+                  <AppRoute
+                    path="/pages/forgot-password"
+                    component={forgotPassword}
+                    fullLayout
+                  />
+
+                  <AppRoute
+                    path="/misc/error/404"
+                    component={error404}
+                    fullLayout
+                  />
+                  <AppRoute
+                    path="/pages/register"
+                    component={register}
+                    fullLayout
+                  />
+                  <AppRoute
+                    path="/misc/error/500"
+                    component={error500}
+                    fullLayout
+                  />
                 </>
               ) : (
                 <>
